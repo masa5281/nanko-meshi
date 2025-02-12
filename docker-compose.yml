@@ -20,5 +20,14 @@ services:
       - db
     tty: true
     stdin_open: true
+  front:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: yarn start
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3001:3000"
 volumes:
   db-volume:
