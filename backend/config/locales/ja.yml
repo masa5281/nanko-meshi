@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    models:
+      calorie: カロリー
+    attributes:
+      calorie:
+        burned_calorie: カロリー
+        recorded_at: 登録日
