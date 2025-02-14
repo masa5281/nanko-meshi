@@ -5,7 +5,7 @@ class CaloriesController < ApplicationController
     if calorie.save
       render json: { status: 200, calorie: calorie }
     else
-      render json: { status: 500, message: "カロリーの入力に失敗しました" }
+      render json: calorie.errors.full_messages, status: :unprocessable_entity
     end
   end
   
