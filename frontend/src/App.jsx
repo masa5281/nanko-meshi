@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const App = () => {
   const [calorieNum, setCalorieNum] = useState("");
   const [errors, setErrors] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
 
   const createBurnedCalorie = async () => {
     try {
@@ -18,6 +21,7 @@ export const App = () => {
       setErrors(ErrorMessages);
     }
   };
+
   
   return (
     <>
@@ -30,6 +34,7 @@ export const App = () => {
       </ul>
       <div>
         <input type="number" placeholder="カロリーを入力してください" value={calorieNum} onChange={(e) => setCalorieNum(Number(e.target.value))} />
+        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
         <button onClick={createBurnedCalorie}>食べ物に換算</button>
       </div>
     </>
