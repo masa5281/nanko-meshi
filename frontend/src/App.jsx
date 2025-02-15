@@ -2,27 +2,29 @@ import axios from "axios";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import { ja } from 'date-fns/locale/ja';
+registerLocale('ja', ja)
 
 export const App = () => {
   const [calorieNum, setCalorieNum] = useState("");
   const [errors, setErrors] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
+  const [recordedDate, setRecordedDate] = useState(new Date());
 
   const createBurnedCalorie = async () => {
     try {
       const response = await axios.post("http://localhost:3000/calories", {
-        burned_calorie: calorieNum
+        burned_calorie: calorieNum,
+        recorded_at: recordedDate.toDateString()
       });
       setCalorieNum("");
       setErrors([]);
-      console.log(response);
     } catch(error) {
       const ErrorMessages = error.response.data;
       setErrors(ErrorMessages);
     }
   };
 
-  
   return (
     <>
       <h2>消費したカロリーを入力!</h2>
@@ -34,7 +36,7 @@ export const App = () => {
       </ul>
       <div>
         <input type="number" placeholder="カロリーを入力してください" value={calorieNum} onChange={(e) => setCalorieNum(Number(e.target.value))} />
-        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+        <DatePicker dateFormat="yyyy/MM/dd" locale="ja" selected={recordedDate} onChange={(date) => setRecordedDate(date)} />
         <button onClick={createBurnedCalorie}>食べ物に換算</button>
       </div>
     </>

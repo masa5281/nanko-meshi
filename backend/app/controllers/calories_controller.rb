@@ -1,7 +1,7 @@
 class CaloriesController < ApplicationController
   def create
     calorie = Calorie.new(calorie_params)
-
+    
     if calorie.save
       render json: { status: 200, calorie: calorie }
     else
