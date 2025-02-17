@@ -30,5 +30,6 @@ module App
     config.api_only = true
     config.i18n.default_locale = :ja
     config.active_model.i18n_customize_full_message = true
+    config.time_zone = 'Tokyo'
   end
 end

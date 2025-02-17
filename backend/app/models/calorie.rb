@@ -6,6 +6,6 @@ class Calorie < ApplicationRecord
   private
 
   def validate_not_future_date
-    errors.add(:recorded_at, :not_future_date) if recorded_at.present? && recorded_at > Date.today
+    errors.add(:recorded_at, :not_future_date) if recorded_at.present? && recorded_at > Time.zone.today
   end
 end
