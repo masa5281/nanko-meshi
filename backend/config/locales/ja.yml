@@ -6,3 +6,14 @@ ja:
       calorie:
         burned_calorie: カロリー
         recorded_at: 登録日
+    errors:
+      models:
+        calorie:
+          attributes:
+            burned_calorie:
+              blank: "%{attribute}を入力してください"
+              not_a_number: "%{attribute}は数字で入力してください"
+              greater_than: "%{attribute}は0より大きい値で入力してください"
+            recorded_at:
+              blank: "%{attribute}を入力してください"
+              not_future_date: "未来の日付は指定できません"

@@ -5,7 +5,7 @@ class CaloriesController < ApplicationController
     if calorie.save
       render json: { status: 200, calorie: calorie }
     else
-      render json: calorie.errors.full_messages, status: :unprocessable_entity
+      render json: calorie.errors, status: :unprocessable_entity
     end
   end
   
