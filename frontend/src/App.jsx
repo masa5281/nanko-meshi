@@ -43,7 +43,7 @@ export const App = () => {
             <div className="mb-6">
               <div className="flex justify-center px-3">
                 <div className="flex flex-col items-star">
-                  <label htmlFor="calorie" className="flex items-center pl-3 font-bold"><FaFire className="mr-0.5 text-lg" />消費カロリー</label>
+                  <label htmlFor="calorie" className="flex items-center pl-3 font-bold"><FaFire className="mr-0.5 text-lg" />消費カロリー（kcal）</label>
                   <input type="number" id="calorie" className="indent-2 mr-3 p-3 border-slate-900 border-2 rounded-full focus:ring-2 focus:ring-primary focus:border-primary focus:outline focus:outline-primary" placeholder="例：300" value={calorieNum} onChange={(e) => setCalorieNum(Number(e.target.value))} />
 
                   {errors.burned_calorie && (
