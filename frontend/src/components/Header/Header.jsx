@@ -10,7 +10,7 @@ import logo from "../../images/logo.png"
 export const Header = () => {
   return (
     <header className="flex items-center justify-between h-16 px-5 bg-header shadow-sm shadow-shadow">
-      <a href="#">
+      <a href="/">
         <div className="w-48">
           <img src={logo} alt="ロゴ" className="w-full" />
         </div>
@@ -22,7 +22,7 @@ export const Header = () => {
           <IconList img={graph} alt={"総消費カロリー"} menuName={"総消費カロリー"} />
         </ul>
         <div>
-          <a href="#" className="flex flex-col items-center bg-white rounded-full p-1">
+          <a href="/" className="flex flex-col items-center p-1 bg-white rounded-full">
             <img src={user} alt="user" className="w-10" />
           </a>
         </div>

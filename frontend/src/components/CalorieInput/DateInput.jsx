@@ -15,7 +15,7 @@ export const DateInput = (props) => {
   return (
     <>
       <label htmlFor="calendar" className="flex items-center pl-3 font-bold"><FaCalendarDays className="mr-0.5 text-lg" />日付</label>
-      <DatePicker id="calendar" className="indent-2 p-3 border-slate-900 border-2 rounded-full focus:ring-2 focus:ring-primary focus:border-primary focus:outline focus:outline-primary" dateFormat="yyyy/MM/dd" locale="ja" selected={recordedDate} onChange={(date) => setRecordedDate(date)} />
+      <DatePicker id="calendar" className="p-3 border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary focus:outline focus:outline-primary" dateFormat="yyyy/MM/dd" locale="ja" selected={recordedDate} onChange={(date) => setRecordedDate(date)} />
     </>
   );
 }

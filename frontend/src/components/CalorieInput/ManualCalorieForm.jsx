@@ -37,14 +37,14 @@ export const ManualCalorieForm = () => {
 
   return (
     <div className="relative max-w-lg mx-auto pt-12 pb-10 border-slate-900 border-4 rounded-md before:content-[''] before:absolute before:w-56 before:h-10 before:bg-background before:inline-block before:-top-5 before:left-1/2 before:-translate-x-1/2">
-      <p className="absolute -top-7 left-1/2 -translate-x-1/2 w-52 mx-auto mb-5 py-3 rounded-full bg-text text-white text-lg font-bold">直接入力する</p>
+      <p className="absolute -top-7 left-1/2 -translate-x-1/2 w-52 mx-auto mb-5 py-3 rounded-full bg-text text-white font-bold text-lg">直接入力する</p>
 
       <div className="mb-6">
         <div className="flex justify-center px-3">
 
           <div className="flex flex-col items-star">
             <label htmlFor="calorie" className="flex items-center pl-3 font-bold"><FaFire className="mr-0.5 text-lg" />消費カロリー（kcal）</label>
-            <input type="text" id="calorie" className="indent-2 mr-3 p-3 border-slate-900 border-2 rounded-full focus:ring-2 focus:ring-primary focus:border-primary focus:outline focus:outline-primary" placeholder="例：300" value={calorieNum} onChange={onChangeToText} />
+            <input type="text" id="calorie" className="mr-3 p-3 border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary focus:outline focus:outline-primary" placeholder="例：300" value={calorieNum} onChange={onChangeToText} />
             <CalorieInputError errors={errors} column="burned_calorie" />
           </div>
 
