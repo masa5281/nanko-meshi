@@ -15,7 +15,6 @@ export const Header = () => {
           <img src={logo} alt="ロゴ" className="w-full" />
         </div>
       </a>
-
       <nav className="flex items-center h-full">
         <ul className="flex items-center h-full mr-4">
           <IconList img={fire} alt={"カロリー入力"} menuName={"カロリー入力"} />
