@@ -1,3 +1,5 @@
+import { Header } from "./components/Header/Header";
+
 // アイコン用コンポーネント
 import { FaFire } from "react-icons/fa6";
 import { FaCalendarDays } from "react-icons/fa6";
@@ -30,6 +32,7 @@ export const App = () => {
     }
   };
 
+  // 入力値を全角→半角変換
   const onChangeToText = (e) => {
     const inputText = e.target.value;
     const toHalfWidth = inputText.replace(/[０-９]/g, (str) => String.fromCharCode(str.charCodeAt(0) - 0xFEE0));
@@ -38,42 +41,7 @@ export const App = () => {
 
   return (
     <>
-      <header className="flex items-center justify-between h-16 px-5 bg-header shadow-sm shadow-shadow">
-        <a href="#">
-          <div className="w-48">
-            <img src="images/logo.png" alt="ロゴ" className="w-full" />
-          </div>
-        </a>
-        <nav className="h-full">
-          <ul className="flex items-center h-full">
-            <li className="w-28 h-full">
-              <a href="#" className="flex flex-col items-center transition-all duration-200 hover:bg-primary-light px-3 h-full">
-                <img src="images/fire-white.png" alt="カロリー入力" className="w-10" />
-                <p className="text-white text-xs font-bold">カロリー入力</p>
-              </a>
-            </li>
-            <li className="w-28 h-full">
-            <a href="#" className="flex flex-col items-center transition-all duration-200 hover:bg-primary-light px-3 h-full">
-                <div  className="w-10">
-                  <img src="images/food-white.png" alt="食品登録" className="w-full h-10 object-contain" />
-                </div>
-                <p className="text-white text-xs font-bold">食品登録</p>
-              </a>
-            </li>
-            <li className="w-28 h-full">
-            <a href="#" className="flex flex-col items-center transition-all duration-200 hover:bg-primary-light px-3 h-full">
-                <img src="images/graph-white.png" alt="総消費カロリー" className="w-10" />
-                <p className="text-white text-xs font-bold">総消費カロリー</p>
-              </a>
-            </li>
-            <li className="ml-5">
-              <a href="#" className="flex flex-col items-center bg-white rounded-full p-1">
-                <img src="images/user.png" alt="user" className="w-10" />
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Header />
 
       <main className="h-screen flex items-center">
         <div className="container mx-auto text-center">
@@ -124,4 +92,3 @@ export const App = () => {
 }
 
 export default App;
-
