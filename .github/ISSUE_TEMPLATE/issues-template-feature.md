@@ -1,7 +1,7 @@
 ---
 name: issues-template-feature
 about: "【プレフィックス】xxx機能の実装"
-title: ''
+title: "【プレフィックス】xxx機能の実装"
 labels: feature
 assignees: masa5281
 
