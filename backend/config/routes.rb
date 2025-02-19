@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
-  get "foods/index"
-  resources :calories, only: %i[create]
+  namespace :api do
+    namespace :v1 do
+      resources :foods, only: %i[index]
+      resources :calories, only: %i[create]
+    end
+  end
 end
