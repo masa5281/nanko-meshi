@@ -1,4 +1,4 @@
-class CaloriesController < ApplicationController
+class Api::V1::CaloriesController < ApplicationController
   def create
     calorie = Calorie.new(calorie_params)
     
