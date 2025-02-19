@@ -5,7 +5,12 @@ export const App = () => {
   return (
     <>
       <Header />
-      <CalorieInput />
+      <Router>
+        <Routes>
+          <Route path="/calorie/input" Component={CalorieInput} />
+          <Route path="/foods/conversion" Component={FoodConversion} />
+        </Routes>
+      </Router>  
     </>
   );
 }
