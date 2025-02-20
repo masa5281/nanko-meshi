@@ -8,7 +8,8 @@ export const FoodConversion = () => {
   const state = useLocation();
   const calorie = state.state.burned_calorie;
 
-  const calorieToFoodCount = (foodCalorie) => (Math.round((calorie / foodCalorie) * 10) / 10);
+  const calorieToFoodCount = (foodCalorie) => Math.round((calorie / foodCalorie) * 10) / 10;
+  const foodPercentage = (foodCalorie) => Math.round((calorie / foodCalorie) * 100);
   
   const getFoodList = async () => {
     try  {
@@ -34,6 +35,7 @@ export const FoodConversion = () => {
               <p>{food.name}</p>
               <p>{food.calorie}</p>
               <p>{calorieToFoodCount(food.calorie)}個分</p>
+              <p>{foodPercentage(food.calorie)}%を消費</p>
             </li>
           )
         })}
