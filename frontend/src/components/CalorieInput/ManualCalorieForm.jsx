@@ -4,6 +4,8 @@ import { CalorieSubmit } from "./CalorieSubmit";
 import { api } from "../../api";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // アイコン用コンポーネント
 import { FaFire } from "react-icons/fa6";
@@ -12,6 +14,7 @@ export const ManualCalorieForm = () => {
   const [calorieNum, setCalorieNum] = useState("");
   const [recordedDate, setRecordedDate] = useState(new Date());
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   const createManualCalorie = async () => {
     try {
@@ -19,13 +22,14 @@ export const ManualCalorieForm = () => {
         burned_calorie: calorieNum,
         recorded_at: recordedDate.toDateString()
       });
-      setCalorieNum("");
-      setErrors([]);
+      navigate("/foods/conversion", {
+        state: { burned_calorie: calorieNum }
+      });
     } catch(error) {
       const ErrorMessages = error.response.data;
       setErrors(ErrorMessages);
-      setCalorieNum("");
     }
+    setCalorieNum("");
   };
 
   // 入力値を全角→半角変換
