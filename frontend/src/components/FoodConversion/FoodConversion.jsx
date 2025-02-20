@@ -35,7 +35,13 @@ export const FoodConversion = () => {
               <p>{food.name}</p>
               <p>{food.calorie}</p>
               <p>{calorieToFoodCount(food.calorie)}個分</p>
-              <p>{foodPercentage(food.calorie)}%を消費</p>
+              <p>
+                {
+                  foodPercentage(food.calorie) >= 100 ? (
+                  <p><span className="text-primary">{foodPercentage(food.calorie)}%</span>を消費</p> 
+                  ) : (<p>{foodPercentage(food.calorie)}%を消費</p>)
+                }
+              </p>
             </li>
           )
         })}
