@@ -1,7 +1,20 @@
+import { Flowbite, Progress } from "flowbite-react";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+
+// flowbite-reactのカスタムテーマ
+const customTheme = {
+  progress: {
+    color: {
+      primaryLight: "bg-primary-light",
+    },
+    size: {
+      lgPlus: "h-5",
+    }
+  },
+};
 
 export const FoodConversion = () => {
   const [foodList, setFoodList] = useState([]);
@@ -31,9 +44,9 @@ export const FoodConversion = () => {
       <ul>
         {foodList.map((food, index) => {
           return (
-            <li key={index}>
+            <li key={index} className="w-1/3">
               <p>{food.name}</p>
-              <p>{food.calorie}</p>
+              <p>{food.calorie}kcal</p>
               <p>{calorieToFoodCount(food.calorie)}個分</p>
               <p>
                 {
@@ -42,6 +55,16 @@ export const FoodConversion = () => {
                   ) : (<p>{foodPercentage(food.calorie)}%を消費</p>)
                 }
               </p>
+              <div className="relative w-48">
+                <div className="flex justify-between font-bold text-sm">
+                  <span>0</span>
+                  <span>50</span>
+                  <span>100</span>
+                </div>
+                <Flowbite theme={{theme: customTheme}}>
+                  <Progress progress={foodPercentage(food.calorie)} size="lgPlus" color="primaryLight" className="bg-slate-200" />
+                </Flowbite>
+              </div>
             </li>
           )
         })}
