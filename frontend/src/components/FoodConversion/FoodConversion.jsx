@@ -65,8 +65,8 @@ export const FoodConversion = () => {
                   <Progress progress={foodPercentage(food.calorie)} size="lgPlus" color="primaryLight" className="bg-slate-200" />
                 </Flowbite>
               </div>
-              <div>
-                <img src={food.food_image.url} alt="食品画像" />
+              <div className="w-24 h-24 rounded-full overflow-hidden">
+                <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full" />
               </div>
             </li>
           )
