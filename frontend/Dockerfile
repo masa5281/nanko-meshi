@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 node:23.7.0
+FROM node:23.7.0
 RUN apt update -qq && apt install -y vim
 
 WORKDIR /app
@@ -12,5 +12,5 @@ RUN yarn install
 
 COPY . .
 
-# RUN yarn build
+RUN yarn build
 EXPOSE 3001

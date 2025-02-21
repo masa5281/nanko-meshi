@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ruby:3.4.1
+FROM ruby:3.4.1
 RUN apt update -qq && apt install -y postgresql-client tzdata imagemagick
 
 WORKDIR /app
