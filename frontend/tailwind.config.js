@@ -20,6 +20,10 @@ module.exports = {
         hover: "#FF915F",
         error: "#C42F30",
         shadow: "#aaa"
+      },
+      borderWidth: {
+        "40": "40px",
+        "50": "50px"
       }
     },
   },
