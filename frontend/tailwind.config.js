@@ -25,6 +25,9 @@ module.exports = {
       borderWidth: {
         "40": "40px",
         "50": "50px"
+      },
+      flexGrow: {
+        2: "2"
       }
     },
   },

@@ -7,8 +7,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 export const App = () => {
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/calorie/input" element={<CalorieInput />} />
           <Route path="/foods/conversion" element={<FoodConversion />} />
