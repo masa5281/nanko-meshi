@@ -9,6 +9,7 @@ const customTheme = {
   progress: {
     color: {
       primaryLight: "bg-primary-light",
+      redBar: "bg-redBar"
     },
     size: {
       lgPlus: "h-5",
@@ -19,10 +20,11 @@ const customTheme = {
 export const FoodConversion = () => {
   const [foodList, setFoodList] = useState([]);
   const state = useLocation();
-  const calorie = state.state.burned_calorie;
+  const manualCalorie = state.state.burned_calorie;
 
-  const calorieToFoodCount = (foodCalorie) => Math.round((calorie / foodCalorie) * 10) / 10;
-  const foodPercentage = (foodCalorie) => Math.round((calorie / foodCalorie) * 100);
+  const calorieToFoodCount = (foodCalorie) => Math.round((manualCalorie / foodCalorie) * 10) / 10;
+  const foodPercentage = (foodCalorie) => Math.round((manualCalorie / foodCalorie) * 100);
+  const progressColor = (foodCalorie) => (foodPercentage(foodCalorie) >= 100) ? "redBar" : "primaryLight";
   
   const getFoodList = async () => {
     try  {
@@ -42,7 +44,7 @@ export const FoodConversion = () => {
       <div className="mb-8 text-center">
         <p className="mb-3 text-4xl font-bold">〇〇<span className="text-lg">さん</span>の消費カロリーは</p>
         <div className="relative w-48 py-2 mx-auto text-white bg-primary rounded-lg text-7xl font-bold z-10 shadow-sm shadow-shadow after:content-[''] after:absolute after:top-16 after:left-1/2 after:-translate-x-1/2 after:border-t-40 after:border-r-50 after:border-l-50 after:border-x-transparent after:border-primary after:-z-10">
-          <p className="relative -top-1">{calorie}<span className="text-3xl">kcal</span></p>
+          <p className="relative -top-1">{manualCalorie}<span className="text-3xl">kcal</span></p>
         </div>
       </div>
 
@@ -67,7 +69,7 @@ export const FoodConversion = () => {
                   <div className="flex flex-col relative w-48">
                     {
                       foodPercentage(food.calorie) >= 100 ? (
-                      <p className="text-2xl font-bold text-center"><span className="text-4xl text-primary">{foodPercentage(food.calorie)}%</span>を消費</p>
+                      <p className="text-3xl font-bold text-center"><span className="text-4xl text-redBar">{foodPercentage(food.calorie)}%</span>を消費</p>
                       ) : (<p className="text-2xl font-bold text-center"><span className="text-4xl">{foodPercentage(food.calorie)}%</span>を消費</p>)
                     }
                     <div className="flex justify-between font-bold text-sm">
@@ -76,7 +78,7 @@ export const FoodConversion = () => {
                       <span>100</span>
                     </div>
                     <Flowbite theme={{theme: customTheme}}>
-                      <Progress progress={foodPercentage(food.calorie)} size="lgPlus" color="primaryLight" className="bg-slate-200" />
+                      <Progress progress={foodPercentage(food.calorie)} size="lgPlus" color={progressColor(food.calorie)} className="bg-slate-200" />
                     </Flowbite>
                   </div>
                 </div>

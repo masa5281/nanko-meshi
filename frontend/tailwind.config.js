@@ -19,7 +19,8 @@ module.exports = {
         text: "#333333",
         hover: "#FF915F",
         error: "#C42F30",
-        shadow: "#aaa"
+        shadow: "#AAA",
+        redBar: "#FF3838"
       },
       borderWidth: {
         "40": "40px",
