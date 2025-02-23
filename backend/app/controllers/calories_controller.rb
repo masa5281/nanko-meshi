@@ -11,7 +11,6 @@ class CaloriesController < ApplicationController
   
   private
   
-  # フロントから送られてくるデータ
   def calorie_params
     params.require(:calorie).permit(:burned_calorie, :recorded_at)
   end
