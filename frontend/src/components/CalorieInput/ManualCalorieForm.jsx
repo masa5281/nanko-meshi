@@ -1,9 +1,9 @@
 import { DateInput } from "./DateInput";
 import { CalorieInputError } from "./CalorieInputError";
 import { CalorieSubmit } from "./CalorieSubmit";
+import { api } from "../../api";
 
 import { useState } from "react";
-import axios from "axios";
 
 // アイコン用コンポーネント
 import { FaFire } from "react-icons/fa6";
@@ -15,7 +15,7 @@ export const ManualCalorieForm = () => {
 
   const createManualCalorie = async () => {
     try {
-      await axios.post("http://localhost:3000/calories", {
+      await api.post("/calories", {
         burned_calorie: calorieNum,
         recorded_at: recordedDate.toDateString()
       });
