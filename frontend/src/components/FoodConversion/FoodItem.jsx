@@ -1,0 +1,50 @@
+// コンポーネント
+import { AnimateProgress } from "./AnimateProgress";
+
+// ライブラリ
+import { Flowbite } from "flowbite-react";
+
+// flowbite-reactのカスタムテーマ
+import { customTheme } from "../../theme/theme";
+
+export const FoodItem =  (props) => {
+  const { food, manualCalorie } = props;
+
+  const calorieToFoodCount = (foodCalorie) => Math.round((manualCalorie / foodCalorie) * 10) / 10;
+  const foodPercentage = (foodCalorie) => Math.round((manualCalorie / foodCalorie) * 100);
+
+  return (
+    <li className="flex p-4 bg-white rounded-lg shadow-sm shadow-shadow">
+      <div className="mr-4 pr-4 border-r-2 text-center">
+        <div className="max-w-24 max-h-24 mb-1 rounded-full overflow-hidden">
+          <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full" />
+        </div>
+        <p>{food.calorie}kcal</p>
+      </div>
+    
+      <div className="flex flex-col flex-grow-2 justify-around">
+        <p className="text-xl font-bold">{food.name}</p>
+        <div className="flex items-end">
+          <div className="max-w-32 mr-5 px-1 bg-secondary rounded-xl text-white font-bold text-center">
+            <p className="relative -top-1 text-5xl">{calorieToFoodCount(food.calorie)}<span className="text-2xl">個分</span></p>
+          </div>
+          <div className="flex flex-col flex-grow-2 relative max-w-52 ml-auto">
+            {
+              foodPercentage(food.calorie) >= 100 ? (
+                <p className="text-3xl font-bold text-center"><span className="text-4xl text-redBar">{foodPercentage(food.calorie)}%</span>を消費</p>
+              ) : (<p className="text-2xl font-bold text-center"><span className="text-4xl">{foodPercentage(food.calorie)}%</span>を消費</p>)
+            }
+            <div className="flex justify-between font-bold text-sm">
+              <span>0</span>
+              <span>50</span>
+              <span>100</span>
+            </div>
+            <Flowbite theme={{ theme: customTheme }}>
+              <AnimateProgress foodCalorie={food.calorie} foodPercentage={foodPercentage(food.calorie)} />
+            </Flowbite>
+          </div>
+        </div>
+      </div>
+    </li>
+  );
+}
