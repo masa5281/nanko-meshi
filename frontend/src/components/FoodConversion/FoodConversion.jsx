@@ -1,8 +1,8 @@
 // コンポーネント
 import { FoodItem } from "./FoodItem";
+import{ api } from "../../api";
 
 // ライブラリ
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -13,7 +13,7 @@ export const FoodConversion = () => {
   
   const getFoodList = async () => {
     try  {
-      const response = await axios.get("http://localhost:3000/api/v1/foods"); 
+      const response = await api.get("/api/v1/foods"); 
       setFoodList(response.data);
     } catch(error) {
       console.log(error);

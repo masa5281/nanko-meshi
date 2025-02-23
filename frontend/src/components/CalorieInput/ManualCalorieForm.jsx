@@ -1,13 +1,14 @@
+// コンポーネント
 import { DateInput } from "./DateInput";
 import { CalorieInputError } from "./CalorieInputError";
 import { CalorieSubmit } from "./CalorieSubmit";
 import { api } from "../../api";
 
+// ライブラリ
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-// アイコン用コンポーネント
+// アイコン
 import { FaFire } from "react-icons/fa6";
 
 export const ManualCalorieForm = () => {
@@ -18,7 +19,7 @@ export const ManualCalorieForm = () => {
 
   const createManualCalorie = async () => {
     try {
-      await api.post("/calories", {
+      await api.post("/api/v1/calories", {
         burned_calorie: calorieNum,
         recorded_at: recordedDate.toDateString()
       });

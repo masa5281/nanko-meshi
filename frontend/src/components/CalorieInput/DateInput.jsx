@@ -1,8 +1,10 @@
-// アイコン用コンポーネント
-import { FaCalendarDays } from "react-icons/fa6";
-
+// ライブラリ
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+// アイコン用
+import { FaCalendarDays } from "react-icons/fa6";
+
 // ロケールの変更
 import { registerLocale } from  "react-datepicker";
 import { ja } from 'date-fns/locale/ja';
