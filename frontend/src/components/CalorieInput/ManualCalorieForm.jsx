@@ -1,31 +1,36 @@
+// コンポーネント
 import { DateInput } from "./DateInput";
 import { CalorieInputError } from "./CalorieInputError";
 import { CalorieSubmit } from "./CalorieSubmit";
 import { api } from "../../api";
 
+// ライブラリ
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-// アイコン用コンポーネント
+// アイコン
 import { FaFire } from "react-icons/fa6";
 
 export const ManualCalorieForm = () => {
   const [calorieNum, setCalorieNum] = useState("");
   const [recordedDate, setRecordedDate] = useState(new Date());
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   const createManualCalorie = async () => {
     try {
-      await api.post("/calories", {
+      await api.post("/api/v1/calories", {
         burned_calorie: calorieNum,
         recorded_at: recordedDate.toDateString()
       });
-      setCalorieNum("");
-      setErrors([]);
+      navigate("/foods/conversion", {
+        state: { burned_calorie: calorieNum }
+      });
     } catch(error) {
       const ErrorMessages = error.response.data;
       setErrors(ErrorMessages);
-      setCalorieNum("");
     }
+    setCalorieNum("");
   };
 
   // 入力値を全角→半角変換

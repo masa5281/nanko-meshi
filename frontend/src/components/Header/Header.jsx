@@ -9,7 +9,7 @@ import logo from "../../images/logo.png"
 
 export const Header = () => {
   return (
-    <header className="flex items-center justify-between h-16 px-5 bg-header shadow-sm shadow-shadow">
+    <header className="flex items-center justify-between h-16 px-5 mb-8 bg-header shadow-sm shadow-shadow">
       <a href="/">
         <div className="w-48">
           <img src={logo} alt="ロゴ" className="w-full" />
@@ -18,7 +18,7 @@ export const Header = () => {
       <nav className="flex items-center h-full">
         <ul className="flex items-center h-full mr-4">
           <IconList img={fire} alt={"カロリー入力"} menuName={"カロリー入力"} />
-          <IconList img={food} alt={"カロリー入力"} menuName={"カロリー入力"} />
+          <IconList img={food} alt={"食品登録"} menuName={"食品登録"} />
           <IconList img={graph} alt={"総消費カロリー"} menuName={"総消費カロリー"} />
         </ul>
         <div>
