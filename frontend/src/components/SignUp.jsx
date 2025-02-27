@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { emailPasswordSignUp } from "../firebase/firebase";
+import { handleSignUp } from "../firebase/firebase";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ export const SignUp = () => {
    */
   const signUp = async (e) => {
     e.preventDefault();
-    const user = await emailPasswordSignUp(email, password);
+    const user = await handleSignUp(email, password);
     console.log("User情報:", user);
   };
 

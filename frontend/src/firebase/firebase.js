@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,7 +14,7 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
-export const emailPasswordSignUp = async (email, password) => {
+export const handleSignUp = async (email, password) => {
   try {
     // ユーザーが存在しない場合は新規登録
     const user = await createUserWithEmailAndPassword(auth, email, password);
@@ -26,7 +26,7 @@ export const emailPasswordSignUp = async (email, password) => {
   }
 }
 
-export const emailPasswordSignIn = async (email, password) => {
+export const handleSignIn = async (email, password) => {
   try {
     const user = await signInWithEmailAndPassword(auth, email, password);
     alert("サインイン成功");
@@ -35,4 +35,14 @@ export const emailPasswordSignIn = async (email, password) => {
     alert("サインイン失敗");
     console.log(error);
   }
+}
+
+export const handleSignOut = async () => {
+  const user1 = await auth.currentUser;
+  console.log("サインアウト前:", user1);
+
+  await signOut(auth);
+
+  const user2 = await auth.currentUser;
+  console.log("サインアウト後:", user2);
 }

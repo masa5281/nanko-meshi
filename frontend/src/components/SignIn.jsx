@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { emailPasswordSignIn } from "../firebase/firebase";
+import { handleSignIn, handleSignOut } from "../firebase/firebase";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ export const SignIn = () => {
    */
   const signIn = async (e) => {
     e.preventDefault();
-    const user = await emailPasswordSignIn(email, password);
+    const user = await handleSignIn(email, password);
     console.log("サインインUser情報:", user);
   };
 
@@ -23,6 +23,7 @@ export const SignIn = () => {
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">ログイン</button>
       </form>
+      <button type="button" onClick={handleSignOut}>ログアウト</button>
     </div>
   );
 }
