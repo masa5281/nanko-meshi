@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,7 +14,7 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
-export const signUpWithEmailAndPassword = async (email, password) => {
+export const emailPasswordSignUp = async (email, password) => {
   try {
     // ユーザーが存在しない場合は新規登録
     const user = await createUserWithEmailAndPassword(auth, email, password);
@@ -22,6 +22,17 @@ export const signUpWithEmailAndPassword = async (email, password) => {
     return user;
   } catch (error) {
     alert("登録失敗");
+    console.log(error);
+  }
+}
+
+export const emailPasswordSignIn = async (email, password) => {
+  try {
+    const user = await signInWithEmailAndPassword(auth, email, password);
+    alert("サインイン成功");
+    return user;
+  } catch (error) {
+    alert("サインイン失敗");
     console.log(error);
   }
 }
