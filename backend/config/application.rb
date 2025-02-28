@@ -31,5 +31,8 @@ module App
     config.i18n.default_locale = :ja
     config.active_model.i18n_customize_full_message = true
     config.time_zone = 'Tokyo'
+
+    # libディレクトリ自動ロード設定
+    config.autoload_lib(ignore: %w(assets tasks))
   end
 end
