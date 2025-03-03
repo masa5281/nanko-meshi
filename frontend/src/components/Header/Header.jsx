@@ -1,10 +1,13 @@
+// コンポーネント
 import { IconList } from "./IconList";
-
+import { handleSignOut } from "../../firebase/firebase";
+// ライブラリ
+import { Link } from "react-router-dom";
 // 画像インポート
 import fire from "../../images/fire-white.png"
 import food from "../../images/food-white.png"
 import graph from "../../images/graph-white.png"
-import user from "../../images/user.png"
+import userIcon from "../../images/user.png"
 import logo from "../../images/logo.png"
 
 export const Header = () => {
@@ -23,10 +26,11 @@ export const Header = () => {
         </ul>
         <div>
           <a href="/" className="flex flex-col items-center p-1 bg-white rounded-full">
-            <img src={user} alt="user" className="w-10" />
+            <img src={userIcon} alt="user" className="w-10" />
           </a>
         </div>
       </nav>
+      <Link to={"/sign_in"} onClick={handleSignOut}>ログアウト</Link>
     </header>
   );
 }
