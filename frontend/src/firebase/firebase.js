@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -11,17 +11,15 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 export const auth = getAuth(app);
+export const provider = new GoogleAuthProvider();
 
 export const handleSignUp = async (email, password) => {
   try {
     // ユーザーが存在しない場合は新規登録
     const user = await createUserWithEmailAndPassword(auth, email, password);
-    alert("登録成功");
     return user;
   } catch (error) {
-    alert("登録失敗");
     console.log(error);
   }
 }
@@ -32,17 +30,8 @@ export const handleSignIn = async (email, password) => {
     alert("サインイン成功");
     return user;
   } catch (error) {
-    alert("サインイン失敗");
     console.log(error);
   }
 }
 
-export const handleSignOut = async () => {
-  const user1 = await auth.currentUser;
-  console.log("サインアウト前:", user1);
-
-  await signOut(auth);
-
-  const user2 = await auth.currentUser;
-  console.log("サインアウト後:", user2);
-}
+export const handleSignOut = async () => await signOut(auth);

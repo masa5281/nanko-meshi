@@ -1,30 +1,26 @@
-import { useState } from "react";
+// コンポーネント
 import { handleSignUp } from "../firebase/firebase";
 import { api } from "../api";
+// ライブラリ
+import { useState } from "react";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
 
-  /**
-   * JSDocで変数eの型を明記
-   * @param {Event} e 
-   */
-
+  // ユーザー登録
   const createUserApi = async (e) => {
     e.preventDefault();
     const userCredential = await handleSignUp(email, password);
     const uid = await userCredential.user.uid;
-
     try {
       await api.post("/api/v1/users", {
         firebase_uid: uid,
         name: userName
       });
-      console.log("OK");
     } catch (error) {
-      console.log("失敗");
+      console.log(error);
     }
   }
 
