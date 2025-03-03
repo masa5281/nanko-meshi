@@ -3,11 +3,13 @@ import { handleSignUp } from "../firebase/firebase";
 import { api } from "../api";
 // ライブラリ
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const navigate = useNavigate();
 
   // ユーザー登録
   const createUserApi = async (e) => {
@@ -19,6 +21,7 @@ export const SignUp = () => {
         firebase_uid: uid,
         name: userName
       });
+      navigate("/calorie/input");
     } catch (error) {
       console.log(error);
     }
