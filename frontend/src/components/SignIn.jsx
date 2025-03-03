@@ -1,13 +1,15 @@
 // ライブラリ
-import { useState } from "react";
-import { auth, handleSignIn, handleSignOut, provider } from "../firebase/firebase";
+import { useEffect, useState } from "react";
+import { auth, handleSignIn, provider } from "../firebase/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from "react-router-dom";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
   const signIn = async (e) => {
     e.preventDefault();
@@ -18,6 +20,10 @@ export const SignIn = () => {
     signInWithPopup(auth, provider);
   }
 
+  useEffect(() => {
+    if (user) { navigate("/calorie/input") };
+  }, [user, navigate]);
+
   return (
     <div>
       <h2>ログイン</h2>
@@ -26,14 +32,7 @@ export const SignIn = () => {
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">ログイン</button>
       </form>
-      { user ? (
-        <>
-          <p>ログイン済み</p>
-        </>
-      ) : 
-        <button onClick={handleSignInGoogle}>Googleでログイン</button>
-      }
-      <button type="button" onClick={handleSignOut}>ログアウト</button>
+      <button onClick={handleSignInGoogle}>Googleでログイン</button>
     </div>
   );
 }
