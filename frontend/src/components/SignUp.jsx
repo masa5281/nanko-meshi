@@ -4,6 +4,8 @@ import { api } from "../api";
 // ライブラリ
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../firebase/firebase";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -27,6 +29,15 @@ export const SignUp = () => {
     }
   }
 
+  const handleSignInGoogle = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch(error) {
+      console.error(error);
+    }
+    navigate("/calorie/input");
+  }
+
   return (
     <div>
       <h2>新規登録</h2>
@@ -36,6 +47,7 @@ export const SignUp = () => {
         <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
         <button type="submit">新規登録</button>
       </form>
+      <button onClick={handleSignInGoogle}>Googleで登録</button>
     </div>
   );
 }

@@ -1,14 +1,12 @@
 // ライブラリ
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { auth, handleSignIn, provider } from "../firebase/firebase";
 import { signInWithPopup } from "firebase/auth";
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from "react-router-dom";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user] = useAuthState(auth);
   const navigate = useNavigate();
 
   const signIn = async (e) => {
@@ -16,13 +14,14 @@ export const SignIn = () => {
     await handleSignIn(email, password);
   };
 
-  const handleSignInGoogle = () => {
-    signInWithPopup(auth, provider);
+  const handleSignInGoogle = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch(error) {
+      console.error(error);
+    }
+    navigate("/calorie/input");
   }
-
-  useEffect(() => {
-    if (user) { navigate("/calorie/input") };
-  }, [user, navigate]);
 
   return (
     <div>

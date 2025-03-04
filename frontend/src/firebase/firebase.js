@@ -27,11 +27,14 @@ export const handleSignUp = async (email, password) => {
 export const handleSignIn = async (email, password) => {
   try {
     const user = await signInWithEmailAndPassword(auth, email, password);
-    alert("サインイン成功");
     return user;
   } catch (error) {
     console.log(error);
   }
 }
 
-export const handleSignOut = async () => await signOut(auth);
+export const handleSignOut = async () => {
+  console.log(auth.currentUser);
+  await signOut(auth);
+  console.log(auth.currentUser);
+}
