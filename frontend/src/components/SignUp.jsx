@@ -2,26 +2,35 @@
 import { handleSignUp } from "../firebase/firebase";
 import { api } from "../api";
 // ライブラリ
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase/firebase";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message"
 
 export const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
   const navigate = useNavigate();
 
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    trigger
+  } = useForm({
+    mode: "onBlur",
+    criteriaMode: "all"
+  });
+
   // ユーザー登録
-  const createUserApi = async (e) => {
-    e.preventDefault();
-    const userCredential = await handleSignUp(email, password);
+  const createUserApi = async () => {
+    const userCredential = await handleSignUp(watch("email"), watch("password"));
     const uid = await userCredential.user.uid;
     try {
       await api.post("/api/v1/users", {
         firebase_uid: uid,
-        name: userName
+        name: watch("name")
       });
       navigate("/calorie/input");
     } catch (error) {
@@ -41,10 +50,23 @@ export const SignUp = () => {
   return (
     <div>
       <h2>新規登録</h2>
-      <form onSubmit={createUserApi}>
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
+      <form onSubmit={handleSubmit(createUserApi)}>
+        <input type="text" placeholder="ユーザー名" {...register("name")} />
+        <input type="text" placeholder="メールアドレス" {...register("email")} />
+        <input type="password" placeholder="パスワード" {...register("password", {
+          onBlur: () => {
+            if (getValues("password_confirm")) {
+              trigger("password_confirm");
+            }
+          }
+        })} />
+        <input type="password" placeholder="パスワード（確認）"  {...register("password_confirm", {
+          validate: (value) => value === getValues("password") || "パスワードが一致しません"})} />
+        <ErrorMessage
+          errors={errors}
+          name="password_confirm"
+          render={({ message }) => message ? (<p>{message}</p>) : null}
+        />
         <button type="submit">新規登録</button>
       </form>
       <button onClick={handleSignInGoogle}>Googleで登録</button>
