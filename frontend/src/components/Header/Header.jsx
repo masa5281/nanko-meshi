@@ -3,12 +3,18 @@ import { IconList } from "./IconList";
 import { handleSignOut } from "../../firebase/firebase";
 // ライブラリ
 import { Link } from "react-router-dom";
+import { Dropdown } from "flowbite-react";
+import { Flowbite } from "flowbite-react";
 // 画像インポート
 import fire from "../../images/fire-white.png"
 import food from "../../images/food-white.png"
 import graph from "../../images/graph-white.png"
 import userIcon from "../../images/user.png"
 import logo from "../../images/logo.png"
+// アイコン
+import { PiSignOutFill } from "react-icons/pi";
+// flowbite-reactのカスタムテーマ
+import { customTheme } from "../../theme/theme";
 
 export const Header = () => {
   return (
@@ -24,13 +30,14 @@ export const Header = () => {
           <IconList img={food} alt={"食品登録"} menuName={"食品登録"} />
           <IconList img={graph} alt={"総消費カロリー"} menuName={"総消費カロリー"} />
         </ul>
-        <div>
-          <a href="/" className="flex flex-col items-center p-1 bg-white rounded-full">
-            <img src={userIcon} alt="user" className="w-10" />
-          </a>
-        </div>
+        <Flowbite theme={{ theme: customTheme }}>
+          <Dropdown label={<img src={userIcon} alt="user" className="w-12" />} arrowIcon={false} inline={true}>
+            <Dropdown.Item icon={PiSignOutFill}>
+              <Link to={"/sign_in"} onClick={handleSignOut}>ログアウト</Link>
+            </Dropdown.Item>
+          </Dropdown>
+        </Flowbite>
       </nav>
-      <Link to={"/sign_in"} onClick={handleSignOut}>ログアウト</Link>
     </header>
   );
 }
