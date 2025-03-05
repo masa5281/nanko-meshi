@@ -26,7 +26,7 @@ export const SignIn = () => {
   const handleSignInGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);
-    } catch(error) {
+    } catch (error) {
       console.error(error);
     }
     navigate("/calorie/input");
@@ -35,12 +35,13 @@ export const SignIn = () => {
   return (
     <div className="pt-12">
       <div className="max-w-96 mx-auto px-10 py-6 bg-header rounded-md">
-        <h2 className="mb-5 pb-2 border-b border-background text-background text-3xl text-center">ログイン</h2>
+        <h2 className="mb-5 pb-2 border-b border-white text-white text-3xl text-center">ログイン</h2>
 
         <div className="px-3">
           <form onSubmit={handleSignIn} className="flex flex-col mb-4">
             <div className="relative">
-              <input type="text"
+              <input
+                type="text"
                 value={email}
                 placeholder="メールアドレス"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
@@ -54,7 +55,8 @@ export const SignIn = () => {
             </div>
 
             <div className="relative">
-              <input type="password"
+              <input
+                type="password"
                 value={password}
                 placeholder="パスワード"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
@@ -73,11 +75,11 @@ export const SignIn = () => {
           </form>
 
           <div className="mb-5 text-center">
-            <Link to={"/password_reset"} className="inline-flex mb-1 text-background hover:underline">パスワードをお忘れの方はこちら</Link>
-            <Link to={"/sign_up"} className="inline-flex text-background hover:underline">新規登録の方はこちら</Link>
+            <Link to={"/password_reset"} className="inline-flex mb-1 text-white hover:underline">パスワードをお忘れの方はこちら</Link>
+            <Link to={"/sign_up"} className="inline-flex text-white hover:underline">新規登録の方はこちら</Link>
           </div>
           <button onClick={handleSignInGoogle} className="flex justify-center items-center gap-2 w-full py-2 bg-white rounded-full hover:bg-hoverWhite">
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlnsXlink="http://www.w3.org/1999/xlink" style={{display: "block"}} width={20} height={20}>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlnsXlink="http://www.w3.org/1999/xlink" style={{ display: "block" }} width={20} height={20}>
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
               <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
               <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>

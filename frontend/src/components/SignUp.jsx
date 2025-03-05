@@ -55,7 +55,7 @@ export const SignUp = () => {
   return (
     <div className="pt-12">
       <div className="max-w-96 mx-auto px-10 py-6 bg-header rounded-md">
-        <h2 className="mb-5 pb-2 border-b border-background text-background text-3xl text-center">新規登録</h2>
+        <h2 className="mb-5 pb-2 border-b border-white text-white text-3xl text-center">新規登録</h2>
 
         <div className="px-3">
           <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col mb-4">
@@ -130,7 +130,6 @@ export const SignUp = () => {
               新規登録
             </button>
           </form>
-
           <button onClick={handleSignInGoogle} className="flex justify-center items-center gap-2 w-full py-2 bg-white rounded-full hover:bg-hoverWhite">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlnsXlink="http://www.w3.org/1999/xlink" style={{ display: "block" }} width={20} height={20}>
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
