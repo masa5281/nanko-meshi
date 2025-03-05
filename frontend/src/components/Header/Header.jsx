@@ -26,7 +26,7 @@ export const Header = () => {
       </a>
       <nav className="flex items-center h-full">
         <ul className="flex items-center h-full mr-4">
-          <IconList img={fire} alt={"カロリー入力"} menuName={"カロリー入力"} />
+          <IconList link={"/calorie/input"} img={fire} alt={"カロリー入力"} menuName={"カロリー入力"} />
           <IconList img={food} alt={"食品登録"} menuName={"食品登録"} />
           <IconList img={graph} alt={"総消費カロリー"} menuName={"総消費カロリー"} />
         </ul>
