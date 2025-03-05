@@ -3,11 +3,9 @@ import { DateInput } from "./DateInput";
 import { CalorieInputError } from "./CalorieInputError";
 import { CalorieSubmit } from "./CalorieSubmit";
 import { api } from "../../api";
-
 // ライブラリ
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 // アイコン
 import { FaFire } from "react-icons/fa6";
 

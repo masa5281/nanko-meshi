@@ -1,7 +1,6 @@
 // コンポーネント
 import { FoodItem } from "./FoodItem";
 import{ api } from "../../api";
-
 // ライブラリ
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -23,7 +22,7 @@ export const FoodConversion = () => {
   useEffect(() => {
     getFoodList();
   }, []);
-
+  
   return (
     <>
       <div className="mb-8 text-center">
