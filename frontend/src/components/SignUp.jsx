@@ -1,5 +1,5 @@
 // コンポーネント
-import { handleSignUp } from "../firebase/firebase";
+import { signUp } from "../firebase/firebase";
 import { api } from "../api";
 // ライブラリ
 import { useNavigate } from "react-router-dom";
@@ -24,8 +24,8 @@ export const SignUp = () => {
   });
 
   // ユーザー登録
-  const createUserApi = async () => {
-    const userCredential = await handleSignUp(watch("email"), watch("password"));
+  const handleSignUp = async () => {
+    const userCredential = await signUp(watch("email"), watch("password"));
     const uid = await userCredential.user.uid;
     try {
       await api.post("/api/v1/users", {
@@ -41,16 +41,16 @@ export const SignUp = () => {
   const handleSignInGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);
+      navigate("/calorie/input");
     } catch(error) {
       console.error(error);
     }
-    navigate("/calorie/input");
   }
 
   return (
     <div>
       <h2>新規登録</h2>
-      <form onSubmit={handleSubmit(createUserApi)}>
+      <form onSubmit={handleSubmit(handleSignUp)}>
         <input type="text" placeholder="ユーザー名" {...register("name")} />
         <input type="text" placeholder="メールアドレス" {...register("email")} />
         <input type="password" placeholder="パスワード" {...register("password", {

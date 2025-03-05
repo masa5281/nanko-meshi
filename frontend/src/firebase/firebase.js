@@ -14,7 +14,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 
-export const handleSignUp = async (email, password) => {
+export const signUp = async (email, password) => {
   try {
     // ユーザーが存在しない場合は新規登録
     const user = await createUserWithEmailAndPassword(auth, email, password);
@@ -24,7 +24,7 @@ export const handleSignUp = async (email, password) => {
   }
 }
 
-export const handleSignIn = async (email, password) => {
+export const signIn = async (email, password) => {
   try {
     const user = await signInWithEmailAndPassword(auth, email, password);
     return user;
