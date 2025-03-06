@@ -12,7 +12,7 @@ import { FaFire } from "react-icons/fa6";
 export const ManualCalorieForm = () => {
   const [calorieNum, setCalorieNum] = useState("");
   const [recordedDate, setRecordedDate] = useState(new Date());
-  const [errors, setErrors] = useState([]);
+  const [validateErrors, setValidateErrors] = useState([]);
   const navigate = useNavigate();
 
   const createManualCalorie = async () => {
@@ -25,8 +25,7 @@ export const ManualCalorieForm = () => {
         state: { burned_calorie: calorieNum }
       });
     } catch(error) {
-      const ErrorMessages = error.response.data;
-      setErrors(ErrorMessages);
+      setValidateErrors(error.response.data);
     }
     setCalorieNum("");
   };
@@ -44,16 +43,14 @@ export const ManualCalorieForm = () => {
 
       <div className="mb-6">
         <div className="flex justify-center px-3">
-
           <div className="flex flex-col items-star">
             <label htmlFor="calorie" className="flex items-center pl-3 font-bold"><FaFire className="mr-0.5 text-lg" />消費カロリー（kcal）</label>
             <input type="text" id="calorie" className="mr-3 p-3 border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary" placeholder="例：300" value={calorieNum} onChange={onChangeToText} />
-            <CalorieInputError errors={errors} column="burned_calorie" />
+            <CalorieInputError errors={validateErrors} column="burned_calorie" />
           </div>
-
           <div className="flex flex-col items-start">
             <DateInput recordedDate={recordedDate} setRecordedDate={setRecordedDate} />
-            <CalorieInputError errors={errors} column="recorded_at" />
+            <CalorieInputError errors={validateErrors} column="recorded_at" />
           </div>
         </div>
       </div>

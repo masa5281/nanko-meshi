@@ -8,6 +8,7 @@ import { auth, provider } from "../firebase/firebase";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message"
 import { IconContext } from "react-icons/lib";
+import { useState } from "react";
 // アイコン
 import { FaUser } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
@@ -15,6 +16,7 @@ import { IoMdLock } from "react-icons/io";
 
 export const SignUp = () => {
   const navigate = useNavigate();
+  const [validateErrors, setValidateErrors] = useState("");
 
   const {
     register,
@@ -39,8 +41,8 @@ export const SignUp = () => {
       });
       navigate("/calorie/input");
     } catch (error) {
-      firebaseErrorMessage(error)
-      // console.log(error);
+      firebaseErrorMessage(error);
+      if (error.response) setValidateErrors(error.response.data);
     }
   }
 
@@ -85,7 +87,7 @@ export const SignUp = () => {
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("name", {
                   required: "ユーザー名を入力してください",
-                  maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
+                  // maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
                 })}
               />
               <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
@@ -93,6 +95,9 @@ export const SignUp = () => {
                   <FaUser />
                 </IconContext.Provider>
               </div>
+              {validateErrors["name"] && (
+                validateErrors["name"].map((error, index) => error ? <p key={index}>{error}</p> : null)
+              )}
               <ErrorMessage
                 errors={errors}
                 name="name"

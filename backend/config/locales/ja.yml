@@ -1,13 +1,27 @@
 ja:
   activerecord:
     models:
+      user: ユーザー
       calorie: カロリー
     attributes:
+      user:
+        firebase_uid: 認証ID
+        name: ユーザー名
+        avatar: プロフィール画像
       calorie:
         burned_calorie: カロリー
         recorded_at: 登録日
     errors:
       models:
+        user:
+          attributes:
+            firebase_uid:
+              blank: "%{attribute}を入力してください"
+              taken: "{attribute}はすでに存在しています"
+            name:
+              blank: "%{attribute}を入力してください"
+              taken: "%{attribute}はすでに登録済みです"
+              too_long: "%{attribute}は20文字以内で入力してください"
         calorie:
           attributes:
             burned_calorie:
