@@ -111,7 +111,11 @@ export const SignUp = () => {
                 placeholder="メールアドレス"
                 className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("email", {
-                  required: "メールアドレスを入力してください"
+                  required: "メールアドレスを入力してください",
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                    message: "有効なメールアドレスを入力してください"
+                  }
                 })}
               />
               <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
@@ -139,7 +143,8 @@ export const SignUp = () => {
                     }
                   },
                   minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
-                })} />
+                })}
+              />
               <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <IoMdLock />
