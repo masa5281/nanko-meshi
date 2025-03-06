@@ -22,33 +22,53 @@ export const SignUp = () => {
     handleSubmit,
     formState: { errors },
     getValues,
-    trigger
+    trigger,
+    setError
   } = useForm({
     mode: "onBlur",
     criteriaMode: "all"
   });
 
-  // ユーザー登録
+  // ユーザー登録（メアド、パスワード）
   const handleSignUp = async () => {
-    const userCredential = await signUp(watch("email"), watch("password"));
-    const uid = await userCredential.user.uid;
     try {
+      const userCredential = await signUp(watch("email"), watch("password"));
       await api.post("/api/v1/users", {
-        firebase_uid: uid,
+        firebase_uid: userCredential.user.uid,
         name: watch("name")
       });
       navigate("/calorie/input");
     } catch (error) {
-      console.log(error);
+      firebaseErrorMessage(error)
+      // console.log(error);
     }
   }
 
+  // ユーザー登録（Google）
   const handleSignInGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);
       navigate("/calorie/input");
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  const firebaseErrorMessage = (code) => {
+    switch (code) {
+      case "auth/invalid-email":
+        setError("email", { type: "manual", message: "有効なメールアドレスを入力してください" })
+        break;
+      case "auth/email-already-in-use":
+        setError("email", { type: "manual", message: "既に登録済みのメールアドレスです" })
+        break;
+      case "auth/missing-password":
+        setError("password", { type: "manual", message: "パスワードを入力してください" })
+        break;
+      case "auth/weak-password":
+        setError("password", { type: "manual", message: "パスワードは6文字以上で入力してください" })
+        break;
+      default:
     }
   }
 
@@ -63,27 +83,42 @@ export const SignUp = () => {
               <input type="text"
                 placeholder="ユーザー名"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                {...register("name")}
+                {...register("name", {
+                  required: "ユーザー名を入力してください",
+                  maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
+                })}
               />
               <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <FaUser />
                 </IconContext.Provider>
               </div>
+              <ErrorMessage
+                errors={errors}
+                name="name"
+                render={({ message }) => message ? (<p>{message}</p>) : null}
+              />
             </div>
 
             <div className="relative">
               <input
-                type="text"
+                type="email"
                 placeholder="メールアドレス"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                {...register("email")}
+                {...register("email", {
+                  required: "メールアドレスを入力してください"
+                })}
               />
               <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <IoMail />
                 </IconContext.Provider>
               </div>
+              <ErrorMessage
+                errors={errors}
+                name="email"
+                render={({ message }) => message ? (<p>{message}</p>) : null}
+              />
             </div>
 
             <div className="relative">
@@ -92,17 +127,24 @@ export const SignUp = () => {
                 placeholder="パスワード"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("password", {
+                  required: "パスワードを入力してください",
                   onBlur: () => {
                     if (getValues("password_confirm")) {
                       trigger("password_confirm");
                     }
-                  }
+                  },
+                  minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
                 })} />
               <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <IoMdLock />
                 </IconContext.Provider>
               </div>
+              <ErrorMessage
+                errors={errors}
+                name="password"
+                render={({ message }) => message ? (<p>{message}</p>) : null}
+              />
             </div>
 
             <div className="relative">
@@ -111,6 +153,7 @@ export const SignUp = () => {
                 placeholder="パスワード（確認）"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("password_confirm", {
+                  required: "パスワード（確認用）を入力してください",
                   validate: (value) => value === getValues("password") || "パスワードが一致しません"
                 })}
               />

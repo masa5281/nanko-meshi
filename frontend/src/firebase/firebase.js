@@ -20,7 +20,7 @@ export const signUp = async (email, password) => {
     const user = await createUserWithEmailAndPassword(auth, email, password);
     return user;
   } catch (error) {
-    console.log(error);
+    throw error.code;
   }
 }
 
