@@ -84,10 +84,10 @@ export const SignUp = () => {
             <div className="relative">
               <input type="text"
                 placeholder="ユーザー名"
-                className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("name", {
                   required: "ユーザー名を入力してください",
-                  // maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
+                  maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
                 })}
               />
               <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
@@ -96,12 +96,12 @@ export const SignUp = () => {
                 </IconContext.Provider>
               </div>
               {validateErrors["name"] && (
-                validateErrors["name"].map((error, index) => error ? <p key={index}>{error}</p> : null)
+                validateErrors["name"].map((error, index) => error ? <p key={index} className="text-errorYellow text-sm">{error}</p> : null)
               )}
               <ErrorMessage
                 errors={errors}
                 name="name"
-                render={({ message }) => message ? (<p>{message}</p>) : null}
+                render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
               />
             </div>
 
@@ -109,28 +109,28 @@ export const SignUp = () => {
               <input
                 type="email"
                 placeholder="メールアドレス"
-                className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("email", {
                   required: "メールアドレスを入力してください"
                 })}
               />
-              <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
+              <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <IoMail />
                 </IconContext.Provider>
               </div>
-              <ErrorMessage
-                errors={errors}
-                name="email"
-                render={({ message }) => message ? (<p>{message}</p>) : null}
-              />
             </div>
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
+            />
 
             <div className="relative">
               <input
                 type="password"
                 placeholder="パスワード"
-                className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("password", {
                   required: "パスワードを入力してください",
                   onBlur: () => {
@@ -140,41 +140,41 @@ export const SignUp = () => {
                   },
                   minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
                 })} />
-              <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
+              <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <IoMdLock />
                 </IconContext.Provider>
               </div>
-              <ErrorMessage
-                errors={errors}
-                name="password"
-                render={({ message }) => message ? (<p>{message}</p>) : null}
-              />
             </div>
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
+            />
 
             <div className="relative">
               <input
                 type="password"
                 placeholder="パスワード（確認）"
-                className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("password_confirm", {
                   required: "パスワード（確認用）を入力してください",
                   validate: (value) => value === getValues("password") || "パスワードが一致しません"
                 })}
               />
-              <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
+              <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <IoMdLock />
                 </IconContext.Provider>
               </div>
-              <ErrorMessage
-                errors={errors}
-                name="password_confirm"
-                render={({ message }) => message ? (<p>{message}</p>) : null}
-              />
             </div>
+            <ErrorMessage
+              errors={errors}
+              name="password_confirm"
+              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
+            />
 
-            <button type="submit" className="inline-block py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+            <button type="submit" className="inline-block mt-4 py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
               新規登録
             </button>
           </form>

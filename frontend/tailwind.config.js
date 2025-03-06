@@ -20,6 +20,7 @@ module.exports = {
         hover: "#FF915F",
         hoverWhite: "#EDEEEE",
         error: "#C42F30",
+        errorYellow: "#FFFF00",
         shadow: "#AAA",
         redBar: "#FF3838",
       },
