@@ -34,7 +34,7 @@ export const signIn = async (email, password) => {
 }
 
 export const handleSignOut = async () => {
-  console.log(auth.currentUser);
+  console.log("ログアウト前", auth.currentUser);
   await signOut(auth);
-  console.log(auth.currentUser);
+  console.log("ログアウト後", auth.currentUser);
 }

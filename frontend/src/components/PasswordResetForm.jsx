@@ -2,16 +2,25 @@
 import { auth } from "../firebase/firebase"
 // ライブラリ
 import { sendPasswordResetEmail } from "firebase/auth"
-import { useState } from "react"
 import { IconContext } from "react-icons/lib";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message"
 // アイコン
 import { IoMail } from "react-icons/io5";
 
 export const PasswordResetForm = () => {
-  const [email, setEmail] = useState("");
+  const {
+      register,
+      watch,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
+      mode: "onBlur",
+      criteriaMode: "all"
+    });
 
   const handlePasswordReset = () => {
-    sendPasswordResetEmail(auth, email);
+    sendPasswordResetEmail(auth, watch("email"));
   }
 
   return (
@@ -25,14 +34,19 @@ export const PasswordResetForm = () => {
             パスワード再設定のURLをメールで送信します。
           </p>
 
-          <form onSubmit={handlePasswordReset}>
+          <form onSubmit={handleSubmit(handlePasswordReset)}>
             <div className="relative">
               <input
-                type="text"
+                type="email"
                 placeholder="メールアドレス"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email", {
+                  required: "メールアドレスを入力してください",
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                    message: "有効なメールアドレスを入力してください"
+                  }
+                })}
               />
               <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
@@ -40,6 +54,11 @@ export const PasswordResetForm = () => {
                 </IconContext.Provider>
               </div>
             </div>
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
+            />
 
             <button type="submit" className="inline-block w-full py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
               パスワード再設定メールを送信
