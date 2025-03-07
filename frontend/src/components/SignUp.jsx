@@ -82,7 +82,8 @@ export const SignUp = () => {
         <div className="px-3">
           <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col mb-4">
             <div className="relative">
-              <input type="text"
+              <input
+                type="text"
                 placeholder="ユーザー名"
                 className="w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("name", {

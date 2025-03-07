@@ -29,7 +29,7 @@ export const signIn = async (email, password) => {
     const user = await signInWithEmailAndPassword(auth, email, password);
     return user;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 }
 

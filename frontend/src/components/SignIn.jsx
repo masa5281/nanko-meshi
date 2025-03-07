@@ -1,35 +1,47 @@
 // ライブラリ
-import { useState } from "react";
 import { auth, signIn, provider } from "../firebase/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { IconContext } from "react-icons/lib";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message"
+import { useState } from "react";
 // アイコン
 import { IoMail } from "react-icons/io5";
 import { IoMdLock } from "react-icons/io";
 
 export const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+    criteriaMode: "all"
+  });
+
+  // ログイン（メアド、パスワード）
   const handleSignIn = async (e) => {
-    e.preventDefault();
     try {
-      await signIn(email, password);
+      await signIn(watch("email"), watch("password"));
+      navigate("/calorie/input");
+    } catch (error) {
+      setErrorMessage("メールアドレスまたはパスワードが違います");
+    }
+  };
+  
+  // ログイン（Google）
+  const handleSignInGoogle = async () => {
+    try {
+      await signInWithPopup(auth, provider);
       navigate("/calorie/input");
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const handleSignInGoogle = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error(error);
-    }
-    navigate("/calorie/input");
   }
 
   return (
@@ -38,14 +50,17 @@ export const SignIn = () => {
         <h2 className="mb-5 pb-2 border-b border-white text-white text-3xl text-center">ログイン</h2>
 
         <div className="px-3">
-          <form onSubmit={handleSignIn} className="flex flex-col mb-4">
+          <form onSubmit={handleSubmit(handleSignIn)} className="flex flex-col mb-4">
+            {errorMessage && <p className="mb-3 text-errorYellow text-sm">{errorMessage}</p>}
+
             <div className="relative">
               <input
-                type="text"
-                value={email}
+                type="email"
                 placeholder="メールアドレス"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email", {
+                  required: "メールアドレスを入力してください"
+                })}
               />
               <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
@@ -53,14 +68,20 @@ export const SignIn = () => {
                 </IconContext.Provider>
               </div>
             </div>
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
+            />
 
             <div className="relative">
               <input
                 type="password"
-                value={password}
                 placeholder="パスワード"
                 className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                onChange={(e) => setPassword(e.target.value)}
+                {...register("password", {
+                  required: "パスワードを入力してください"
+                })}
               />
               <div className="absolute top-1 left-1 p-1 rounded-full  bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
@@ -68,6 +89,11 @@ export const SignIn = () => {
                 </IconContext.Provider>
               </div>
             </div>
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
+            />
 
             <button type="submit" className="inline-block py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
               ログイン
