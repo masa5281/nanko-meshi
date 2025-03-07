@@ -5,10 +5,13 @@ import { sendPasswordResetEmail } from "firebase/auth"
 import { IconContext } from "react-icons/lib";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message"
+import { useNavigate } from "react-router-dom";
 // アイコン
 import { IoMail } from "react-icons/io5";
 
 export const PasswordResetForm = () => {
+  const navigate = useNavigate();
+
   const {
       register,
       watch,
@@ -21,6 +24,7 @@ export const PasswordResetForm = () => {
 
   const handlePasswordReset = () => {
     sendPasswordResetEmail(auth, watch("email"));
+    navigate("/password_sent");
   }
 
   return (
