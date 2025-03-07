@@ -39,7 +39,7 @@ export const PasswordResetForm = () => {
               <input
                 type="email"
                 placeholder="メールアドレス"
-                className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("email", {
                   required: "メールアドレスを入力してください",
                   pattern: {
@@ -60,7 +60,7 @@ export const PasswordResetForm = () => {
               render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
             />
 
-            <button type="submit" className="inline-block w-full py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+            <button type="submit" className="inline-block w-full mt-4 py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
               パスワード再設定メールを送信
             </button>
           </form>
