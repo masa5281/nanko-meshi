@@ -57,12 +57,12 @@ export const SignIn = () => {
               <input
                 type="email"
                 placeholder="メールアドレス"
-                className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("email", {
                   required: "メールアドレスを入力してください"
                 })}
               />
-              <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
+              <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <IoMail />
                 </IconContext.Provider>
@@ -78,12 +78,12 @@ export const SignIn = () => {
               <input
                 type="password"
                 placeholder="パスワード"
-                className="w-full mb-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
                 {...register("password", {
                   required: "パスワードを入力してください"
                 })}
               />
-              <div className="absolute top-1 left-1 p-1 rounded-full  bg-text">
+              <div className="absolute bottom-1 left-1 p-1 rounded-full  bg-text">
                 <IconContext.Provider value={{ size: 24, color: "white" }}>
                   <IoMdLock />
                 </IconContext.Provider>
@@ -95,7 +95,7 @@ export const SignIn = () => {
               render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
             />
 
-            <button type="submit" className="inline-block py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+            <button type="submit" className="inline-block mt-4 py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
               ログイン
             </button>
           </form>
