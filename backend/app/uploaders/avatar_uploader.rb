@@ -1,7 +1,7 @@
 class AvatarUploader < CarrierWave::Uploader::Base
   # Include RMagick, MiniMagick, or Vips support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
   # include CarrierWave::Vips
 
   # Choose what kind of storage to use for this uploader:
@@ -15,12 +15,12 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
-  # def default_url(*args)
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-  #
-  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  # end
+  def default_url(*args)
+    # For Rails 3.1+ asset pipeline compatibility:
+    # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+  
+    "#{CarrierWave::Uploader::Base.asset_host}/images/default-icon.jpg"
+  end
 
   # Process files as they are uploaded:
   # process scale: [200, 300]
@@ -30,19 +30,34 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process resize_to_fit: [50, 50]
-  # end
+  version :icon do
+    process resize_to_fit: [100, 100]
+  end
 
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_allowlist
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_allowlist
+    %w(jpg jpeg gif png heic)
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # def filename
   #   "something.jpg"
   # end
+
+  process :convert_to_jpg
+
+  # heicをjpgに変換
+  def convert_to_jpg
+    manipulate! do |img|
+      img.format "jpg" if file.extension.downcase == "heic"
+      img
+    end
+  end
+
+  # 画像を.jpgで保存
+  def filename
+    super.chomp(File.extname(super)) + ".jpg" if original_filename.present?
+  end
 end
