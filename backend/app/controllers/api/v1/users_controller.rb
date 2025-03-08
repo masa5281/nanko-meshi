@@ -1,6 +1,11 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authenticate_request, only: %i[create]
 
+  def show
+    user = User.find_by(firebase_uid: params[:firebase_uid])
+    render json: user
+  end
+
   def create
     user = User.new(user_params)
     if user.save
