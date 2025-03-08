@@ -15,9 +15,6 @@ ja:
       models:
         user:
           attributes:
-            firebase_uid:
-              blank: "%{attribute}を入力してください"
-              taken: "{attribute}はすでに存在しています"
             name:
               blank: "%{attribute}を入力してください"
               taken: "%{attribute}はすでに登録済みです"

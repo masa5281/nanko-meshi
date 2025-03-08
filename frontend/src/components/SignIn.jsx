@@ -1,5 +1,7 @@
-// ライブラリ
+// コンポーネント
+import { api } from "../api";
 import { auth, signIn, provider } from "../firebase/firebase";
+// ライブラリ
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { IconContext } from "react-icons/lib";
@@ -37,12 +39,16 @@ export const SignIn = () => {
   // ログイン（Google）
   const handleSignInGoogle = async () => {
     try {
-      await signInWithPopup(auth, provider);
+      const googleUser = await signInWithPopup(auth, provider);
+      await api.post("/api/v1/users", {
+        firebase_uid: googleUser.user.uid,
+        name: googleUser.user.displayName
+      });
       navigate("/calorie/input");
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <div className="pt-12">

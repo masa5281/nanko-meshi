@@ -7,6 +7,13 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
+    user = User.find_by(firebase_uid: params[:firebase_uid])
+    # 既にユーザー登録済みの場合は新規登録をしない
+    if user
+      render json: { status: 200, user: user }
+      return
+    end
+
     user = User.new(user_params)
     if user.save
       render json: { status: 200, user: user }

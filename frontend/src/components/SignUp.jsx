@@ -34,9 +34,9 @@ export const SignUp = () => {
   // ユーザー登録（メアド、パスワード）
   const handleSignUp = async () => {
     try {
-      const userCredential = await signUp(watch("email"), watch("password"));
+      const emailUser = await signUp(watch("email"), watch("password"));
       await api.post("/api/v1/users", {
-        firebase_uid: userCredential.user.uid,
+        firebase_uid: emailUser.user.uid,
         name: watch("name")
       });
       navigate("/calorie/input");
@@ -44,17 +44,21 @@ export const SignUp = () => {
       firebaseErrorMessage(error);
       if (error.response) setValidateErrors(error.response.data);
     }
-  }
+  };
 
   // ユーザー登録（Google）
   const handleSignInGoogle = async () => {
     try {
-      await signInWithPopup(auth, provider);
+      const googleUser = await signInWithPopup(auth, provider);
+      await api.post("/api/v1/users", {
+        firebase_uid: googleUser.user.uid,
+        name: googleUser.user.displayName
+      });
       navigate("/calorie/input");
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const firebaseErrorMessage = (code) => {
     switch (code) {
@@ -72,7 +76,7 @@ export const SignUp = () => {
         break;
       default:
     }
-  }
+  };
 
   return (
     <div className="pt-12">
