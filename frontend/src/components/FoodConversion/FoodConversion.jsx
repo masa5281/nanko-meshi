@@ -8,18 +8,17 @@ import { useLocation } from "react-router-dom";
 export const FoodConversion = () => {
   const [foodList, setFoodList] = useState([]);
   const state = useLocation();
-  const manualCalorie = state.state.burned_calorie;
+  const manualCalorie = state.state?.burned_calorie;
   
-  const getFoodList = async () => {
-    try  {
-      const response = await api.get("/api/v1/foods"); 
-      setFoodList(response.data);
-    } catch(error) {
-      console.log(error);
-    }
-  }
-
   useEffect(() => {
+    const getFoodList = async () => {
+      try  {
+        const response = await api.get("/api/v1/foods"); 
+        setFoodList(response.data);
+      } catch(error) {
+        console.log(error);
+      }
+    }
     getFoodList();
   }, []);
   

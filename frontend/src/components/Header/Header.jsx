@@ -31,7 +31,6 @@ export const Header = () => {
         console.error(error);
       }
     };
-
     if (user) getUser();
   }, [user])
 
@@ -42,6 +41,7 @@ export const Header = () => {
           <img src={logo} alt="ロゴ" className="w-full" />
         </div>
       </a>
+      { user &&
       <nav className="flex items-center h-full">
         <ul className="flex items-center h-full mr-4">
           <IconList link={"/calorie/input"} img={fire} alt={"カロリー入力"} menuName={"カロリー入力"} />
@@ -61,6 +61,7 @@ export const Header = () => {
           </Dropdown>
         </Flowbite>
       </nav>
+      }
     </header>
   );
 }
