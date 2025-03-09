@@ -1,35 +1,31 @@
 // コンポーネント
 import { signUp } from "../firebase/firebase";
 import { api } from "../api";
+import { InputField } from "./InputField";
 // ライブラリ
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase/firebase";
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message"
-import { IconContext } from "react-icons/lib";
-import { useState } from "react";
+import { useForm, FormProvider } from "react-hook-form"
+import { createContext, useContext, useState } from "react";
 // アイコン
 import { FaUser } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
 import { IoMdLock } from "react-icons/io";
 
+// validateErrorsのコンテキスト
+const ValidateErrorContext = createContext();
+export const useValidateError = () => useContext(ValidateErrorContext);
+
 export const SignUp = () => {
   const navigate = useNavigate();
   const [validateErrors, setValidateErrors] = useState("");
 
-  const {
-    register,
-    watch,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    trigger,
-    setError
-  } = useForm({
+  const methods = useForm({
     mode: "onBlur",
     criteriaMode: "all"
   });
+  const { watch, setError, handleSubmit, getValues } = methods;
 
   // ユーザー登録（メアド、パスワード）
   const handleSignUp = async () => {
@@ -82,109 +78,56 @@ export const SignUp = () => {
     <div className="pt-12">
       <div className="max-w-96 mx-auto px-10 py-6 bg-header rounded-md shadow-md shadow-shadow">
         <h2 className="mb-5 pb-2 border-b border-white text-white text-3xl text-center">新規登録</h2>
-
         <div className="px-3">
           <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col mb-4">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="ユーザー名"
-                className="w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                {...register("name", {
-                  required: "ユーザー名を入力してください",
-                  maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
-                })}
-              />
-              <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
-                <IconContext.Provider value={{ size: 24, color: "white" }}>
-                  <FaUser />
-                </IconContext.Provider>
-              </div>
-              {validateErrors["name"] && (
-                validateErrors["name"].map((error, index) => error ? <p key={index} className="text-errorYellow text-sm">{error}</p> : null)
-              )}
-              <ErrorMessage
-                errors={errors}
-                name="name"
-                render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
-              />
-            </div>
-
-            <div className="relative">
-              <input
-                type="email"
-                placeholder="メールアドレス"
-                className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                {...register("email", {
-                  required: "メールアドレスを入力してください",
-                  pattern: {
-                    value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                    message: "有効なメールアドレスを入力してください"
-                  }
-                })}
-              />
-              <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
-                <IconContext.Provider value={{ size: 24, color: "white" }}>
-                  <IoMail />
-                </IconContext.Provider>
-              </div>
-            </div>
-            <ErrorMessage
-              errors={errors}
-              name="email"
-              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
-            />
-
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="パスワード"
-                className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                {...register("password", {
-                  required: "パスワードを入力してください",
-                  onBlur: () => {
-                    if (getValues("password_confirm")) {
-                      trigger("password_confirm");
+            <FormProvider {...methods}>
+              <ValidateErrorContext.Provider value={validateErrors} >
+                <InputField
+                  type="text"
+                  placeholder="ユーザー名"
+                  fieldName="name"
+                  validationRule={{
+                    required: "ユーザー名を入力してください",
+                    maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
+                  }}
+                  iconComponent={<FaUser />}
+                />
+                <InputField
+                  type="email"
+                  placeholder="メールアドレス"
+                  fieldName="email"
+                  validationRule={{
+                    required: "メールアドレスを入力してください",
+                    pattern: {
+                      value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                      message: "有効なメールアドレスを入力してください"
                     }
-                  },
-                  minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
-                })}
-              />
-              <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
-                <IconContext.Provider value={{ size: 24, color: "white" }}>
-                  <IoMdLock />
-                </IconContext.Provider>
-              </div>
-            </div>
-            <ErrorMessage
-              errors={errors}
-              name="password"
-              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
-            />
-
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="パスワード（確認）"
-                className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                {...register("password_confirm", {
-                  required: "パスワード（確認用）を入力してください",
-                  validate: (value) => value === getValues("password") || "パスワードが一致しません"
-                })}
-              />
-              <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
-                <IconContext.Provider value={{ size: 24, color: "white" }}>
-                  <IoMdLock />
-                </IconContext.Provider>
-              </div>
-            </div>
-            <ErrorMessage
-              errors={errors}
-              name="password_confirm"
-              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
-            />
-
-            <button type="submit" className="inline-block mt-4 py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+                  }}
+                  iconComponent={<IoMail />}
+                />
+                <InputField
+                  type="password"
+                  placeholder="パスワード"
+                  fieldName="password"
+                  validationRule={{
+                    required: "パスワードを入力してください",
+                    minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
+                  }}
+                  iconComponent={<IoMdLock />}
+                />
+                <InputField
+                  type="password"
+                  placeholder="パスワード（確認）"
+                  fieldName="password_confirm"
+                  validationRule={{
+                    required: "パスワード（確認用）を入力してください",
+                    validate: (value) => value === getValues("password") || "パスワードが一致しません"
+                  }}
+                  iconComponent={<IoMdLock />}
+                />
+              </ValidateErrorContext.Provider>
+            </FormProvider>
+            <button type="submit" className="inline-block py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
               新規登録
             </button>
           </form>
