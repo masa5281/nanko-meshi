@@ -2,6 +2,7 @@
 import { signUp } from "../firebase/firebase";
 import { api } from "../api";
 import { InputField } from "./InputField";
+import { AuthButton } from "./AuthButton";
 // ライブラリ
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
@@ -127,9 +128,9 @@ export const SignUp = () => {
                 />
               </ValidateErrorContext.Provider>
             </FormProvider>
-            <button type="submit" className="inline-block py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+            <AuthButton>
               新規登録
-            </button>
+            </AuthButton>
           </form>
           <button onClick={handleSignInGoogle} className="flex justify-center items-center gap-2 w-full py-2 bg-white rounded-full hover:bg-hoverWhite">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlnsXlink="http://www.w3.org/1999/xlink" style={{ display: "block" }} width={20} height={20}>

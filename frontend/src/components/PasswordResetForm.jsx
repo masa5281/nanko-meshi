@@ -7,10 +7,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 // アイコン
 import { IoMail } from "react-icons/io5";
+import { AuthButton } from "./AuthButton";
 
 export const PasswordResetForm = () => {
   const navigate = useNavigate();
-  
+
   const methods = useForm({
     mode: "onBlur",
     criteriaMode: "all"
@@ -49,9 +50,9 @@ export const PasswordResetForm = () => {
                 iconComponent={<IoMail />}
               />
             </FormProvider>
-            <button type="submit" className="inline-block w-full py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+            <AuthButton className="w-full">
               パスワード再設定メールを送信
-            </button>
+            </AuthButton>
           </form>
         </div>
       </div>

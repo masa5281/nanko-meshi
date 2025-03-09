@@ -2,6 +2,7 @@
 import { api } from "../api";
 import { auth, signIn, provider } from "../firebase/firebase";
 import { InputField } from "./InputField";
+import { AuthButton } from "./AuthButton";
 // ライブラリ
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -72,9 +73,10 @@ export const SignIn = () => {
                 iconComponent={<IoMdLock />}
               />
             </FormProvider>
-            <button type="submit" className="inline-block py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+
+            <AuthButton>
               ログイン
-            </button>
+            </AuthButton>
           </form>
           <div className="mb-5 text-center">
             <Link to={"/password_reset"} className="inline-flex mb-1 text-white hover:underline">パスワードをお忘れの方はこちら</Link>
