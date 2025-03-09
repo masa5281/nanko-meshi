@@ -38,7 +38,7 @@ export const InputField = (props) => {
         name={fieldName}
         render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
       />
-      {validateErrors[fieldName] && (
+      {validateErrors?.[fieldName] && (
         validateErrors[fieldName].map((error, index) => error ? <p key={index} className="text-errorYellow text-sm">{error}</p> : null)
       )}
     </div>

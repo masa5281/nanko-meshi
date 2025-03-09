@@ -1,12 +1,11 @@
 // コンポーネント
 import { api } from "../api";
 import { auth, signIn, provider } from "../firebase/firebase";
+import { InputField } from "./InputField";
 // ライブラリ
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { IconContext } from "react-icons/lib";
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message"
+import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
 // アイコン
 import { IoMail } from "react-icons/io5";
@@ -16,15 +15,11 @@ export const SignIn = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const {
-    register,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const methods = useForm({
     mode: "onBlur",
     criteriaMode: "all"
   });
+  const { watch, handleSubmit } = methods;
 
   // ログイン（メアド、パスワード）
   const handleSignIn = async (e) => {
@@ -35,7 +30,7 @@ export const SignIn = () => {
       setErrorMessage("メールアドレスまたはパスワードが違います");
     }
   };
-  
+
   // ログイン（Google）
   const handleSignInGoogle = async () => {
     try {
@@ -54,58 +49,33 @@ export const SignIn = () => {
     <div className="pt-12">
       <div className="max-w-96 mx-auto px-10 py-6 bg-header rounded-md shadow-md shadow-shadow">
         <h2 className="mb-5 pb-2 border-b border-white text-white text-3xl text-center">ログイン</h2>
-
         <div className="px-3">
           <form onSubmit={handleSubmit(handleSignIn)} className="flex flex-col mb-4">
             {errorMessage && <p className="mb-3 text-errorYellow text-sm">{errorMessage}</p>}
-
-            <div className="relative">
-              <input
+            <FormProvider {...methods}>
+              <InputField
                 type="email"
                 placeholder="メールアドレス"
-                className="w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                {...register("email", {
+                fieldName="email"
+                validationRule={{
                   required: "メールアドレスを入力してください"
-                })}
+                }}
+                iconComponent={<IoMail />}
               />
-              <div className="absolute bottom-1 left-1 p-1 rounded-full bg-text">
-                <IconContext.Provider value={{ size: 24, color: "white" }}>
-                  <IoMail />
-                </IconContext.Provider>
-              </div>
-            </div>
-            <ErrorMessage
-              errors={errors}
-              name="email"
-              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
-            />
-
-            <div className="relative">
-              <input
+              <InputField
                 type="password"
                 placeholder="パスワード"
-                className="w-full mt-4 py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
-                {...register("password", {
+                fieldName="password"
+                validationRule={{
                   required: "パスワードを入力してください"
-                })}
+                }}
+                iconComponent={<IoMdLock />}
               />
-              <div className="absolute bottom-1 left-1 p-1 rounded-full  bg-text">
-                <IconContext.Provider value={{ size: 24, color: "white" }}>
-                  <IoMdLock />
-                </IconContext.Provider>
-              </div>
-            </div>
-            <ErrorMessage
-              errors={errors}
-              name="password"
-              render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
-            />
-
-            <button type="submit" className="inline-block mt-4 py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+            </FormProvider>
+            <button type="submit" className="inline-block py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
               ログイン
             </button>
           </form>
-
           <div className="mb-5 text-center">
             <Link to={"/password_reset"} className="inline-flex mb-1 text-white hover:underline">パスワードをお忘れの方はこちら</Link>
             <Link to={"/sign_up"} className="inline-flex text-white hover:underline">新規登録の方はこちら</Link>
