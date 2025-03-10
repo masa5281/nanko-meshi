@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :calories, dependent: :destroy
+
   mount_uploader :avatar, AvatarUploader
 
   validates :firebase_uid, presence: true, uniqueness: true

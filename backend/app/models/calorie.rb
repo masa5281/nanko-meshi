@@ -1,4 +1,6 @@
 class Calorie < ApplicationRecord
+  belongs_to :user
+
   validates :burned_calorie, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :recorded_at, presence: true
   validate :validate_not_future_date
