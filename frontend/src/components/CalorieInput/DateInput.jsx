@@ -6,13 +6,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarDays } from "react-icons/fa6";
 
 // ロケールの変更
-import { registerLocale } from  "react-datepicker";
+import { registerLocale } from "react-datepicker";
 import { ja } from 'date-fns/locale/ja';
 
 export const DateInput = (props) => {
   // React Datepcikerの表示を日本語化
   registerLocale('ja', ja);
-  
+
   const { recordedDate, setRecordedDate } = props;
   return (
     <>

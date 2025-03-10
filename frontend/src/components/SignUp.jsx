@@ -1,6 +1,7 @@
-// コンポーネント
+// モジュール
+import { createUserApi } from "../api/userApi";
 import { signUp } from "../firebase/firebase";
-import { api } from "../api";
+// コンポーネント
 import { InputField } from "./InputField";
 import { AuthButton } from "./AuthButton";
 import { GoogleButton } from "./GoogleButton";
@@ -33,10 +34,7 @@ export const SignUp = () => {
   const handleSignUp = async () => {
     try {
       const emailUser = await signUp(watch("email"), watch("password"));
-      await api.post("/api/v1/users", {
-        firebase_uid: emailUser.user.uid,
-        name: watch("name")
-      });
+      createUserApi(emailUser.user.uid, watch("name"));
       navigate("/calorie/input");
     } catch (error) {
       firebaseErrorMessage(error);
@@ -48,10 +46,7 @@ export const SignUp = () => {
   const handleSignInGoogle = async () => {
     try {
       const googleUser = await signInWithPopup(auth, provider);
-      await api.post("/api/v1/users", {
-        firebase_uid: googleUser.user.uid,
-        name: googleUser.user.displayName
-      });
+      createUserApi(googleUser.user.uid, googleUser.user.displayName);
       navigate("/calorie/input");
     } catch (error) {
       console.error(error);

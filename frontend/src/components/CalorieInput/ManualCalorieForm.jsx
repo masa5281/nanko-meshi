@@ -1,8 +1,9 @@
+// モジュール
+import { createFoodApi } from "../../api/foodApi";
 // コンポーネント
 import { DateInput } from "./DateInput";
 import { CalorieInputError } from "./CalorieInputError";
 import { CalorieSubmit } from "./CalorieSubmit";
-import { api } from "../../api";
 // ライブラリ
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,17 +18,15 @@ export const ManualCalorieForm = () => {
 
   const createManualCalorie = async () => {
     try {
-      await api.post("/api/v1/calories", {
-        burned_calorie: calorieNum,
-        recorded_at: recordedDate.toDateString()
-      });
+      createFoodApi(calorieNum, recordedDate.toDateString());
       navigate("/foods/conversion", {
         state: { burned_calorie: calorieNum }
       });
-    } catch(error) {
+    } catch (error) {
       setValidateErrors(error.response.data);
+    } finally {
+      setCalorieNum("");
     }
-    setCalorieNum("");
   };
 
   // 入力値を全角→半角変換
@@ -54,7 +53,7 @@ export const ManualCalorieForm = () => {
           </div>
         </div>
       </div>
-      
+
       <CalorieSubmit onClick={createManualCalorie} />
     </div>
   );

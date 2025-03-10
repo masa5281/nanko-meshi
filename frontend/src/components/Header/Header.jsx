@@ -1,7 +1,7 @@
 // コンポーネント
 import { IconList } from "./IconList";
 import { auth, handleSignOut } from "../../firebase/firebase";
-import { api } from "../../api";
+import { getUserApi } from "../../api/userApi";
 // ライブラリ
 import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
@@ -23,17 +23,19 @@ import { IconContext } from "react-icons/lib";
 export const Header = () => {
   const [user] = useAuthState(auth);
   const [userImage, setUserImage] = useState("");
-  
+
   useEffect(() => {
-    const getUser = async () => {
+    if (!user) return;
+
+    const getUserData = async () => {
       try {
-        const response = await api.get(`/api/v1/users/${user.uid}`);
-        setUserImage(response.data.avatar.icon.url);
+        const userData = await getUserApi(user.uid);
+        setUserImage(userData.avatar.icon.url);
       } catch (error) {
         console.error(error);
       }
     };
-    if (user) getUser();
+    getUserData();
   }, [user])
 
   return (
@@ -52,8 +54,8 @@ export const Header = () => {
           </ul>
           <Flowbite theme={{ theme: customTheme }}>
             <Dropdown label={
-                <img src={userImage} alt="" className="max-w-full max-h-full"/>
-              }
+              <img src={userImage} alt="" className="max-w-full max-h-full hover:brightness-95 transition-all duration-100" />
+            }
               arrowIcon={false}
               inline={true}
             >

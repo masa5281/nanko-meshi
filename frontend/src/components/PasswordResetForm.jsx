@@ -1,5 +1,6 @@
-// コンポーネント
+// モジュール
 import { auth } from "../firebase/firebase"
+// コンポーネント
 import { InputField } from "./InputField";
 // ライブラリ
 import { sendPasswordResetEmail } from "firebase/auth"

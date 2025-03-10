@@ -1,6 +1,7 @@
+// モジュール
+import { getFoodsApi } from "../../api/foodApi";
 // コンポーネント
 import { FoodItem } from "./FoodItem";
-import{ api } from "../../api";
 // ライブラリ
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -9,19 +10,19 @@ export const FoodConversion = () => {
   const [foodList, setFoodList] = useState([]);
   const state = useLocation();
   const manualCalorie = state.state?.burned_calorie;
-  
+
   useEffect(() => {
     const getFoodList = async () => {
-      try  {
-        const response = await api.get("/api/v1/foods"); 
-        setFoodList(response.data);
-      } catch(error) {
-        console.log(error);
+      try {
+        const foodData = await getFoodsApi();
+        setFoodList(foodData);
+      } catch (error) {
+        console.error(error);
       }
     }
     getFoodList();
   }, []);
-  
+
   return (
     <>
       <div className="mb-8 text-center">

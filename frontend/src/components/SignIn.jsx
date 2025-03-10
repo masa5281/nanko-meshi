@@ -1,6 +1,7 @@
-// コンポーネント
-import { api } from "../api";
+// モジュール
+import { createUserApi } from "../api/userApi";
 import { auth, signIn, provider } from "../firebase/firebase";
+// コンポーネント
 import { InputField } from "./InputField";
 import { AuthButton } from "./AuthButton";
 // ライブラリ
@@ -37,10 +38,7 @@ export const SignIn = () => {
   const handleSignInGoogle = async () => {
     try {
       const googleUser = await signInWithPopup(auth, provider);
-      await api.post("/api/v1/users", {
-        firebase_uid: googleUser.user.uid,
-        name: googleUser.user.displayName
-      });
+      createUserApi(googleUser.user.uid, googleUser.user.displayName);
       navigate("/calorie/input");
     } catch (error) {
       console.error(error);
