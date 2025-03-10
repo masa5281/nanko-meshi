@@ -1,9 +1,9 @@
 class Api::V1::CaloriesController < ApplicationController
   def create
-    calorie = Calorie.new(calorie_params)
-    
+    user = User.find_by(firebase_uid: params[:firebase_uid])
+    calorie = user.calories.new(calorie_params)
     if calorie.save
-      render json: { status: 200, calorie: calorie }
+      render json: calorie
     else
       render json: calorie.errors, status: :unprocessable_entity
     end
