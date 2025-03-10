@@ -32,11 +32,9 @@ export const FoodConversion = () => {
         </div>
       </div>
       <ul className="grid grid-cols-2 gap-8 w-3/4 mx-auto">
-        {foodList.map((food) => {
-          return (
-            <FoodItem key={food.id} food={food} manualCalorie={manualCalorie} />
-          )
-        })}
+        {foodList.map((food) =>
+          <FoodItem key={food.id} food={food} manualCalorie={manualCalorie} />
+        )}
       </ul>
     </>
   );

@@ -36,10 +36,20 @@ export const InputField = (props) => {
       <ErrorMessage
         errors={errors}
         name={fieldName}
-        render={({ message }) => message ? (<p className="text-errorYellow text-sm">{message}</p>) : null}
+        render={({ message }) =>
+          message ? (
+            <p className="text-errorYellow text-sm">{message}</p>
+          ) : null
+        }
       />
       {validateErrors?.[fieldName] && (
-        validateErrors[fieldName].map((error, index) => error ? <p key={index} className="text-errorYellow text-sm">{error}</p> : null)
+        validateErrors[fieldName].map((error, index) =>
+          error ? (
+            <p key={index} className="text-errorYellow text-sm">{error}</p>
+          ) : (
+            null
+          )
+        )
       )}
     </div>
   );

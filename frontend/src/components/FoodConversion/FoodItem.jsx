@@ -7,7 +7,7 @@ import { Flowbite } from "flowbite-react";
 // flowbite-reactのカスタムテーマ
 import { customTheme } from "../../theme/theme";
 
-export const FoodItem =  (props) => {
+export const FoodItem = (props) => {
   const { food, manualCalorie } = props;
 
   const calorieToFoodCount = (foodCalorie) => Math.round((manualCalorie / foodCalorie) * 10) / 10;
@@ -21,7 +21,6 @@ export const FoodItem =  (props) => {
         </div>
         <p>{food.calorie}kcal</p>
       </div>
-    
       <div className="flex flex-col flex-grow-2 justify-around">
         <p className="text-xl font-bold">{food.name}</p>
         <div className="flex items-end">
@@ -32,7 +31,9 @@ export const FoodItem =  (props) => {
             {
               foodPercentage(food.calorie) >= 100 ? (
                 <p className="text-3xl font-bold text-center"><span className="text-4xl text-redBar">{foodPercentage(food.calorie)}%</span>を消費</p>
-              ) : (<p className="text-2xl font-bold text-center"><span className="text-4xl">{foodPercentage(food.calorie)}%</span>を消費</p>)
+              ) : (
+                <p className="text-2xl font-bold text-center"><span className="text-4xl">{foodPercentage(food.calorie)}%</span>を消費</p>
+              )
             }
             <div className="flex justify-between font-bold text-sm">
               <span>0</span>

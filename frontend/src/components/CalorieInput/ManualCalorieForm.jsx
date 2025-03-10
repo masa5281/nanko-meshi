@@ -1,5 +1,6 @@
 // モジュール
-import { createFoodApi } from "../../api/foodApi";
+import { createCalorieApi } from "../../api/calorieApi";
+import { ROUTES } from "../../utils/constants";
 // コンポーネント
 import { DateInput } from "./DateInput";
 import { CalorieInputError } from "./CalorieInputError";
@@ -18,8 +19,8 @@ export const ManualCalorieForm = () => {
 
   const createManualCalorie = async () => {
     try {
-      createFoodApi(calorieNum, recordedDate.toDateString());
-      navigate("/foods/conversion", {
+      await createCalorieApi(calorieNum, recordedDate.toDateString());
+      navigate(ROUTES.FOODS.CONVERSION, {
         state: { burned_calorie: calorieNum }
       });
     } catch (error) {
@@ -44,7 +45,13 @@ export const ManualCalorieForm = () => {
         <div className="flex justify-center px-3">
           <div className="flex flex-col items-star">
             <label htmlFor="calorie" className="flex items-center pl-3 font-bold"><FaFire className="mr-0.5 text-lg" />消費カロリー（kcal）</label>
-            <input type="text" id="calorie" className="mr-3 p-3 border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary" placeholder="例：300" value={calorieNum} onChange={onChangeToText} />
+            <input
+              type="text"
+              id="calorie"
+              className="mr-3 p-3 border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
+              placeholder="例：300"
+              value={calorieNum}
+              onChange={onChangeToText} />
             <CalorieInputError errors={validateErrors} column="burned_calorie" />
           </div>
           <div className="flex flex-col items-start">
@@ -57,4 +64,4 @@ export const ManualCalorieForm = () => {
       <CalorieSubmit onClick={createManualCalorie} />
     </div>
   );
-}
+};

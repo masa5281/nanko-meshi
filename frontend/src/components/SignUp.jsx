@@ -1,6 +1,7 @@
 // モジュール
 import { createUserApi } from "../api/userApi";
 import { signUp } from "../firebase/firebase";
+import { ROUTES } from "../utils/constants";
 // コンポーネント
 import { InputField } from "./InputField";
 import { AuthButton } from "./AuthButton";
@@ -35,7 +36,7 @@ export const SignUp = () => {
     try {
       const emailUser = await signUp(watch("email"), watch("password"));
       createUserApi(emailUser.user.uid, watch("name"));
-      navigate("/calorie/input");
+      navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
       firebaseErrorMessage(error);
       if (error.response) setValidateErrors(error.response.data);
@@ -47,7 +48,7 @@ export const SignUp = () => {
     try {
       const googleUser = await signInWithPopup(auth, provider);
       createUserApi(googleUser.user.uid, googleUser.user.displayName);
-      navigate("/calorie/input");
+      navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
       console.error(error);
     }

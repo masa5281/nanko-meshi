@@ -1,3 +1,6 @@
+// モジュール
+import { ROUTES } from "./utils/constants";
+// コンポーネント
 import { Header } from "./components/Header/Header";
 import { CalorieInput } from "./components/CalorieInput/CalorieInput";
 import { FoodConversion } from "./components/FoodConversion/FoodConversion";
@@ -17,7 +20,7 @@ export const App = () => {
         <Header />
         <Routes>
           <Route
-            path="/sign_up"
+            path={ROUTES.AUTH.SIGN_UP}
             element={
               <GuestRoute>
                 <SignUp />
@@ -25,7 +28,7 @@ export const App = () => {
             }
           />
           <Route
-            path="/sign_in"
+            path={ROUTES.AUTH.SIGN_IN}
             element={
               <GuestRoute>
                 <SignIn />
@@ -33,7 +36,7 @@ export const App = () => {
             }
           />
           <Route
-            path="/password_reset"
+            path={ROUTES.AUTH.PASSWORD_RESET}
             element={
               <GuestRoute>
                 <PasswordResetForm />
@@ -41,7 +44,7 @@ export const App = () => {
             }
           />
           <Route
-            path="/password_sent"
+            path={ROUTES.AUTH.PASSWORD_SENT}
             element={
               <GuestRoute>
                 <PasswordResetSuccess />
@@ -49,7 +52,7 @@ export const App = () => {
             }
           />
           <Route
-            path="/calorie/input"
+            path={ROUTES.CALORIE.INPUT}
             element={
               <ProtectedRoute>
                 <CalorieInput />
@@ -57,7 +60,7 @@ export const App = () => {
             }
           />
           <Route
-            path="/foods/conversion"
+            path={ROUTES.FOODS.CONVERSION}
             element={
               <ProtectedRoute>
                 <FoodConversion />
@@ -68,4 +71,4 @@ export const App = () => {
       </Router>
     </>
   );
-}
+};

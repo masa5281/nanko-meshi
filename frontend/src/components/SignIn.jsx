@@ -1,6 +1,7 @@
 // モジュール
 import { createUserApi } from "../api/userApi";
 import { auth, signIn, provider } from "../firebase/firebase";
+import { ROUTES } from "../utils/constants";
 // コンポーネント
 import { InputField } from "./InputField";
 import { AuthButton } from "./AuthButton";
@@ -28,7 +29,7 @@ export const SignIn = () => {
   const handleSignIn = async (e) => {
     try {
       await signIn(watch("email"), watch("password"));
-      navigate("/calorie/input");
+      navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
       setErrorMessage("メールアドレスまたはパスワードが違います");
     }
@@ -39,7 +40,7 @@ export const SignIn = () => {
     try {
       const googleUser = await signInWithPopup(auth, provider);
       createUserApi(googleUser.user.uid, googleUser.user.displayName);
-      navigate("/calorie/input");
+      navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
       console.error(error);
     }
@@ -75,8 +76,8 @@ export const SignIn = () => {
             <AuthButton>ログイン</AuthButton>
           </form>
           <div className="mb-5 text-center">
-            <Link to={"/password_reset"} className="inline-flex mb-1 text-white hover:underline">パスワードをお忘れの方はこちら</Link>
-            <Link to={"/sign_up"} className="inline-flex text-white hover:underline">新規登録の方はこちら</Link>
+            <Link to={ROUTES.AUTH.PASSWORD_RESET} className="inline-flex mb-1 text-white hover:underline">パスワードをお忘れの方はこちら</Link>
+            <Link to={ROUTES.AUTH.SIGN_UP} className="inline-flex text-white hover:underline">新規登録の方はこちら</Link>
           </div>
           <GoogleButton handleSignInGoogle={handleSignInGoogle}>Googleでログイン</GoogleButton>
         </div>

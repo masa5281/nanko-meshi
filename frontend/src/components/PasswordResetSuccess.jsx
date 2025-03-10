@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { ROUTES } from "../utils/constants";
 
 export const PasswordResetSuccess = () => {
   return (
@@ -15,7 +15,11 @@ export const PasswordResetSuccess = () => {
           メールが届かない場合や紛失した場合は、<br/>
           以下より再送信してください。
         </p>
-        <Link to={"/password_reset"} className="inline-block w-full mt-4 py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">メールを再送信する</Link>
+        <Link
+          to={ROUTES.AUTH.PASSWORD_RESET}
+          className="inline-block w-full mt-4 py-1 border-2 border-white rounded-full bg-primary text-white text-xl hover:bg-hover">
+          メールを再送信する
+        </Link>
       </div>
     </div>
   );

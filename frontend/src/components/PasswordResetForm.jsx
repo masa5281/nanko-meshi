@@ -1,5 +1,6 @@
 // モジュール
 import { auth } from "../firebase/firebase"
+import { ROUTES } from "../utils/constants";
 // コンポーネント
 import { InputField } from "./InputField";
 // ライブラリ
@@ -21,14 +22,13 @@ export const PasswordResetForm = () => {
 
   const handlePasswordReset = () => {
     sendPasswordResetEmail(auth, watch("email"));
-    navigate("/password_sent");
+    navigate(ROUTES.AUTH.PASSWORD_SENT);
   }
 
   return (
     <div className="pt-12">
       <div className="max-w-md mx-auto px-10 py-6 bg-header rounded-md shadow-md shadow-shadow">
         <h2 className="mb-5 pb-2 border-b border-white text-white text-3xl text-center">パスワード再設定</h2>
-
         <div className="px-3">
           <p className="mb-3 text-white tracking-tight">
             登録済みのメールアドレスを入力してください。
@@ -55,6 +55,7 @@ export const PasswordResetForm = () => {
               パスワード再設定メールを送信
             </AuthButton>
           </form>
+          
         </div>
       </div>
     </div>
