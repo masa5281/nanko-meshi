@@ -1,15 +1,17 @@
 // モジュール
-import { auth } from "../firebase/firebase";
 import { ROUTES } from "../utils/constants";
 // ライブラリ
 import { Navigate } from "react-router-dom"
-import { useAuthState } from "react-firebase-hooks/auth";
+// カスタムフック
+import { useAuth } from "../Context/AuthContext";
 
 // 未ログイン時、サインインへ遷移
-export const ProtectedRoute = ({children}) => {
-  const [user, loading] = useAuthState(auth);
+export const ProtectedRoute = ({ children }) => {
+  const { user, isAuthReady } = useAuth();
 
-  if (!loading) {
-    return user ? children : <Navigate to={ROUTES.AUTH.SIGN_IN} />
+  if (!isAuthReady) {
+    return null;
   }
+
+  return user ? children : <Navigate to={ROUTES.AUTH.SIGN_IN} />
 }

@@ -10,12 +10,13 @@ import { PasswordResetForm } from "./components/PasswordResetForm";
 import { PasswordResetSuccess } from "./components/PasswordResetSuccess";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { GuestRoute } from "./components/GuestRoute";
+import { AuthProvider } from "./Context/AuthContext";
 // ライブラリ
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 export const App = () => {
   return (
-    <>
+    <AuthProvider>
       <Router>
         <Header />
         <Routes>
@@ -69,6 +70,6 @@ export const App = () => {
           />
         </Routes>
       </Router>
-    </>
+    </AuthProvider>
   );
 };
