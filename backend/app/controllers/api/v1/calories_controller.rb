@@ -1,7 +1,6 @@
 class Api::V1::CaloriesController < ApplicationController
   def create
-    user = User.find_by(firebase_uid: params[:firebase_uid])
-    calorie = user.calories.new(calorie_params)
+    calorie = @current_user.calories.new(calorie_params)
     if calorie.save
       render json: calorie
     else
