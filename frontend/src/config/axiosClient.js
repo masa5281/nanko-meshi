@@ -1,4 +1,4 @@
-import { auth } from "../firebase/firebase";
+import { auth } from "../config/firebase";
 import axios from "axios";
 
 export const axiosClient = axios.create({

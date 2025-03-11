@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from "../utils/constants";
-import { axiosClient } from "./axiosClient";
+import { axiosClient } from "../config/axiosClient";
 
 // カロリーを作成
 export const createCalorieApi = async (calorieNum, recordedDate, uid) => {

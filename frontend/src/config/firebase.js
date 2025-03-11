@@ -16,11 +16,10 @@ export const provider = new GoogleAuthProvider();
 
 export const signUp = async (email, password) => {
   try {
-    // ユーザーが存在しない場合は新規登録
     const user = await createUserWithEmailAndPassword(auth, email, password);
     return user;
   } catch (error) {
-    throw error.code;
+    throw error;
   }
 }
 
@@ -33,8 +32,4 @@ export const signIn = async (email, password) => {
   }
 }
 
-export const handleSignOut = async () => {
-  console.log("ログアウト前", auth.currentUser);
-  await signOut(auth);
-  console.log("ログアウト後", auth.currentUser);
-}
+export const handleSignOut = async () => await signOut(auth);

@@ -1,15 +1,15 @@
 // モジュール
 import { createUserApi } from "../api/userApi";
-import { signUp } from "../firebase/firebase";
+import { signUp } from "../config/firebase";
 import { ROUTES } from "../utils/constants";
 // コンポーネント
-import { InputField } from "./InputField";
-import { AuthButton } from "./AuthButton";
-import { GoogleButton } from "./GoogleButton";
+import { InputField } from "../components/Auth/InputField";
+import { AuthButton } from "../components/Auth/AuthButton";
+import { GoogleButton } from "../components/Auth/GoogleButton";
 // ライブラリ
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../firebase/firebase";
+import { auth, provider } from "../config/firebase";
 import { useForm, FormProvider } from "react-hook-form"
 import { createContext, useContext, useState } from "react";
 // アイコン
@@ -38,7 +38,7 @@ export const SignUp = () => {
       createUserApi(emailUser.user.uid, watch("name"));
       navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
-      firebaseErrorMessage(error);
+      firebaseErrorMessage(error.code);
       if (error.response) setValidateErrors(error.response.data);
     }
   };

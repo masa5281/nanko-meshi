@@ -1,10 +1,11 @@
 // モジュール
 import { createUserApi } from "../api/userApi";
-import { auth, signIn, provider } from "../firebase/firebase";
+import { auth, signIn, provider } from "../config/firebase";
 import { ROUTES } from "../utils/constants";
 // コンポーネント
-import { InputField } from "./InputField";
-import { AuthButton } from "./AuthButton";
+import { InputField } from "../components/Auth/InputField";
+import { AuthButton } from "../components/Auth/AuthButton";
+import { GoogleButton } from "../components/Auth/GoogleButton";
 // ライブラリ
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,7 +14,6 @@ import { useState } from "react";
 // アイコン
 import { IoMail } from "react-icons/io5";
 import { IoMdLock } from "react-icons/io";
-import { GoogleButton } from "./GoogleButton";
 
 export const SignIn = () => {
   const navigate = useNavigate();

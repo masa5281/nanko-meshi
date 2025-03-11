@@ -4,13 +4,13 @@ import { ROUTES } from "./utils/constants";
 import { Header } from "./components/Header/Header";
 import { CalorieInput } from "./components/CalorieInput/CalorieInput";
 import { FoodConversion } from "./components/FoodConversion/FoodConversion";
-import { SignUp } from "./components/SignUp";
-import { SignIn } from "./components/SignIn";
-import { PasswordResetForm } from "./components/PasswordResetForm";
-import { PasswordResetSuccess } from "./components/PasswordResetSuccess";
-import { ProtectedRoute } from "./components/ProtectedRoute";
-import { GuestRoute } from "./components/GuestRoute";
-import { AuthProvider } from "./Context/AuthContext";
+import { SignUp } from "./pages/SignUp";
+import { SignIn } from "./pages/SignIn";
+import { PasswordResetForm } from "./pages/PasswordResetForm"
+import { PasswordResetSuccess } from "./pages/PasswordResetSuccess"
+import { ProtectedRoute } from "./Routes/ProtectedRoute";
+import { GuestRoute } from "./Routes/GuestRoute";
+import { AuthProvider } from "./context/AuthContext";
 // ライブラリ
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 

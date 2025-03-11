@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from "../utils/constants";
-import { axiosClient } from "./axiosClient";
+import { axiosClient } from "../config/axiosClient";
 
 // 全ての食品情報を取得
 export const getFoodsApi = async () => {

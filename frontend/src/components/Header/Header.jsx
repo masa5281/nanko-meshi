@@ -1,6 +1,6 @@
 // モジュール
 import { ROUTES } from "../../utils/constants";
-import { handleSignOut } from "../../firebase/firebase";
+import { handleSignOut } from "../../config/firebase";
 import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { IconList } from "./IconList";
@@ -21,7 +21,7 @@ import { PiSignInBold } from "react-icons/pi";
 // flowbite-reactのカスタムテーマ
 import { customTheme } from "../../theme/theme";
 // カスタムフック
-import { useAuth } from "../../Context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export const Header = () => {
   const [userImage, setUserImage] = useState("");

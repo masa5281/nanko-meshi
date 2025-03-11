@@ -1,7 +1,7 @@
 // ライブラリ
 import { useFormContext } from "react-hook-form"
 import { ErrorMessage } from "@hookform/error-message"
-import { useValidateError } from "./SignUp";
+import { useValidateError } from "../../pages/SignUp";
 import { IconContext } from "react-icons/lib";
 
 export const InputField = (props) => {

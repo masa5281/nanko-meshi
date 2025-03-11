@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 // アイコン
 import { FaFire } from "react-icons/fa6";
 // カスタムフック
-import { useAuth } from "../../Context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export const ManualCalorieForm = () => {
   const [calorieNum, setCalorieNum] = useState("");

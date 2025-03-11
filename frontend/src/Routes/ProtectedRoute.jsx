@@ -3,7 +3,7 @@ import { ROUTES } from "../utils/constants";
 // ライブラリ
 import { Navigate } from "react-router-dom"
 // カスタムフック
-import { useAuth } from "../Context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 // 未ログイン時、サインインへ遷移
 export const ProtectedRoute = ({ children }) => {

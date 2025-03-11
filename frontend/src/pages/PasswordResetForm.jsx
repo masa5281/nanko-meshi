@@ -1,15 +1,15 @@
 // モジュール
-import { auth } from "../firebase/firebase"
+import { auth } from "../config/firebase";
 import { ROUTES } from "../utils/constants";
 // コンポーネント
-import { InputField } from "./InputField";
+import { InputField } from "../components/Auth/InputField";
+import { AuthButton } from "../components/Auth/AuthButton";
 // ライブラリ
 import { sendPasswordResetEmail } from "firebase/auth"
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 // アイコン
 import { IoMail } from "react-icons/io5";
-import { AuthButton } from "./AuthButton";
 
 export const PasswordResetForm = () => {
   const navigate = useNavigate();

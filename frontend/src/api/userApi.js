@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from "../utils/constants";
-import { axiosClient } from "./axiosClient";
+import { axiosClient } from "../config/axiosClient";
 
 // 特定のユーザーを取得
 export const getUserApi = async (uid) => {
