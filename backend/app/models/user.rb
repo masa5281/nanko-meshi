@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :calories, dependent: :destroy
+  has_many :foods, dependent: :destroy
 
   mount_uploader :avatar, AvatarUploader
 
