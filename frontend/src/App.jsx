@@ -2,7 +2,7 @@
 import { ROUTES } from "./utils/constants";
 // コンポーネント
 import { Header } from "./components/Header/Header";
-import { CalorieInput } from "./components/CalorieInput/CalorieInput";
+import { CalorieInput } from "./pages/CalorieInput";
 import { FoodConversion } from "./components/FoodConversion/FoodConversion";
 import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";

@@ -1,4 +1,4 @@
-import { ManualCalorieForm } from "./ManualCalorieForm";
+import { ManualCalorieForm } from "../components/CalorieInput/ManualCalorieForm";
 
 export const CalorieInput = () => {
   return (
