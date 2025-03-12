@@ -4,7 +4,7 @@ import { ErrorMessage } from "@hookform/error-message"
 import { useValidateError } from "../../pages/SignUp";
 import { IconContext } from "react-icons/lib";
 
-export const InputField = (props) => {
+export const AuthInputField = (props) => {
   const {
     type,
     placeholder,

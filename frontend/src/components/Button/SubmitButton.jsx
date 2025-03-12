@@ -1,4 +1,4 @@
-export const CalorieSubmit = (props) => {
+export const SubmitButton = (props) => {
   const { onClick } = props;
 
   return (

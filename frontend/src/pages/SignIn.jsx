@@ -3,9 +3,9 @@ import { createUserApi } from "../api/userApi";
 import { auth, signIn, provider } from "../config/firebase";
 import { ROUTES } from "../utils/constants";
 // コンポーネント
-import { InputField } from "../components/Auth/InputField";
-import { AuthButton } from "../components/Auth/AuthButton";
-import { GoogleButton } from "../components/Auth/GoogleButton";
+import { AuthInputField } from "../components/InputField/AuthInputField"
+import { AuthSubmitButton } from "../components/Button/AuthSubmitButton"
+import { GoogleButton } from "../components/Button/GoogleButton";
 // ライブラリ
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -54,7 +54,7 @@ export const SignIn = () => {
           <form onSubmit={handleSubmit(handleSignIn)} className="flex flex-col mb-4">
             {errorMessage && <p className="mb-3 text-errorYellow text-sm">{errorMessage}</p>}
             <FormProvider {...methods}>
-              <InputField
+              <AuthInputField
                 type="email"
                 placeholder="メールアドレス"
                 fieldName="email"
@@ -63,7 +63,7 @@ export const SignIn = () => {
                 }}
                 iconComponent={<IoMail />}
               />
-              <InputField
+              <AuthInputField
                 type="password"
                 placeholder="パスワード"
                 fieldName="password"
@@ -73,7 +73,7 @@ export const SignIn = () => {
                 iconComponent={<IoMdLock />}
               />
             </FormProvider>
-            <AuthButton>ログイン</AuthButton>
+            <AuthSubmitButton>ログイン</AuthSubmitButton>
           </form>
           <div className="mb-5 text-center">
             <Link to={ROUTES.AUTH.PASSWORD_RESET} className="inline-flex mb-1 text-white hover:underline">パスワードをお忘れの方はこちら</Link>

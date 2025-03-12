@@ -2,8 +2,8 @@
 import { auth } from "../config/firebase";
 import { ROUTES } from "../utils/constants";
 // コンポーネント
-import { InputField } from "../components/Auth/InputField";
-import { AuthButton } from "../components/Auth/AuthButton";
+import { AuthInputField } from "../components/InputField/AuthInputField"
+import { AuthSubmitButton } from "../components/Button/AuthSubmitButton"
 // ライブラリ
 import { sendPasswordResetEmail } from "firebase/auth"
 import { FormProvider, useForm } from "react-hook-form";
@@ -37,7 +37,7 @@ export const PasswordResetForm = () => {
 
           <form onSubmit={handleSubmit(handlePasswordReset)}>
             <FormProvider {...methods}>
-              <InputField
+              <AuthInputField
                 type="email"
                 placeholder="メールアドレス"
                 fieldName="email"
@@ -51,9 +51,9 @@ export const PasswordResetForm = () => {
                 iconComponent={<IoMail />}
               />
             </FormProvider>
-            <AuthButton className="w-full">
+            <AuthSubmitButton className="w-full">
               パスワード再設定メールを送信
-            </AuthButton>
+            </AuthSubmitButton>
           </form>
           
         </div>

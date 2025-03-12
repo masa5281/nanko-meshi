@@ -1,4 +1,4 @@
-export const AuthButton = (props) => {
+export const AuthSubmitButton = (props) => {
   const {
     children,
     className = ""
