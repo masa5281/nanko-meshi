@@ -11,6 +11,7 @@ import { PasswordResetSuccess } from "./pages/PasswordResetSuccess"
 import { ProtectedRoute } from "./Routes/ProtectedRoute";
 import { GuestRoute } from "./Routes/GuestRoute";
 import { AuthProvider } from "./context/AuthContext";
+import { FoodRegister } from "./pages/FoodRegister";
 // ライブラリ
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -65,6 +66,14 @@ export const App = () => {
             element={
               <ProtectedRoute>
                 <FoodConversion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.FOODS.REGISTER}
+            element={
+              <ProtectedRoute>
+                <FoodRegister />
               </ProtectedRoute>
             }
           />

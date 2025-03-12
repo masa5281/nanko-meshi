@@ -12,7 +12,8 @@ export const ROUTES = {
     INPUT: "/calorie/input"
   },
   FOODS: {
-    CONVERSION: "/foods/conversion"
+    CONVERSION: "/foods/conversion",
+    REGISTER: "/foods/register"
   }
 };
 
