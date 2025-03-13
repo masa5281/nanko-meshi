@@ -7,7 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-user = User.find_or_create_by(firebase_uid: "VR9PWymF9weId4TC3q6TDUMQTk42") do |u|
+user = User.find_or_create_by(firebase_uid: "8NLjWFYNhWU5vvM0gyNfqAT4mnH2") do |u|
   u.name = "開発者"
   u.avatar = nil
 end
