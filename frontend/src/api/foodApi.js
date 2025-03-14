@@ -10,3 +10,12 @@ export const getFoodsApi = async () => {
     throw error;
   }
 };
+
+// 食品を登録
+export const createFoodApi = (name, calorie, foodImage) => {
+  const formData = new FormData();
+  formData.append("food[name]", name);
+  formData.append("food[calorie]", calorie);
+  formData.append("food[food_image]", foodImage);
+  return formData;
+}
