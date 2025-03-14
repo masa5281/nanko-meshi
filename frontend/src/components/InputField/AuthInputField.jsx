@@ -28,7 +28,7 @@ export const AuthInputField = (props) => {
         className="w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary"
         {...register(fieldName, validationRule)}
       />
-      <div className="absolute top-1 left-1 p-1 rounded-full bg-text">
+      <div className="absolute top-1 left-1 p-1 rounded-full bg-black">
         <IconContext.Provider value={{ size: 24, color: "white" }}>
           {iconComponent}
         </IconContext.Provider>

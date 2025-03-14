@@ -16,6 +16,7 @@ export const InputField = (props) => {
     id,
     iconComponent,
     labelName,
+    className = ""
   } = props;
 
   const {
@@ -24,7 +25,7 @@ export const InputField = (props) => {
   } = useFormContext();
 
   return (
-    <div>
+    <div className={className}>
       <label htmlFor={id} className="flex items-center pl-3 font-bold">
         <IconContext.Provider value={{ size: 20 }}>
           {iconComponent}
@@ -35,7 +36,7 @@ export const InputField = (props) => {
         id={id}
         type={type}
         placeholder={placeholder}
-        className="w-full border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
+        className="w-full border-black border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
         {...register(fieldName, validationRule)}
       />
       <ErrorMessage

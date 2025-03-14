@@ -1,25 +1,27 @@
 // モジュール
 import { createFoodApi } from "../../api/foodApi";
+import { API_ENDPOINTS } from "../../utils/constants";
+import { axiosClient } from "../../config/axiosClient";
 // コンポーネント
 import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
 // ライブラリ
 import { createContext, useContext, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { IconContext } from "react-icons/lib";
 // アイコン
 import { FaFire } from "react-icons/fa6";
 import { BiSolidBowlRice } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-import { API_ENDPOINTS } from "../../utils/constants";
-import { axiosClient } from "../../config/axiosClient";
+import { LuCameraOff } from "react-icons/lu";
 
 const ValidateErrorContext = createContext();
 export const useValidateError = () => useContext(ValidateErrorContext);
 
 export const FoodRegisterForm = () => {
   const [validateErrors, setValidateErrors] = useState([]);
-  const [foodImage, setFoodImage] = useState();
-  const [previewImage, setPreviewImage] = useState();
+  const [foodImage, setFoodImage] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -57,11 +59,22 @@ export const FoodRegisterForm = () => {
   return (
     <FormProvider {...methods}>
       <ValidateErrorContext.Provider value={validateErrors}>
-        <form onSubmit={handleSubmit(createFood)} className="">
-          <div>
-            <img src={previewImage} alt="" />
-            <input type="file" ref={inputRef} onChange={onFileInputChange} className="hidden" />
-            <button onClick={handleInputFile}>画像を選択</button>
+        <form onSubmit={handleSubmit(createFood)} className="px-10">
+          <div className="w-64 aspect-[4/3] mb-4 mx-auto border-2 border-black rounded-md ring-1 ring-black text-center overflow-hidden">
+            <input type="file" className="hidden" ref={inputRef} onChange={onFileInputChange} />
+            <button className="relative w-full h-full bg-gray-100 hover:brightness-110 transition-all duration-200" onClick={handleInputFile}>
+              {foodImage ? (
+                <img src={previewImage} alt="" className="w-full h-full" />
+              ) : (
+                <div className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <IconContext.Provider value={{ size: 40 }}>
+                    <LuCameraOff className="mb-1" />
+                  </IconContext.Provider>
+                  <span className="text-xl">NO IMAGE</span>
+                </div>
+              )
+              }
+            </button>
           </div>
           <InputField
             id="name"
@@ -70,6 +83,7 @@ export const FoodRegisterForm = () => {
             fieldName="name"
             iconComponent={<BiSolidBowlRice className="mr-0.5" />}
             labelName="食品名"
+            className="mb-4"
           />
           <InputField
             id="calorie"
@@ -78,6 +92,7 @@ export const FoodRegisterForm = () => {
             fieldName="calorie"
             iconComponent={<FaFire className="mr-0.5" />}
             labelName="食品のカロリー（kcal）"
+            className="mb-6"
           />
           <SubmitButton className="w-full">
             登録

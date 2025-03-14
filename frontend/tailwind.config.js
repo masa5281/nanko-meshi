@@ -14,9 +14,9 @@ module.exports = {
           DEFAULT: "#FF6E2B"
         } ,
         secondary: "#77C043",
+        black: "#333333",
         background: "#FFEEC3",
         header: "#FF763C",
-        text: "#333333",
         hover: "#FF915F",
         hoverWhite: "#EDEEEE",
         error: "#C42F30",
