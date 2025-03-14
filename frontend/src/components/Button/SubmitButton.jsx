@@ -1,12 +1,15 @@
 export const SubmitButton = (props) => {
-  const { onClick } = props;
+  const {
+    children,
+    className = ""
+  } = props;
 
   return (
     <button
-      className="inline-block relative mx-auto px-12 py-3 border-slate-900 border-2 rounded-full bg-primary text-white font-bold hover:bg-hover"
-      onClick={onClick}
+      type="submit"
+      className={`inline-block relative mx-auto px-12 py-2 border-slate-900 border-2 rounded-full bg-primary text-white font-bold hover:bg-hover ${className}`}
     >
-      食べ物に換算
+      {children}
     </button>
   );
-}
+};
