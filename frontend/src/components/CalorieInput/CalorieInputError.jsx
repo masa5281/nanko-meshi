@@ -5,9 +5,9 @@ export const CalorieInputError = (props) => {
     <>
       {errors[column] && (
         <ul className="text-left">
-          {errors[column].map((error, index) => {
-            return <li key={index} className="text-error text-xs font-bold">{error}</li>
-          })}
+          {errors[column].map((error, index) =>
+            <li key={index} className="text-error text-xs font-bold">{error}</li>
+          )}
         </ul>
       )}
     </>

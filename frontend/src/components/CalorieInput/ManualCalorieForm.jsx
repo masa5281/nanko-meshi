@@ -1,36 +1,41 @@
+// モジュール
+import { createCalorieApi } from "../../api/calorieApi";
+import { ROUTES } from "../../utils/constants";
+import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { DateInput } from "./DateInput";
 import { CalorieInputError } from "./CalorieInputError";
 import { CalorieSubmit } from "./CalorieSubmit";
-import { api } from "../../api";
-
 // ライブラリ
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 // アイコン
 import { FaFire } from "react-icons/fa6";
+// カスタムフック
+import { useAuth } from "../../context/AuthContext";
 
 export const ManualCalorieForm = () => {
   const [calorieNum, setCalorieNum] = useState("");
   const [recordedDate, setRecordedDate] = useState(new Date());
-  const [errors, setErrors] = useState([]);
+  const [validateErrors, setValidateErrors] = useState([]);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const createManualCalorie = async () => {
     try {
-      await api.post("/api/v1/calories", {
-        burned_calorie: calorieNum,
-        recorded_at: recordedDate.toDateString()
+      await createCalorieApi(calorieNum, recordedDate.toDateString(), user.uid);
+      const dbUserData = await getUserApi(user.uid);
+      navigate(ROUTES.FOODS.CONVERSION, {
+        state: {
+          burned_calorie: calorieNum,
+          userName: dbUserData.name
+        }
       });
-      navigate("/foods/conversion", {
-        state: { burned_calorie: calorieNum }
-      });
-    } catch(error) {
-      const ErrorMessages = error.response.data;
-      setErrors(ErrorMessages);
+    } catch (error) {
+      setValidateErrors(error.response.data);
+    } finally {
+      setCalorieNum("");
     }
-    setCalorieNum("");
   };
 
   // 入力値を全角→半角変換
@@ -46,21 +51,25 @@ export const ManualCalorieForm = () => {
 
       <div className="mb-6">
         <div className="flex justify-center px-3">
-
           <div className="flex flex-col items-star">
             <label htmlFor="calorie" className="flex items-center pl-3 font-bold"><FaFire className="mr-0.5 text-lg" />消費カロリー（kcal）</label>
-            <input type="text" id="calorie" className="mr-3 p-3 border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary focus:outline focus:outline-primary" placeholder="例：300" value={calorieNum} onChange={onChangeToText} />
-            <CalorieInputError errors={errors} column="burned_calorie" />
+            <input
+              type="text"
+              id="calorie"
+              className="mr-3 p-3 border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
+              placeholder="例：300"
+              value={calorieNum}
+              onChange={onChangeToText} />
+            <CalorieInputError errors={validateErrors} column="burned_calorie" />
           </div>
-
           <div className="flex flex-col items-start">
             <DateInput recordedDate={recordedDate} setRecordedDate={setRecordedDate} />
-            <CalorieInputError errors={errors} column="recorded_at" />
+            <CalorieInputError errors={validateErrors} column="recorded_at" />
           </div>
         </div>
       </div>
-      
+
       <CalorieSubmit onClick={createManualCalorie} />
     </div>
   );
-}
+};

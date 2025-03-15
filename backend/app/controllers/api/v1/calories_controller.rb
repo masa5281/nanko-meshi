@@ -1,9 +1,8 @@
 class Api::V1::CaloriesController < ApplicationController
   def create
-    calorie = Calorie.new(calorie_params)
-    
+    calorie = @current_user.calories.new(calorie_params)
     if calorie.save
-      render json: { status: 200, calorie: calorie }
+      render json: calorie
     else
       render json: calorie.errors, status: :unprocessable_entity
     end
