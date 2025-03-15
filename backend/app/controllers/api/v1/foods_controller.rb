@@ -6,7 +6,7 @@ class Api::V1::FoodsController < ApplicationController
 
   def create
     food = current_user.foods.new(food_params)
-    if food.save!
+    if food.save
       render json: food
     else
       render json: food.errors, status: :unprocessable_entity

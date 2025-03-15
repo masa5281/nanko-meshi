@@ -48,11 +48,11 @@ export const FoodRegisterForm = () => {
 
   const createFood = async () => {
     try {
-      const data = createFoodApi(watch("name"), watch("calorie"), foodImage);
+      const data = createFoodApi(watch("foodName"), watch("foodCalorie"), foodImage);
       await axiosClient.post(API_ENDPOINTS.FOODS.BASE, data);
       navigate("/");
     } catch (error) {
-      console.error(error);
+      setValidateErrors(error.response.data);
     }
   };
 
@@ -76,24 +76,38 @@ export const FoodRegisterForm = () => {
               }
             </button>
           </div>
+
           <InputField
-            id="name"
+            id="foodName"
             type="text"
             placeholder="例：チョコレート"
-            fieldName="name"
+            fieldName="foodName"
             iconComponent={<BiSolidBowlRice className="mr-0.5" />}
             labelName="食品名"
             className="mb-4"
+            validationRule={{
+              required: "食品名を入力してください",
+              maxLength: { value: 20, message: "食品名は20文字以内で入力してください" }
+            }}
+            columnName="name"
           />
+
           <InputField
-            id="calorie"
+            id="foodCalorie"
             type="text"
             placeholder="例：300"
-            fieldName="calorie"
+            fieldName="foodCalorie"
             iconComponent={<FaFire className="mr-0.5" />}
             labelName="食品のカロリー（kcal）"
             className="mb-6"
+            validationRule={{
+              required: "カロリーを入力してください",
+              min: { value: 1, message: "カロリーは1以上で入力してください" },
+              max: { value: 9999, message: "カロリーは9999以下で入力してください" }
+            }}
+            columnName="calorie"
           />
+
           <SubmitButton className="w-full">
             登録
           </SubmitButton>

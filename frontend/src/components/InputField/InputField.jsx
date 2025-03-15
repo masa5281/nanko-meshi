@@ -1,3 +1,5 @@
+// コンポーネント
+import { InputValidateErrors } from "../CalorieInput/InputValidateErrors";
 // ライブラリ
 import { useFormContext } from "react-hook-form";
 import { IconContext } from "react-icons/lib";
@@ -16,7 +18,8 @@ export const InputField = (props) => {
     id,
     iconComponent,
     labelName,
-    className = ""
+    className = "",
+    columnName
   } = props;
 
   const {
@@ -44,19 +47,11 @@ export const InputField = (props) => {
         name={fieldName}
         render={({ message }) =>
           message ? (
-            <p className="text-error text-xs font-bold">{message}</p>
+            <p className="pl-2 text-error text-xs font-bold">{message}</p>
           ) : null
         }
       />
-      {validateErrors?.[fieldName] && (
-        validateErrors[fieldName].map((error, index) =>
-          error ? (
-            <p key={index} className="text-error text-xs font-bold">{error}</p>
-          ) : (
-            null
-          )
-        )
-      )}
+      <InputValidateErrors errors={validateErrors} column={columnName} />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { ROUTES } from "../../utils/constants";
 import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { DateInput } from "./DateInput";
-import { CalorieInputError } from "./CalorieInputError";
+import { InputValidateErrors } from "./InputValidateErrors";
 import { SubmitButton } from "../Button/SubmitButton"
 // ライブラリ
 import { useState } from "react";
@@ -58,12 +58,13 @@ export const ManualCalorieForm = () => {
             className="mr-3 border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
             placeholder="例：300"
             value={calorieNum}
-            onChange={onChangeToText} />
-          <CalorieInputError errors={validateErrors} column="burned_calorie" />
+            onChange={onChangeToText}
+          />
+          <InputValidateErrors errors={validateErrors} column="burned_calorie" />
         </div>
         <div className="flex flex-col items-start">
           <DateInput recordedDate={recordedDate} setRecordedDate={setRecordedDate} />
-          <CalorieInputError errors={validateErrors} column="recorded_at" />
+          <InputValidateErrors errors={validateErrors} column="recorded_at" />
         </div>
       </div>
       <SubmitButton>食べ物に換算</SubmitButton>

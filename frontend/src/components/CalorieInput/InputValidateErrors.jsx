@@ -1,4 +1,4 @@
-export const CalorieInputError = (props) => {
+export const InputValidateErrors = (props) => {
   const { errors, column } = props;
 
   return (
