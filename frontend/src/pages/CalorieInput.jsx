@@ -1,4 +1,5 @@
 import { ManualCalorieForm } from "../components/CalorieInput/ManualCalorieForm";
+import { ValidateErrorProvider } from "../context/ValidateErrorContext";
 
 export const CalorieInput = () => {
   return (
@@ -10,7 +11,9 @@ export const CalorieInput = () => {
         </div>
         <div className="relative max-w-lg mx-auto pt-12 pb-10 border-slate-900 border-4 rounded-md before:content-[''] before:absolute before:w-56 before:h-10 before:bg-background before:inline-block before:-top-5 before:left-1/2 before:-translate-x-1/2">
           <p className="absolute -top-7 left-1/2 -translate-x-1/2 w-52 mx-auto mb-5 py-2 rounded-full bg-black text-white text-2xl">直接入力する</p>
-          <ManualCalorieForm />
+          <ValidateErrorProvider>
+            <ManualCalorieForm />
+          </ValidateErrorProvider>
         </div>
       </div>
     </main>

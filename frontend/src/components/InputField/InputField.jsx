@@ -5,10 +5,10 @@ import { useFormContext } from "react-hook-form";
 import { IconContext } from "react-icons/lib";
 import { ErrorMessage } from "@hookform/error-message"
 // カスタムフック
-import { useValidateError } from "../FoodRegister/FoodRegisterForm";
+import { useValidateError } from "../../context/ValidateErrorContext";
 
 export const InputField = (props) => {
-  const validateErrors = useValidateError();
+  const { validateErrors } = useValidateError();
 
   const {
     type,
@@ -19,7 +19,8 @@ export const InputField = (props) => {
     iconComponent,
     labelName,
     className = "",
-    columnName
+    columnName,
+    onChange,
   } = props;
 
   const {
@@ -40,14 +41,17 @@ export const InputField = (props) => {
         type={type}
         placeholder={placeholder}
         className="w-full border-black border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
-        {...register(fieldName, validationRule)}
+        {...register(fieldName, {
+          ...validationRule,
+          onChange: onChange
+        })}
       />
       <ErrorMessage
         errors={errors}
         name={fieldName}
         render={({ message }) =>
           message ? (
-            <p className="pl-2 text-error text-xs font-bold">{message}</p>
+            <p className="pl-2 text-error text-xs font-bold text-left">{message}</p>
           ) : null
         }
       />
