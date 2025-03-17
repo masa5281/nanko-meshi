@@ -28,14 +28,15 @@ export const ManualCalorieForm = () => {
     criteriaMode: "all"
   });
   const { watch, handleSubmit, setValue } = methods;
+  const foodCalorie = watch("calorie");
 
   const createManualCalorie = async () => {
     try {
-      await createCalorieApi(watch("calorie"), recordedDate.toDateString(), user.uid);
+      await createCalorieApi(foodCalorie, recordedDate.toDateString(), user.uid);
       const dbUserData = await getUserApi(user.uid);
       navigate(ROUTES.FOODS.CONVERSION, {
         state: {
-          burned_calorie: watch("calorie"),
+          burned_calorie: foodCalorie,
           userName: dbUserData.name
         }
       });

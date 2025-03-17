@@ -29,7 +29,9 @@ export const FoodRegisterForm = () => {
     criteriaMode: "all"
   });
   const { watch, handleSubmit } = methods;
-
+  const foodName = watch("foodName");
+  const foodCalorie = watch("foodCalorie");
+  
   // ボタン押下でinputが発火
   const handleInputFile = (e) => {
     e.preventDefault();
@@ -47,7 +49,7 @@ export const FoodRegisterForm = () => {
 
   const createFood = async () => {
     try {
-      const data = createFoodApi(watch("foodName"), watch("foodCalorie"), foodImage);
+      const data = createFoodApi(foodName, foodCalorie, foodImage);
       await axiosClient.post(API_ENDPOINTS.FOODS.BASE, data);
       navigate("/");
     } catch (error) {
