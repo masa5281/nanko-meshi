@@ -8,12 +8,15 @@ export const ROUTES = {
     PASSWORD_RESET: "/password_reset",
     PASSWORD_SENT: "/password_sent"
   },
-  CALORIE: {
-    INPUT: "/calorie/input"
+  USERS: {
+    ITEM: "/users/item"
   },
   FOODS: {
     CONVERSION: "/foods/conversion",
-    REGISTER: "/foods/register"
+    REGISTER: "/foods/register",
+  },
+  CALORIE: {
+    INPUT: "/calorie/input"
   }
 };
 
