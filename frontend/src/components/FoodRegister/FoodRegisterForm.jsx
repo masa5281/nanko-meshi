@@ -28,7 +28,7 @@ export const FoodRegisterForm = () => {
     mode: "onBlur",
     criteriaMode: "all"
   });
-  const { watch, handleSubmit, setValue } = methods;
+  const { watch, handleSubmit } = methods;
 
   // ボタン押下でinputが発火
   const handleInputFile = (e) => {
@@ -54,12 +54,6 @@ export const FoodRegisterForm = () => {
       setValidateErrors(error.response.data);
     }
   };
-
-  const onChangeToText = (e) => {
-    const inputText = e.target.value;
-    const toHalfWidth = inputText.replace(/[０-９]/g, (str) => String.fromCharCode(str.charCodeAt(0) - 0xFEE0));
-    setValue("foodCalorie", toHalfWidth, { shouldValidate: true });
-  }
 
   return (
     <FormProvider {...methods}>
@@ -110,7 +104,6 @@ export const FoodRegisterForm = () => {
             max: { value: 9999, message: "カロリーは9999以下で入力してください" }
           }}
           columnName="calorie"
-          onChange={onChangeToText}
         />
 
         <SubmitButton className="w-full">

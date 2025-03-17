@@ -6,9 +6,11 @@ import { IconContext } from "react-icons/lib";
 import { ErrorMessage } from "@hookform/error-message"
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
+import { useHalfWith } from "../../hooks/useHalfWith";
 
 export const InputField = (props) => {
   const { validateErrors } = useValidateError();
+  const { onChangeToText } = useHalfWith();
 
   const {
     type,
@@ -20,7 +22,6 @@ export const InputField = (props) => {
     labelName,
     className = "",
     columnName,
-    onChange,
   } = props;
 
   const {
@@ -43,7 +44,7 @@ export const InputField = (props) => {
         className="w-full border-black border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
         {...register(fieldName, {
           ...validationRule,
-          onChange: onChange
+          onChange: (e) => onChangeToText(e, fieldName)
         })}
       />
       <ErrorMessage

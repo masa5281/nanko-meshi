@@ -46,13 +46,6 @@ export const ManualCalorieForm = () => {
     }
   };
 
-  // 入力値を全角→半角変換
-  const onChangeToText = (e) => {
-    const inputText = e.target.value;
-    const toHalfWidth = inputText.replace(/[０-９]/g, (str) => String.fromCharCode(str.charCodeAt(0) - 0xFEE0));
-    setValue("calorie", toHalfWidth, { shouldValidate: true });
-  }
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(createManualCalorie)}>
@@ -69,7 +62,6 @@ export const ManualCalorieForm = () => {
               min: { value: 1, message: "カロリーは1以上で入力してください" },
             }}
             columnName="burned_calorie"
-            onChange={onChangeToText}
           />
 
           <div className="flex flex-col items-start">
