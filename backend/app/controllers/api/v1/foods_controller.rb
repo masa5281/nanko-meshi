@@ -1,6 +1,6 @@
 class Api::V1::FoodsController < ApplicationController
   def index
-    foods = Food.all
+    foods = current_user.foods
     render json: foods
   end
 
