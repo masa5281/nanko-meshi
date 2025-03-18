@@ -11,11 +11,13 @@ export const getFoodsApi = async () => {
   }
 };
 
-// 食品を登録
-export const createFoodApi = (name, calorie, foodImage) => {
+// FormData送信の準備
+export const createFoodFormData = (foodName, foodCalorie, foodImage) => {
   const formData = new FormData();
-  formData.append("food[name]", name);
-  formData.append("food[calorie]", calorie);
-  formData.append("food[food_image]", foodImage);
+  formData.append("food[name]", foodName);
+  formData.append("food[calorie]", foodCalorie);
+  if (foodImage instanceof File) {
+    formData.append("food[food_image]", foodImage);
+  }
   return formData;
-}
+};

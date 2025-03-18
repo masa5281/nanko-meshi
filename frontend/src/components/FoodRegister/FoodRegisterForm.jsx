@@ -1,6 +1,6 @@
 // モジュール
-import { createFoodApi } from "../../api/foodApi";
-import { API_ENDPOINTS } from "../../utils/constants";
+import { createFoodFormData } from "../../api/foodApi";
+import { API_ENDPOINTS, ROUTES } from "../../utils/constants";
 import { axiosClient } from "../../config/axiosClient";
 // コンポーネント
 import { InputField } from "../InputField/InputField";
@@ -31,7 +31,7 @@ export const FoodRegisterForm = () => {
   const { watch, handleSubmit } = methods;
   const foodName = watch("foodName");
   const foodCalorie = watch("foodCalorie");
-  
+
   // ボタン押下でinputが発火
   const handleInputFile = (e) => {
     e.preventDefault();
@@ -49,9 +49,9 @@ export const FoodRegisterForm = () => {
 
   const createFood = async () => {
     try {
-      const data = createFoodApi(foodName, foodCalorie, foodImage);
+      const data = createFoodFormData(foodName, foodCalorie, foodImage);
       await axiosClient.post(API_ENDPOINTS.FOODS.BASE, data);
-      navigate("/");
+      navigate(ROUTES.USERS.ITEM);
     } catch (error) {
       setValidateErrors(error.response.data);
     }
@@ -72,8 +72,7 @@ export const FoodRegisterForm = () => {
                 </IconContext.Provider>
                 <span className="text-xl">NO IMAGE</span>
               </div>
-            )
-            }
+            )}
           </button>
         </div>
 
