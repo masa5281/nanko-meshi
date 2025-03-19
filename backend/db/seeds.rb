@@ -19,6 +19,6 @@ food_names.each_with_index do |food_name, index|
   user.foods.create!(
     name: food_name,
     calorie: calorie,
-    food_image: File.open(Rails.root.join("public/images/no-food-image.jpg"))
+    food_image: nil
   )
 end
