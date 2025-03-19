@@ -21,3 +21,7 @@ body {
   font-family: "Zen Maru Gothic", serif;
   background-color: #FFEEC3;
 }
+
+.modal--open {
+  overflow: hidden;
+}

@@ -7,7 +7,7 @@ export const SubmitButton = (props) => {
   return (
     <button
       type="submit"
-      className={`inline-block relative mx-auto px-12 py-2 border-slate-900 border-2 rounded-full bg-primary text-white font-bold hover:bg-hover ${className}`}
+      className={`inline-block relative mx-auto px-12 py-2 border-black border-2 rounded-full bg-primary text-white font-bold hover:bg-hover ${className}`}
     >
       {children}
     </button>

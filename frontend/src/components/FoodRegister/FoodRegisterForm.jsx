@@ -60,11 +60,11 @@ export const FoodRegisterForm = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(createFood)} className="px-10">
-        <div className="w-64 aspect-[4/3] mb-4 mx-auto border-2 border-black rounded-md ring-1 ring-black text-center overflow-hidden">
+        <div className="w-72 aspect-[4/3] mb-4 mx-auto border-2 border-black rounded-md ring-1 ring-black text-center overflow-hidden">
           <input type="file" className="hidden" ref={inputRef} onChange={onFileInputChange} />
-          <button className="relative w-full h-full bg-gray-100 hover:brightness-110 transition-all duration-200" onClick={handleInputFile}>
+          <button className="relative w-full h-full align-bottom bg-gray-100 hover:brightness-110 transition-all duration-200" onClick={handleInputFile}>
             {foodImage ? (
-              <img src={previewImage} alt="" className="w-full h-full" />
+              <img src={previewImage} alt="" className="w-full h-full object-cover" />
             ) : (
               <div className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 <IconContext.Provider value={{ size: 40 }}>
