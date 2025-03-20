@@ -1,16 +1,21 @@
 // モジュール
-import { createFoodFormData, getFoodsApi } from "../../api/foodApi";
+import { createFoodFormData, deleteFoodApi, getFoodsApi } from "../../api/foodApi";
 import { axiosClient } from "../../config/axiosClient";
 // ライブラリ
 import { useEffect, useRef, useState } from "react";
 import { IconContext } from "react-icons/lib";
 import Modal from 'react-modal';
 import ReactModal from "react-modal";
+import { Dropdown } from "flowbite-react";
 // アイコン
-import { MdEdit } from "react-icons/md";
 import { API_ENDPOINTS } from "../../utils/constants";
 import { FaCamera } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
+import { BsThreeDots } from "react-icons/bs";
+import { FaPencilAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
+// flowbite-reactのカスタムテーマ
+import { foodCustomTheme } from "../../theme/theme";
 
 ReactModal.setAppElement('#root');
 
@@ -21,6 +26,7 @@ export const RegisterdFoodItem = () => {
   const [foodImage, setFoodImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const inputRef = useRef(null);
+  const [modalType, setModalType] = useState("");
 
   const modalStyle = {
     overlay: {
@@ -59,19 +65,21 @@ export const RegisterdFoodItem = () => {
     getFoodList();
   }, []);
 
-  const openModal = (food) => {
-    setIsOpen(true);
+  const openModal = (type, food) => {
     setSelectFood(food);
+    setModalType(type);
+    setIsOpen(true);
   };
   const closeModal = () => {
     setIsOpen(false);
     setPreviewImage("");
     setFoodImage("");
+    setModalType("");
+    document.querySelector("body").classList.remove("modal--open");
   };
 
   const handleUpdateFood = async () => {
     try {
-      console.log(selectFood);
       const data = await createFoodFormData(
         selectFood.name,
         selectFood.calorie,
@@ -83,7 +91,7 @@ export const RegisterdFoodItem = () => {
       );
       closeModal();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -93,7 +101,7 @@ export const RegisterdFoodItem = () => {
     inputRef.current.click();
   }
 
-  // ファイル選択後、画像をプレビュー用とアップロード用に保存
+  // 画像ファイル選択後、プレビュー用とアップロード用に保存
   const onFileInputChange = (e) => {
     if (!e.target.files) return;
 
@@ -102,12 +110,24 @@ export const RegisterdFoodItem = () => {
     setFoodImage(fileObject);
   };
 
+  const handleDeleteFood = async () => {
+    try {
+      await deleteFoodApi(selectFood.id);
+      setFoodList(prevFoodList =>
+        prevFoodList.filter(food => food.id !== selectFood.id)
+      );
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto text-center">
       <h2 className="inline-block mb-8 px-5 py-3 bg-black rounded-full text-white text-3xl">登録した食品</h2>
 
       {/* モーダル */}
-      {selectFood && (
+      {modalType === "edit" && selectFood && (
         <Modal
           isOpen={isOpen}
           style={modalStyle}
@@ -163,20 +183,48 @@ export const RegisterdFoodItem = () => {
         </Modal>
       )}
 
+      {/* 削除用のモーダル */}
+      {modalType === "delete" && selectFood && (
+        <Modal
+          isOpen={isOpen}
+          style={modalStyle}
+          bodyOpenClassName="modal--open"
+        >
+          <p className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">食品を削除しますか？</p>
+          <button
+            onClick={() => handleDeleteFood()}
+            className="w-full inline-block relative mx-auto px-12 py-2 border-black border-2 rounded-full bg-delete text-white font-bold hover:bg-hover"
+          >
+            削除
+          </button>
+          <button
+            onClick={() => closeModal()}
+            className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200">
+            <IconContext.Provider value={{ size: 30 }}>
+              <IoIosClose />
+            </IconContext.Provider>
+          </button>
+        </Modal>
+      )}
+
       {/* ページ内 */}
       <ul className="grid grid-cols-3 gap-14 px-20">
         {foodList.map((food, index) => {
           return (
             <li key={index} className="relative flex flex-col justify-center px-8 py-4 bg-white rounded-lg shadow-sm shadow-shadow">
-
-              <div
-                className="absolute top-3 right-3 p-1 rounded-full transition-all duration-200 hover:bg-gray-200 hover:cursor-pointer"
-                onClick={() => openModal(food)}
+              <Dropdown label={
+                <div className="p-1.5 bg-gray-200 rounded-full hover:bg-hoverGray">
+                  <BsThreeDots />
+                </div>
+              }
+                arrowIcon={false}
+                inline={true}
+                theme={foodCustomTheme}
               >
-                <IconContext.Provider value={{ size: 22 }}>
-                  <MdEdit />
-                </IconContext.Provider>
-              </div>
+                <Dropdown.Item icon={FaPencilAlt} onClick={() => openModal("edit", food)}>編集</Dropdown.Item>
+                <Dropdown.Item icon={FaTrashAlt} onClick={() => openModal("delete", food)} className="text-delete">削除</Dropdown.Item>
+              </Dropdown>
+
               <div className="mb-3 border-b-2">
                 <img src={food.food_image.thumb.url} alt="" className="mx-auto mb-3 rounded-lg" />
               </div>

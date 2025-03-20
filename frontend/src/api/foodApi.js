@@ -21,3 +21,13 @@ export const createFoodFormData = (foodName, foodCalorie, foodImage) => {
   }
   return formData;
 };
+
+// 食品を削除
+export const deleteFoodApi = async (foodId) => {
+  try {
+    const response = await axiosClient.delete(`${API_ENDPOINTS.FOODS.BASE}/${foodId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

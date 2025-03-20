@@ -20,10 +20,12 @@ module.exports = {
         header: "#FF763C",
         hover: "#FF915F",
         hoverWhite: "#EDEEEE",
+        hoverGray: "#DDDDDD",
         error: "#C42F30",
         errorYellow: "#FFFF00",
         shadow: "#AAA",
         redBar: "#FF3838",
+        delete: "#DC2626"
       },
       borderWidth: {
         "40": "40px",
