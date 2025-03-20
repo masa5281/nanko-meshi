@@ -79,14 +79,6 @@ export const App = () => {
             }
           />
           <Route
-            path={ROUTES.FOODS.REGISTER}
-            element={
-              <ProtectedRoute>
-                <FoodRegister />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path={ROUTES.USERS.ITEM}
             element={
               <ProtectedRoute>
