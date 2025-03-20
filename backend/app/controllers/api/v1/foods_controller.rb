@@ -22,6 +22,16 @@ class Api::V1::FoodsController < ApplicationController
     end
   end
 
+  def destroy
+    food = Food.find(params[:id])
+    if food
+      food.destroy
+      head :no_content
+    else
+      render json: food.errors, status: :not_found
+    end
+  end
+
   private
 
   def food_params
