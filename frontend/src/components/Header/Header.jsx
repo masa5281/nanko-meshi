@@ -17,6 +17,7 @@ import logo from "../../images/logo.png"
 // アイコン
 import { PiSignOutBold } from "react-icons/pi";
 import { PiSignInBold } from "react-icons/pi";
+import { BiSolidBowlRice } from "react-icons/bi";
 // flowbite-reactのカスタムテーマ
 import { headerCustomTheme } from "../../theme/theme";
 // カスタムフック
@@ -62,9 +63,12 @@ export const Header = () => {
               inline={true}
               theme={headerCustomTheme}
             >
-              <Dropdown.Item icon={PiSignOutBold}>
-                <Link to={ROUTES.AUTH.SIGN_IN} onClick={handleSignOut}>ログアウト</Link>
-              </Dropdown.Item>
+              <Link to={ROUTES.AUTH.SIGN_IN} onClick={handleSignOut}>
+                <Dropdown.Item icon={PiSignOutBold}>ログアウト</Dropdown.Item>
+              </Link>
+              <Link to={ROUTES.USERS.ITEM}>
+                <Dropdown.Item icon={BiSolidBowlRice}>登録した食品</Dropdown.Item>
+              </Link>
             </Dropdown>
           </nav>
         ) : (
@@ -78,4 +82,4 @@ export const Header = () => {
       )}
     </header>
   );
-}
+};
