@@ -1,7 +1,7 @@
 export const SubmitButton = (props) => {
   const {
     children,
-    className = ""
+    className = "",
   } = props;
 
   return (

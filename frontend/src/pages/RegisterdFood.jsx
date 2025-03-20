@@ -1,7 +1,10 @@
 import { RegisterdFoodItem } from "../components/RegisterdFoodList/RegisterdFoodItem";
+import { ValidateErrorProvider } from "../context/ValidateErrorContext";
 
 export const RegisterdFood = () => {
   return (
-    <RegisterdFoodItem />
+    <ValidateErrorProvider>
+      <RegisterdFoodItem />
+    </ValidateErrorProvider>
   );
 };

@@ -4,7 +4,7 @@ import { ROUTES } from "../../utils/constants";
 import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { DateInput } from "./DateInput";
-import { InputValidateErrors } from "./InputValidateErrors";
+import { InputValidateErrors } from "../InputField/InputValidateErrors";
 import { SubmitButton } from "../Button/SubmitButton"
 import { InputField } from "../InputField/InputField";
 // ライブラリ

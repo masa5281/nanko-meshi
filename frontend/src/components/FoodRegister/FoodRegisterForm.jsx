@@ -81,7 +81,7 @@ export const FoodRegisterForm = () => {
           type="text"
           placeholder="例：チョコレート"
           fieldName="foodName"
-          iconComponent={<BiSolidBowlRice className="mr-0.5" />}
+          iconComponent={<BiSolidBowlRice />}
           labelName="食品名"
           className="mb-4"
           validationRule={{
@@ -96,7 +96,7 @@ export const FoodRegisterForm = () => {
           type="text"
           placeholder="例：300"
           fieldName="foodCalorie"
-          iconComponent={<FaFire className="mr-0.5" />}
+          iconComponent={<FaFire />}
           labelName="食品のカロリー（kcal）"
           className="mb-6"
           validationRule={{

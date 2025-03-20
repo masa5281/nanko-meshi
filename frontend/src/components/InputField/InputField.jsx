@@ -1,5 +1,5 @@
 // コンポーネント
-import { InputValidateErrors } from "../CalorieInput/InputValidateErrors";
+import { InputValidateErrors } from "./InputValidateErrors";
 // ライブラリ
 import { useFormContext } from "react-hook-form";
 import { IconContext } from "react-icons/lib";
@@ -11,7 +11,7 @@ import { useHalfWith } from "../../hooks/useHalfWith";
 export const InputField = (props) => {
   const { validateErrors } = useValidateError();
   const { onChangeToText } = useHalfWith();
-
+  
   const {
     type,
     placeholder,
@@ -22,8 +22,9 @@ export const InputField = (props) => {
     labelName,
     className = "",
     columnName,
+    handleOnChange
   } = props;
-
+  
   const {
     register,
     formState: { errors },
@@ -33,7 +34,9 @@ export const InputField = (props) => {
     <div className={className}>
       <label htmlFor={id} className="flex items-center pl-3 font-bold">
         <IconContext.Provider value={{ size: 20 }}>
-          {iconComponent}
+          <div className="mr-0.5">
+            {iconComponent}
+          </div>
         </IconContext.Provider>
         {labelName}
       </label>
@@ -44,7 +47,12 @@ export const InputField = (props) => {
         className="w-full border-black border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
         {...register(fieldName, {
           ...validationRule,
-          onChange: (e) => onChangeToText(e, fieldName)
+          onChange: (e) => {
+            if (handleOnChange) {
+              handleOnChange(e, columnName);
+            }
+            onChangeToText(e, fieldName);
+          }
         })}
       />
       <ErrorMessage
