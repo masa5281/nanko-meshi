@@ -1,12 +1,6 @@
 // コンポーネント
 import { AnimateProgress } from "./AnimateProgress";
 
-// ライブラリ
-import { Flowbite } from "flowbite-react";
-
-// flowbite-reactのカスタムテーマ
-import { customTheme } from "../../theme/theme";
-
 export const FoodItem = (props) => {
   const { food, manualCalorie } = props;
 
@@ -40,9 +34,8 @@ export const FoodItem = (props) => {
               <span>50</span>
               <span>100</span>
             </div>
-            <Flowbite theme={{ theme: customTheme }}>
-              <AnimateProgress foodCalorie={food.calorie} foodPercentage={foodPercentage(food.calorie)} />
-            </Flowbite>
+
+            <AnimateProgress foodCalorie={food.calorie} foodPercentage={foodPercentage(food.calorie)} />
           </div>
         </div>
       </div>

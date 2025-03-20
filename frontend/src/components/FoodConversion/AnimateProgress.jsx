@@ -2,6 +2,8 @@
 import { Progress } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useMotionValue, useMotionValueEvent, animate } from "motion/react";
+// flowbite-reactのカスタムテーマ
+import { progressCustomTheme } from "../../theme/theme";
 
 // プログレスバーをアニメーション
 export const AnimateProgress = (props) => {
@@ -19,6 +21,6 @@ export const AnimateProgress = (props) => {
   }, [initialValue, foodCalorie, foodPercentage]);
 
   return (
-    <Progress progress={progressValue} size="lgPlus" color={progressColor(foodCalorie)} className="bg-slate-200" />
+    <Progress progress={progressValue} size="lgPlus" color={progressColor(foodCalorie)} className="bg-slate-200" theme={progressCustomTheme} />
   )
 }
