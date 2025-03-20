@@ -6,11 +6,11 @@ import { IconContext } from "react-icons/lib";
 import { ErrorMessage } from "@hookform/error-message"
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
-import { useHalfWith } from "../../hooks/useHalfWith";
+import { useFormUtils } from "../../hooks/useFormUtils";
 
 export const InputField = (props) => {
   const { validateErrors } = useValidateError();
-  const { onChangeToText } = useHalfWith();
+  const { onChangeToText } = useFormUtils();
   
   const {
     type,

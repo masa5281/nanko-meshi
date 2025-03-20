@@ -6,8 +6,8 @@ import { axiosClient } from "../../config/axiosClient";
 import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
 // ライブラリ
-import { useRef, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useRef } from "react";
+import { FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { IconContext } from "react-icons/lib";
 // アイコン
@@ -16,18 +16,18 @@ import { BiSolidBowlRice } from "react-icons/bi";
 import { LuCameraOff } from "react-icons/lu";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
+import { useFormUtils } from "../../hooks/useFormUtils";
 
 export const FoodRegisterForm = () => {
-  const [foodImage, setFoodImage] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const { setValidateErrors } = useValidateError();
-
-  const methods = useForm({
-    mode: "onBlur",
-    criteriaMode: "all"
-  });
+  const {
+    foodImage,
+    previewImage,
+    onFileInputChange,
+    methods,
+  } = useFormUtils();
   const { watch, handleSubmit } = methods;
   const foodName = watch("foodName");
   const foodCalorie = watch("foodCalorie");
@@ -37,15 +37,6 @@ export const FoodRegisterForm = () => {
     e.preventDefault();
     inputRef.current.click();
   }
-
-  // ファイル選択後、画像をプレビュー用とアップロード用に保存
-  const onFileInputChange = (e) => {
-    if (!e.target.files) return;
-
-    const fileObject = e.target.files[0];
-    setPreviewImage(URL.createObjectURL(fileObject));
-    setFoodImage(fileObject);
-  };
 
   const createFood = async () => {
     try {
@@ -75,7 +66,6 @@ export const FoodRegisterForm = () => {
             )}
           </button>
         </div>
-
         <InputField
           id="foodName"
           type="text"
@@ -90,7 +80,6 @@ export const FoodRegisterForm = () => {
           }}
           columnName="name"
         />
-
         <InputField
           id="foodCalorie"
           type="text"
@@ -106,10 +95,7 @@ export const FoodRegisterForm = () => {
           }}
           columnName="calorie"
         />
-
-        <SubmitButton className="w-full">
-          登録
-        </SubmitButton>
+        <SubmitButton className="w-full">登録</SubmitButton>
       </form>
     </FormProvider>
   );
