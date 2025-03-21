@@ -13,7 +13,6 @@ import { FaTrashAlt } from "react-icons/fa";
 // flowbite-reactのカスタムテーマ
 import { foodCustomTheme } from "../../theme/theme";
 // カスタムフック
-import { useFormUtils } from "../../hooks/useFormUtils";
 import { useFoodApi } from "../../hooks/useFoodApi";
 
 ReactModal.setAppElement('#root');
@@ -23,10 +22,6 @@ export const RegisterdFoodItem = () => {
   const [selectFood, setSelectFood] = useState({});
   const [modalType, setModalType] = useState("");
   const { foodList, setFoodList } = useFoodApi();
-  const {
-    setFoodImage,
-    setPreviewImage,
-  } = useFormUtils();
   const { reset } = useFormContext();
 
   const openModal = (type, food) => {
@@ -44,9 +39,7 @@ export const RegisterdFoodItem = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    setPreviewImage("");
-    setFoodImage("");
-    setSelectFood("");
+    setSelectFood({});
     document.querySelector("body").classList.remove("modal--open");
   };
 

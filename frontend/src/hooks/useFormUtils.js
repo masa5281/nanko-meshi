@@ -23,9 +23,7 @@ export const useFormUtils = () => {
 
   return {
     foodImage,
-    setFoodImage,
     previewImage,
-    setPreviewImage,
     onChangeToText,
     onFileInputChange
   };
