@@ -1,21 +1,23 @@
 // モジュール
 import { useFoodApi } from "../../hooks/useFoodApi";
 // ライブラリ
-import { IconContext } from "react-icons/lib";
 import Modal from 'react-modal';
 import ReactModal from "react-modal";
 // アイコン
 import { IoIosClose } from "react-icons/io";
+// カスタムフック
+import { useCloseModalContext } from "./RegisterdFoodItem";
 // モーダルのスタイル
 import { modalStyle } from "../../theme/modalStyle"
+import { CloseModalButton } from "../Button/CloseModalButton";
 
 ReactModal.setAppElement('#root');
 
 export const FoodDeleteModal = (props) => {
+  const closeModal= useCloseModalContext();
   const {
     selectFood,
     isOpen,
-    closeModal,
     setFoodList,
   } = props;
   const { deleteFood } = useFoodApi();
@@ -45,13 +47,9 @@ export const FoodDeleteModal = (props) => {
       >
         削除
       </button>
-      <button
-        onClick={() => closeModal()}
-        className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200">
-        <IconContext.Provider value={{ size: 30 }}>
-          <IoIosClose />
-        </IconContext.Provider>
-      </button>
+      <CloseModalButton>
+        <IoIosClose />
+      </CloseModalButton>
     </Modal>
   );
 };

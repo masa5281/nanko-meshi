@@ -10,25 +10,27 @@ import Modal from 'react-modal';
 import { useRef } from "react";
 // アイコン
 import { FaCamera } from "react-icons/fa";
-import { IoIosClose } from "react-icons/io";
 import { FaFire } from "react-icons/fa6";
 import { BiSolidBowlRice } from "react-icons/bi";
+import { IoIosClose } from "react-icons/io";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
+import { useCloseModalContext } from "./RegisterdFoodItem";
 // モーダルのスタイル
 import { modalStyle } from "../../theme/modalStyle"
 import { useFormContext } from "react-hook-form";
+import { CloseModalButton } from "../Button/CloseModalButton";
 
 export const FoodEditModal = (props) => {
   const { setValidateErrors } = useValidateError();
   const { handleSubmit } = useFormContext();
   const { updateFood } = useFoodApi();
   const inputRef = useRef(null);
+  const closeModal = useCloseModalContext();
   const {
     selectFood,
     isOpen,
     setSelectFood,
-    closeModal,
     setFoodList,
   } = props;
   const {
@@ -40,6 +42,7 @@ export const FoodEditModal = (props) => {
   const handleUpdateFood = async () => {
     try {
       const response = await updateFood(selectFood, foodImage);
+      console.log(response);
       setFoodList(prevFoodList =>
         prevFoodList.map(food => food.id === selectFood.id ? response : food)
       );
@@ -85,6 +88,7 @@ export const FoodEditModal = (props) => {
             )}
           </button>
         </div>
+
         <div className="flex flex-col gap-3">
           <InputField
             id="foodName"
@@ -100,6 +104,7 @@ export const FoodEditModal = (props) => {
             columnName="name"
             handleOnChange={handleOnChange}
           />
+
           <InputField
             id="foodCalorie"
             type="text"
@@ -118,13 +123,9 @@ export const FoodEditModal = (props) => {
           <SubmitButton className="w-full">更新</SubmitButton>
         </div>
       </form>
-      <button
-        onClick={() => closeModal()}
-        className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200">
-        <IconContext.Provider value={{ size: 30 }}>
-          <IoIosClose />
-        </IconContext.Provider>
-      </button>
+      <CloseModalButton>
+        <IoIosClose />
+      </CloseModalButton>
     </Modal>
   );
 };

@@ -22,7 +22,7 @@ export const useFoodApi = () => {
   // 食品を更新
   const updateFood = async (selectFood, foodImage) => {
     try {
-      const data = await createFoodFormData(
+      const data = createFoodFormData(
         selectFood.name,
         selectFood.calorie,
         foodImage ? foodImage : selectFood.food_image
