@@ -1,17 +1,11 @@
 import { useState } from "react";
-import { useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 export const useFormUtils = () => {
   const { setValue } = useFormContext();
-
   const [foodImage, setFoodImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
 
-  const methods = useForm({
-    mode: "onBlur",
-    criteriaMode: "all"
-  });
-  
   // 入力値を全角→半角変換
   const onChangeToText = (e, fieldName) => {
     const inputText = e.target.value;
@@ -29,8 +23,9 @@ export const useFormUtils = () => {
 
   return {
     foodImage,
+    setFoodImage,
     previewImage,
-    methods,
+    setPreviewImage,
     onChangeToText,
     onFileInputChange
   };

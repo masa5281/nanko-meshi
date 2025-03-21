@@ -11,7 +11,6 @@ import { useFormUtils } from "../../hooks/useFormUtils";
 export const InputField = (props) => {
   const { validateErrors } = useValidateError();
   const { onChangeToText } = useFormUtils();
-  
   const {
     type,
     placeholder,
@@ -24,7 +23,6 @@ export const InputField = (props) => {
     columnName,
     handleOnChange
   } = props;
-  
   const {
     register,
     formState: { errors },
