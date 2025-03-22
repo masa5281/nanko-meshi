@@ -1,11 +1,11 @@
 // コンポーネント
-import { FoodEditModal } from "./FoodEditModal";
-import { FoodDeleteModal } from "./FoodDeleteModal";
+import { FoodEditForm } from "./FoodEditForm";
+import { FoodDeleteForm } from "./FoodDeleteForm";
 // ライブラリ
 import { createContext, useContext, useState } from "react";
-import ReactModal from "react-modal";
 import { Dropdown } from "flowbite-react";
 import { useFormContext } from "react-hook-form";
+import Modal from 'react-modal';
 // アイコン
 import { BsThreeDots } from "react-icons/bs";
 import { FaPencilAlt } from "react-icons/fa";
@@ -14,8 +14,8 @@ import { FaTrashAlt } from "react-icons/fa";
 import { foodCustomTheme } from "../../theme/theme";
 // カスタムフック
 import { useFoodApi } from "../../hooks/useFoodApi";
-
-ReactModal.setAppElement('#root');
+// モーダルのスタイル
+import { modalStyle } from "../../theme/modalStyle"
 
 const CloseModalContext = createContext();
 export const useCloseModalContext = () => useContext(CloseModalContext);
@@ -50,23 +50,29 @@ export const RegisterdFoodItem = () => {
     <div className="max-w-7xl mx-auto text-center">
       <h2 className="inline-block mb-8 px-5 py-3 bg-black rounded-full text-white text-3xl">登録した食品</h2>
 
-      <CloseModalContext.Provider value={closeModal}>
-        {modalType === "edit" && selectFood && (
-          <FoodEditModal
-            selectFood={selectFood}
-            setSelectFood={setSelectFood}
-            isOpen={isOpen}
-            setFoodList={setFoodList}
-          />
-        )}
-        {modalType === "delete" && selectFood && (
-          <FoodDeleteModal
-            selectFood={selectFood}
-            isOpen={isOpen}
-            setFoodList={setFoodList}
-          />
-        )}
-      </CloseModalContext.Provider>
+      <Modal
+        isOpen={isOpen}
+        style={modalStyle}
+        bodyOpenClassName="modal--open"
+      >
+        <CloseModalContext.Provider value={closeModal}>
+          {modalType === "edit" && selectFood && (
+            <FoodEditForm
+              selectFood={selectFood}
+              setSelectFood={setSelectFood}
+              isOpen={isOpen}
+              setFoodList={setFoodList}
+            />
+          )}
+          {modalType === "delete" && selectFood && (
+            <FoodDeleteForm
+              selectFood={selectFood}
+              isOpen={isOpen}
+              setFoodList={setFoodList}
+            />
+          )}
+        </CloseModalContext.Provider>
+      </Modal>
 
       <ul className="grid grid-cols-3 gap-12 px-20">
         {foodList.map((food, index) => {

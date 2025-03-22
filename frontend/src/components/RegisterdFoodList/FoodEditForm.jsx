@@ -1,12 +1,14 @@
 // コンポーネント
 import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
+import { IconWrapper } from "../IconWrapper";
+import { CloseModalButton } from "../Button/CloseModalButton";
 // モジュール
 import { useFormUtils } from "../../hooks/useFormUtils";
 import { useFoodApi } from "../../hooks/useFoodApi";
 // ライブラリ
-import Modal from 'react-modal';
 import { useRef } from "react";
+import { useFormContext } from "react-hook-form";
 // アイコン
 import { FaCamera } from "react-icons/fa";
 import { FaFire } from "react-icons/fa6";
@@ -15,13 +17,8 @@ import { IoIosClose } from "react-icons/io";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
 import { useCloseModalContext } from "./RegisterdFoodItem";
-// モーダルのスタイル
-import { modalStyle } from "../../theme/modalStyle"
-import { useFormContext } from "react-hook-form";
-import { CloseModalButton } from "../Button/CloseModalButton";
-import { IconWrapper } from "../IconWrapper";
 
-export const FoodEditModal = (props) => {
+export const FoodEditForm = (props) => {
   const { setValidateErrors } = useValidateError();
   const { handleSubmit } = useFormContext();
   const { updateFood } = useFoodApi();
@@ -29,7 +26,6 @@ export const FoodEditModal = (props) => {
   const closeModal = useCloseModalContext();
   const {
     selectFood,
-    isOpen,
     setSelectFood,
     setFoodList,
   } = props;
@@ -62,11 +58,7 @@ export const FoodEditModal = (props) => {
   }
 
   return (
-    <Modal
-      isOpen={isOpen}
-      style={modalStyle}
-      bodyOpenClassName="modal--open"
-    >
+    <>
       <h3 className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">食品情報を変更</h3>
 
       <form onSubmit={handleSubmit(handleUpdateFood)}>
@@ -125,6 +117,6 @@ export const FoodEditModal = (props) => {
       <CloseModalButton>
         <IoIosClose />
       </CloseModalButton>
-    </Modal>
+    </>
   );
 };

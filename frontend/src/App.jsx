@@ -15,6 +15,9 @@ import { GuestRoute } from "./Routes/GuestRoute";
 import { AuthProvider } from "./context/AuthContext";
 // ライブラリ
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ReactModal from "react-modal";
+
+ReactModal.setAppElement('#root');
 
 export const App = () => {
   return (
