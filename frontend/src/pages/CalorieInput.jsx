@@ -10,7 +10,7 @@ export const CalorieInput = () => {
           <motion.h2 className="relative inline-block mb-3 text-black text-5xl font-bold gradient-marker">
             消費したカロリーを入力！
             <motion.span
-              className="absolute -bottom-1 right-2 w-full h-3 bg-primary -z-10"
+              className="absolute -bottom-1 right-2 w-full h-3 bg-[#FFD700] -z-10"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ type: "tween", duration: 0.5 }}
