@@ -1,8 +1,8 @@
 // コンポーネント
 import { InputValidateErrors } from "./InputValidateErrors";
+import { IconWrapper } from "../IconWrapper";
 // ライブラリ
 import { useFormContext } from "react-hook-form";
-import { IconContext } from "react-icons/lib";
 import { ErrorMessage } from "@hookform/error-message"
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
@@ -31,12 +31,12 @@ export const InputField = (props) => {
   return (
     <div className={className}>
       <label htmlFor={id} className="flex items-center pl-3 font-bold">
-        <IconContext.Provider value={{ size: 20 }}>
+        <IconWrapper size={20}>
           <div className="mr-0.5">
             {iconComponent}
           </div>
-        </IconContext.Provider>
-        {labelName}
+          {labelName}
+        </IconWrapper>
       </label>
       <input
         id={id}

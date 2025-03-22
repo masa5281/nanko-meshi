@@ -9,7 +9,6 @@ import { SubmitButton } from "../Button/SubmitButton";
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { IconContext } from "react-icons/lib";
 // アイコン
 import { FaFire } from "react-icons/fa6";
 import { BiSolidBowlRice } from "react-icons/bi";
@@ -17,6 +16,7 @@ import { LuCameraOff } from "react-icons/lu";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
 import { useFormUtils } from "../../hooks/useFormUtils";
+import { IconWrapper } from "../IconWrapper";
 
 export const FoodRegisterForm = () => {
   const inputRef = useRef(null);
@@ -56,9 +56,9 @@ export const FoodRegisterForm = () => {
             <img src={previewImage} alt="" className="w-full h-full object-cover" />
           ) : (
             <div className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <IconContext.Provider value={{ size: 40 }}>
+              <IconWrapper size={40}>
                 <LuCameraOff className="mb-1" />
-              </IconContext.Provider>
+              </IconWrapper>
               <span className="text-xl">NO IMAGE</span>
             </div>
           )}

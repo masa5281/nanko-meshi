@@ -5,7 +5,6 @@ import { SubmitButton } from "../Button/SubmitButton";
 import { useFormUtils } from "../../hooks/useFormUtils";
 import { useFoodApi } from "../../hooks/useFoodApi";
 // ライブラリ
-import { IconContext } from "react-icons/lib";
 import Modal from 'react-modal';
 import { useRef } from "react";
 // アイコン
@@ -20,6 +19,7 @@ import { useCloseModalContext } from "./RegisterdFoodItem";
 import { modalStyle } from "../../theme/modalStyle"
 import { useFormContext } from "react-hook-form";
 import { CloseModalButton } from "../Button/CloseModalButton";
+import { IconWrapper } from "../IconWrapper";
 
 export const FoodEditModal = (props) => {
   const { setValidateErrors } = useValidateError();
@@ -42,7 +42,6 @@ export const FoodEditModal = (props) => {
   const handleUpdateFood = async () => {
     try {
       const response = await updateFood(selectFood, foodImage);
-      console.log(response);
       setFoodList(prevFoodList =>
         prevFoodList.map(food => food.id === selectFood.id ? response : food)
       );
@@ -75,9 +74,9 @@ export const FoodEditModal = (props) => {
           <input type="file" className="hidden" ref={inputRef} onChange={onFileInputChange} />
           <button className="relative w-full h-full hover:brightness-105 transition-all duration-200" onClick={handleInputFile}>
             <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
-              <IconContext.Provider value={{ size: 16, color: "white" }}>
-                <FaCamera />
-              </IconContext.Provider>
+              <IconWrapper>
+                <FaCamera size={16} color="#fff" />
+              </IconWrapper>
             </div>
             {previewImage ? (
               <img src={previewImage} alt="" className="w-full h-full rounded-md object-cover" />

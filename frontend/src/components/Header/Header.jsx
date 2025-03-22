@@ -8,7 +8,6 @@ import { IconList } from "./IconList";
 import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { IconContext } from "react-icons/lib";
 // 画像
 import fire from "../../images/fire-white.png"
 import food from "../../images/food-white.png"
@@ -22,6 +21,7 @@ import { BiSolidBowlRice } from "react-icons/bi";
 import { headerCustomTheme } from "../../theme/theme";
 // カスタムフック
 import { useAuth } from "../../context/AuthContext";
+import { IconWrapper } from "../IconWrapper";
 
 export const Header = () => {
   const [userImage, setUserImage] = useState("");
@@ -73,9 +73,9 @@ export const Header = () => {
           </nav>
         ) : (
           <Link to={ROUTES.AUTH.SIGN_IN} className="flex flex-col items-center text-white font-bold hover:text-hoverWhite">
-            <IconContext.Provider value={{ size: 26 }}>
+            <IconWrapper size={26}>
               <PiSignInBold />
-            </IconContext.Provider>
+            </IconWrapper>
             ログイン
           </Link>
         )

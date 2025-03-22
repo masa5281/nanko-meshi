@@ -1,8 +1,10 @@
+// コンポーネント
+import { IconWrapper } from "../IconWrapper";
 // ライブラリ
 import { useFormContext } from "react-hook-form"
 import { ErrorMessage } from "@hookform/error-message"
-import { useValidateError } from "../../pages/SignUp";
-import { IconContext } from "react-icons/lib";
+// カスタムフック
+import { useValidateError } from "../../context/ValidateErrorContext";
 
 export const AuthInputField = (props) => {
   const {
@@ -12,12 +14,10 @@ export const AuthInputField = (props) => {
     validationRule,
     iconComponent
   } = props;
-
   const {
     register,
     formState: { errors },
   } = useFormContext();
-
   const validateErrors = useValidateError();
 
   return (
@@ -29,9 +29,9 @@ export const AuthInputField = (props) => {
         {...register(fieldName, validationRule)}
       />
       <div className="absolute top-1 left-1 p-1 rounded-full bg-black">
-        <IconContext.Provider value={{ size: 24, color: "white" }}>
+        <IconWrapper size={24} color="#fff">
           {iconComponent}
-        </IconContext.Provider>
+        </IconWrapper>
       </div>
       <ErrorMessage
         errors={errors}
