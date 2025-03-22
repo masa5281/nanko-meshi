@@ -9,16 +9,16 @@ export const FoodItem = (props) => {
 
   return (
     <li className="flex p-4 bg-white rounded-lg shadow-sm shadow-shadow">
-      <div className="mr-4 pr-4 border-r-2 text-center">
-        <div className="max-w-24 max-h-24 mb-1 rounded-full overflow-hidden">
+      <div className="flex flex-col justify-between mr-4 pr-4 border-r-2 text-center">
+        <div className="max-w-24 max-h-24 rounded-sm overflow-hidden">
           <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full" />
         </div>
-        <p>{food.calorie}kcal</p>
+        <p><span className="text-xl">{food.calorie}</span>kcal</p>
       </div>
       <div className="flex flex-col flex-grow-2 justify-around">
         <p className="text-xl font-bold">{food.name}</p>
         <div className="flex items-end">
-          <div className="max-w-32 mr-5 px-1 bg-secondary rounded-xl text-white font-bold text-center">
+          <div className="max-w-32 mr-5 px-1 bg-secondary rounded-lg text-white font-bold text-center">
             <p className="relative -top-1 text-5xl">{calorieToFoodCount(food.calorie)}<span className="text-2xl">個分</span></p>
           </div>
           <div className="flex flex-col flex-grow-2 relative max-w-52 ml-auto">
