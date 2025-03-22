@@ -6,6 +6,7 @@ import { createContext, useContext, useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { useFormContext } from "react-hook-form";
 import Modal from 'react-modal';
+import { motion } from "motion/react";
 // アイコン
 import { BsThreeDots } from "react-icons/bs";
 import { FaPencilAlt } from "react-icons/fa";
@@ -54,6 +55,16 @@ export const RegisterdFoodItem = () => {
         isOpen={isOpen}
         style={modalStyle}
         bodyOpenClassName="modal--open"
+        contentElement={(props, children) => (
+          <motion.div
+            {...props}
+            initial={{ opacity: 0.5, scale:0, x: "-50%", y: "-50%" }}
+            animate={{ opacity: 1, scale:1, x: "-50%", y: "-50%" }}
+            transition={{type: "spring", duration: 0.5}}
+          >
+            {children}
+          </motion.div>
+        )}
       >
         <CloseModalContext.Provider value={closeModal}>
           {modalType === "edit" && selectFood && (
