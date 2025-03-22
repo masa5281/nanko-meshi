@@ -7,6 +7,7 @@ import { Dropdown } from "flowbite-react";
 import { useFormContext } from "react-hook-form";
 import Modal from 'react-modal';
 import { motion } from "motion/react";
+import { ToastContainer, toast } from 'react-toastify';
 // アイコン
 import { BsThreeDots } from "react-icons/bs";
 import { FaPencilAlt } from "react-icons/fa";
@@ -20,6 +21,9 @@ import { modalStyle } from "../../theme/modalStyle"
 
 const CloseModalContext = createContext();
 export const useCloseModalContext = () => useContext(CloseModalContext);
+
+const notifyContext = createContext();
+export const useNotifyContext = () => useContext(notifyContext);
 
 export const RegisterdFoodItem = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,8 +51,25 @@ export const RegisterdFoodItem = () => {
     document.querySelector("body").classList.remove("modal--open");
   };
 
+  const updateFoodNotofy = () => {
+    toast.success("食品を更新しました", {
+      position: "top-center",
+      hideProgressBar: true,
+      theme: "colored"
+    });
+  };
+
+  const deleteFoodNotify = () => {
+    toast.error("食品を削除しました", {
+      position: "top-center",
+      hideProgressBar: true,
+      theme: "colored"
+    });
+  };
+
   return (
     <div className="max-w-7xl mx-auto text-center">
+      <ToastContainer />
       <h2 className="inline-block mb-8 px-5 py-3 bg-black rounded-full text-white text-3xl">登録した食品</h2>
 
       <Modal
@@ -58,31 +79,33 @@ export const RegisterdFoodItem = () => {
         contentElement={(props, children) => (
           <motion.div
             {...props}
-            initial={{ opacity: 0.5, scale:0, x: "-50%", y: "-50%" }}
-            animate={{ opacity: 1, scale:1, x: "-50%", y: "-50%" }}
-            transition={{type: "spring", duration: 0.5}}
+            initial={{ opacity: 0.5, scale: 0, x: "-50%", y: "-50%" }}
+            animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
+            transition={{ type: "spring", duration: 0.5 }}
           >
             {children}
           </motion.div>
         )}
       >
-        <CloseModalContext.Provider value={closeModal}>
-          {modalType === "edit" && selectFood && (
-            <FoodEditForm
-              selectFood={selectFood}
-              setSelectFood={setSelectFood}
-              isOpen={isOpen}
-              setFoodList={setFoodList}
-            />
-          )}
-          {modalType === "delete" && selectFood && (
-            <FoodDeleteForm
-              selectFood={selectFood}
-              isOpen={isOpen}
-              setFoodList={setFoodList}
-            />
-          )}
-        </CloseModalContext.Provider>
+        <notifyContext.Provider value={{updateFoodNotofy, deleteFoodNotify}}>
+          <CloseModalContext.Provider value={closeModal}>
+            {modalType === "edit" && selectFood && (
+              <FoodEditForm
+                selectFood={selectFood}
+                setSelectFood={setSelectFood}
+                isOpen={isOpen}
+                setFoodList={setFoodList}
+              />
+            )}
+            {modalType === "delete" && selectFood && (
+              <FoodDeleteForm
+                selectFood={selectFood}
+                isOpen={isOpen}
+                setFoodList={setFoodList}
+              />
+            )}
+          </CloseModalContext.Provider>
+        </notifyContext.Provider>
       </Modal>
 
       <ul className="grid grid-cols-3 gap-12 px-20">

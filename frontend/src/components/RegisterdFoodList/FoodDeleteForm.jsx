@@ -5,15 +5,16 @@ import { useFoodApi } from "../../hooks/useFoodApi";
 // アイコン
 import { IoIosClose } from "react-icons/io";
 // カスタムフック
-import { useCloseModalContext } from "./RegisterdFoodItem";
+import { useCloseModalContext, useNotifyContext } from "./RegisterdFoodItem";
 
 export const FoodDeleteForm = (props) => {
   const closeModal = useCloseModalContext();
+  const { deleteFood } = useFoodApi();
+  const { deleteFoodNotify } = useNotifyContext();
   const {
     selectFood,
     setFoodList,
   } = props;
-  const { deleteFood } = useFoodApi();
 
   const handleDeleteFood = async () => {
     try {
@@ -31,7 +32,10 @@ export const FoodDeleteForm = (props) => {
     <>
       <p className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">食品を削除しますか？</p>
       <button
-        onClick={() => handleDeleteFood()}
+        onClick={() => {
+          handleDeleteFood();
+          deleteFoodNotify();
+        }}
         className="w-full inline-block relative mx-auto px-12 py-2 border-black border-2 rounded-full bg-delete text-white font-bold hover:bg-hover"
       >
         削除

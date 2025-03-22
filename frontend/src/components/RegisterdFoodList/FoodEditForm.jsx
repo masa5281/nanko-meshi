@@ -16,7 +16,7 @@ import { BiSolidBowlRice } from "react-icons/bi";
 import { IoIosClose } from "react-icons/io";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
-import { useCloseModalContext } from "./RegisterdFoodItem";
+import { useCloseModalContext, useNotifyContext } from "./RegisterdFoodItem";
 
 export const FoodEditForm = (props) => {
   const { setValidateErrors } = useValidateError();
@@ -24,6 +24,7 @@ export const FoodEditForm = (props) => {
   const { updateFood } = useFoodApi();
   const inputRef = useRef(null);
   const closeModal = useCloseModalContext();
+  const { updateFoodNotofy } = useNotifyContext();
   const {
     selectFood,
     setSelectFood,
@@ -111,7 +112,13 @@ export const FoodEditForm = (props) => {
             columnName="calorie"
             handleOnChange={handleOnChange}
           />
-          <SubmitButton className="w-full">更新</SubmitButton>
+          
+          <SubmitButton
+            className="w-full"
+            notifyClick={updateFoodNotofy}
+          >
+            更新
+          </SubmitButton>
         </div>
       </form>
       <CloseModalButton>
