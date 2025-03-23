@@ -11,11 +11,12 @@ import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../config/firebase";
 import { useForm, FormProvider } from "react-hook-form"
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 // アイコン
 import { FaUser } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
 import { IoMdLock } from "react-icons/io";
+import { setWeight } from "../utils/formUtils";
 
 // validateErrorsのコンテキスト
 const ValidateErrorContext = createContext();
@@ -24,6 +25,9 @@ export const useValidateError = () => useContext(ValidateErrorContext);
 export const SignUp = () => {
   const navigate = useNavigate();
   const [validateErrors, setValidateErrors] = useState("");
+  const [bodyWeight, setBodyWeight] = useState();
+  const bodyWeightRef = useRef(false);
+  const weights = setWeight();
 
   const methods = useForm({
     mode: "onBlur",
@@ -80,6 +84,15 @@ export const SignUp = () => {
           <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col mb-4">
             <FormProvider {...methods}>
               <ValidateErrorContext.Provider value={validateErrors} >
+                <select
+                  ref={bodyWeightRef}
+                  value={bodyWeight}
+                  onChange={(e) => setBodyWeight(e.target.value)}
+                >
+                  <option value={""}>体重を選択してください</option>
+                  {weights.map((weight) => <option key={weight} value={weight}>{weight}</option>)}
+                </select>
+
                 <AuthInputField
                   type="text"
                   placeholder="ユーザー名"
