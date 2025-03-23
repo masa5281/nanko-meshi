@@ -34,8 +34,11 @@ export const FoodRegisterForm = () => {
   // ボタン押下でinputが発火
   const handleInputFile = (e) => {
     e.preventDefault();
-    inputRef.current.click();
-  }
+    if (inputRef.current) {
+      console.log(inputRef.current);
+      inputRef.current.click();
+    }
+  };
 
   const createFood = async () => {
     try {
