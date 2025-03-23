@@ -16,7 +16,7 @@ export const createFoodFormData = (foodName, foodCalorie, foodImage) => {
   const formData = new FormData();
   formData.append("food[name]", foodName);
   formData.append("food[calorie]", foodCalorie);
-  if (foodImage instanceof File) {
+  if (foodImage && foodImage instanceof File) {
     formData.append("food[food_image]", foodImage);
   }
   return formData;
