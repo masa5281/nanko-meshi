@@ -10,6 +10,7 @@ import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";
 import { PasswordResetForm } from "./pages/PasswordResetForm"
 import { PasswordResetSuccess } from "./pages/PasswordResetSuccess"
+import { WeightRegister } from "./pages/WeightRegister";
 import { ProtectedRoute } from "./Routes/ProtectedRoute";
 import { GuestRoute } from "./Routes/GuestRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -55,6 +56,14 @@ export const App = () => {
               <GuestRoute>
                 <PasswordResetSuccess />
               </GuestRoute>
+            }
+          />
+          <Route
+            path={ROUTES.AUTH.WEIGHT}
+            element={
+              <ProtectedRoute>
+                <WeightRegister />
+              </ProtectedRoute>
             }
           />
           <Route
