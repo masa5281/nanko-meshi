@@ -61,7 +61,7 @@ export const App = () => {
           <Route
             path={ROUTES.AUTH.WEIGHT}
             element={
-              <ProtectedRoute>
+              <ProtectedRoute skipWeightCheck={true}>
                 <WeightRegister />
               </ProtectedRoute>
             }
