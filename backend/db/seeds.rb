@@ -7,9 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-user = User.find_or_create_by(firebase_uid: "8NLjWFYNhWU5vvM0gyNfqAT4mnH2") do |u|
+user = User.find_or_create_by(firebase_uid: "rvo1lUXPXngy4gSKV94pQmoxCjh2") do |u|
   u.name = "開発者"
   u.avatar = nil
+  u.weight = 70
 end
 
 food_names = [ "ポテトチップス うすしお味", "たけのこの里", "牛丼 並盛", "ハーゲンダッツ", "てりやきマックバーガー" ]
