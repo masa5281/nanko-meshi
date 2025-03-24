@@ -22,9 +22,18 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def update
+    user = User.find_by(firebase_uid: params[:firebase_uid])
+    if user.update(user_params)
+      render json: user
+    else
+      render json: user.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:firebase_uid, :name, :weight)
+    params.require(:user).permit(:firebase_uid, :name, :avatar, :weight)
   end
 end
