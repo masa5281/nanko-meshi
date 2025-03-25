@@ -14,7 +14,6 @@ import { ErrorMessage } from "@hookform/error-message";
 // カスタムフック
 import { useUserDataContext } from "../context/UserDataContext";
 // アイコン
-import { FaWeightScale } from "react-icons/fa6";
 import { GiWeightScale } from "react-icons/gi";
 
 export const WeightRegister = () => {
@@ -22,12 +21,13 @@ export const WeightRegister = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { setDbUserData } = useUserDataContext();
+  const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
+  const [validateErrors, setValidateErrors] = useState([]);
   const methods = useForm({
     mode: "onBlur",
     criteriaMode: "all"
   });
   const { register, watch, handleSubmit, formState: { errors } } = methods;
-  const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
   const selectWeight = watch("userWeight");
 
   const handleUpdateUser = async () => {
@@ -43,7 +43,7 @@ export const WeightRegister = () => {
       setDbUserData(updateUserData);
       navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
-      console.error(error);
+      setValidateErrors(error.response.data);
     }
   };
 
@@ -81,7 +81,9 @@ export const WeightRegister = () => {
                 })}
               >
                 <option value="" disabled>体重を選択</option>
-                {weights.map((weight) => <option key={weight} value={weight}>{weight}</option>)}
+                {weights.map((weight) =>
+                  <option key={weight} value={weight}>{weight}</option>
+                )}
               </select>
               <span className="absolute top-1.5 right-8 pointer-events-none">kg</span>
               <ErrorMessage
@@ -93,6 +95,13 @@ export const WeightRegister = () => {
                   ) : null
                 }
               />
+              {validateErrors?.["weight"] && (
+                validateErrors["weight"].map((error, index) =>
+                  error ? (
+                    <p key={index} className="pl-2 text-errorYellow text-sm">{error}</p>
+                  ) : null
+                )
+              )}
             </div>
 
             <AuthSubmitButton>決定</AuthSubmitButton>
