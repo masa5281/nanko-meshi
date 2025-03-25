@@ -23,3 +23,41 @@ food_names.each_with_index do |food_name, index|
     food_image: nil
   )
 end
+
+activity_names = [
+  "ウォーキング（ゆっくり）",
+  "ウォーキング（普通）",
+  "ウォーキング（速め）",
+  "ジョギング（ゆっくり）",
+  "ジョギング（普通）",
+  "ジョギング（やや速め）",
+  "ジョギング（速め）",
+  "ランニング（ゆっくり）",
+  "ランニング（普通）",
+  "ランニング（速め）",
+  "ヨガ・ストレッチ",
+  "筋トレ（軽・中等度）腹筋、腕立て伏せ、スクワットなど",
+  "筋トレ（高強度）ベンチプレス、デッドリフトなど"
+]
+mets_values = [
+  2.0,
+  3.5,
+  5.0,
+  6.0,
+  7.0,
+  7.4,
+  7.8,
+  8.3,
+  11.0,
+  15.0,
+  2.5,
+  3.5,
+  6.0
+]
+activity_names.each_with_index do |activity_name, index|
+  mets_value = mets_values[index]
+  Met.create!(
+    activity_name: activity_name,
+    mets_value: mets_value
+  )
+end
