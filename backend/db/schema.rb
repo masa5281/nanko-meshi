@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_23_010939) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_25_074400) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_23_010939) do
     t.datetime "updated_at", null: false
     t.integer "weight"
     t.check_constraint "weight > 0", name: "greater_than_0"
+    t.check_constraint "weight > 19 AND weight < 151", name: "weight_check"
   end
 
   add_foreign_key "calories", "users"
