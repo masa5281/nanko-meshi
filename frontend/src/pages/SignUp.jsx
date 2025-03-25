@@ -1,6 +1,7 @@
 // モジュール
 import { createUserApi } from "../api/userApi";
 import { signUp } from "../config/firebase";
+import { ROUTES } from "../utils/constants";
 // コンポーネント
 import { AuthInputField } from "../components/InputField/AuthInputField"
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton"
@@ -10,6 +11,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../config/firebase";
 import { useForm, FormProvider } from "react-hook-form"
 import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // アイコン
 import { FaUser } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
@@ -21,6 +23,7 @@ export const useValidateError = () => useContext(ValidateErrorContext);
 
 export const SignUp = () => {
   const [validateErrors, setValidateErrors] = useState("");
+  const navigate = useNavigate();
 
   const methods = useForm({
     mode: "onBlur",
@@ -32,7 +35,8 @@ export const SignUp = () => {
   const handleSignUp = async () => {
     try {
       const emailUser = await signUp(watch("email"), watch("password"));
-      createUserApi(emailUser.user.uid, watch("name"));
+      await createUserApi(emailUser.user.uid, watch("name"));
+      navigate(ROUTES.AUTH.WEIGHT);
     } catch (error) {
       firebaseErrorMessage(error.code);
       if (error.response) setValidateErrors(error.response.data);
@@ -44,6 +48,7 @@ export const SignUp = () => {
     try {
       const googleUser = await signInWithPopup(auth, provider);
       createUserApi(googleUser.user.uid, googleUser.user.displayName);
+      navigate(ROUTES.AUTH.WEIGHT);
     } catch (error) {
       console.error(error);
     }

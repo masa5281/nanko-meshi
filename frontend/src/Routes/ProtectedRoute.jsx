@@ -4,32 +4,17 @@ import { ROUTES } from "../utils/constants";
 import { Navigate } from "react-router-dom"
 // カスタムフック
 import { useAuth } from "../context/AuthContext";
-import { getUserApi } from "../api/userApi";
-import { useEffect, useState } from "react";
+import { useUserDataContext } from "../context/UserDataContext";
 
-// 未ログイン時、サインインへ遷移
+// 未ログイン時はサインインへ遷移、体重未入力時は体重入力へ遷移
 export const ProtectedRoute = ({ children, skipWeightCheck = false }) => {
   const { user, isAuthReady } = useAuth();
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const getUser = async () => {
-      try {
-        const dbUserData = await getUserApi(user.uid);
-        setUserData(dbUserData);
-      } catch (error) {
-        setUserData(null);
-      }
-    };
-    getUser();
-  }, [user]);
+  const { dbUserData } = useUserDataContext();
 
   if (!isAuthReady) return null;
   if (!user) return <Navigate to={ROUTES.AUTH.SIGN_IN} />
-  if (!userData) return null;
-  if (!skipWeightCheck && !userData.weight) return <Navigate to={ROUTES.AUTH.WEIGHT} />
+  if (!dbUserData) return null;
+  if (!skipWeightCheck && !dbUserData.weight) return <Navigate to={ROUTES.AUTH.WEIGHT} />
 
   return children;
 };

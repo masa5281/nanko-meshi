@@ -1,28 +1,39 @@
-import { useRef, useState } from "react";
-import { setWeight } from "../utils/formUtils";
+// コンポーネント
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton";
-import { getUserApi, updateUserApi } from "../api/userApi";
+// モジュール
+import { setWeight } from "../utils/formUtils";
 import { useAuth } from "../context/AuthContext";
+import { getUserApi, updateUserApi } from "../api/userApi";
+import { ROUTES } from "../utils/constants";
+// ライブラリ
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+// カスタムフック
+import { useUserDataContext } from "../context/UserDataContext";
 
 export const WeightRegister = () => {
   const [bodyWeight, setBodyWeight] = useState();
   const bodyWeightRef = useRef(null);
   const weights = setWeight();
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { setDbUserData } = useUserDataContext();
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     try {
-      const dbUserData = await getUserApi(user.uid);
-      const response = await updateUserApi(
-        dbUserData.name,
+      const userData = await getUserApi(user.uid);
+      await updateUserApi(
+        userData.name,
         bodyWeight,
-        dbUserData.avatar,
+        userData.avatar,
         user.uid
-      )
-      return response;
+      );
+      const updateUserData = await getUserApi(user.uid);
+      setDbUserData(updateUserData);
+      navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
