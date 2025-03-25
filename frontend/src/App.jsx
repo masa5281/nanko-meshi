@@ -18,6 +18,7 @@ import { UserDataProvider } from "./context/UserDataContext";
 // ライブラリ
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ReactModal from "react-modal";
+import { ValidateErrorProvider } from "./context/ValidateErrorContext";
 
 ReactModal.setAppElement('#root');
 
@@ -25,83 +26,85 @@ export const App = () => {
   return (
     <AuthProvider>
       <UserDataProvider>
-        <Router>
-          <Header />
-          <Routes>
-            <Route
-              path={ROUTES.AUTH.SIGN_UP}
-              element={
-                <GuestRoute>
-                  <SignUp />
-                </GuestRoute>
-              }
-            />
-            <Route
-              path={ROUTES.AUTH.SIGN_IN}
-              element={
-                <GuestRoute>
-                  <SignIn />
-                </GuestRoute>
-              }
-            />
-            <Route
-              path={ROUTES.AUTH.PASSWORD_RESET}
-              element={
-                <GuestRoute>
-                  <PasswordResetForm />
-                </GuestRoute>
-              }
-            />
-            <Route
-              path={ROUTES.AUTH.PASSWORD_SENT}
-              element={
-                <GuestRoute>
-                  <PasswordResetSuccess />
-                </GuestRoute>
-              }
-            />
-            <Route
-              path={ROUTES.AUTH.WEIGHT}
-              element={
-                <ProtectedRoute skipWeightCheck={true}>
-                  <WeightRegister />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={ROUTES.CALORIE.INPUT}
-              element={
-                <ProtectedRoute>
-                  <CalorieInput />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={ROUTES.FOODS.CONVERSION}
-              element={
-                <ProtectedRoute>
-                  <FoodConversion />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={ROUTES.FOODS.REGISTER}
-              element={
-                <ProtectedRoute>
-                  <FoodRegister />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={ROUTES.USERS.ITEM}
-              element={
-                <ProtectedRoute>
-                  <RegisterdFood />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Router>
+        <ValidateErrorProvider>
+          <Router>
+            <Header />
+            <Routes>
+              <Route
+                path={ROUTES.AUTH.SIGN_UP}
+                element={
+                  <GuestRoute>
+                    <SignUp />
+                  </GuestRoute>
+                }
+              />
+              <Route
+                path={ROUTES.AUTH.SIGN_IN}
+                element={
+                  <GuestRoute>
+                    <SignIn />
+                  </GuestRoute>
+                }
+              />
+              <Route
+                path={ROUTES.AUTH.PASSWORD_RESET}
+                element={
+                  <GuestRoute>
+                    <PasswordResetForm />
+                  </GuestRoute>
+                }
+              />
+              <Route
+                path={ROUTES.AUTH.PASSWORD_SENT}
+                element={
+                  <GuestRoute>
+                    <PasswordResetSuccess />
+                  </GuestRoute>
+                }
+              />
+              <Route
+                path={ROUTES.AUTH.WEIGHT}
+                element={
+                  <ProtectedRoute skipWeightCheck={true}>
+                    <WeightRegister />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.CALORIE.INPUT}
+                element={
+                  <ProtectedRoute>
+                    <CalorieInput />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.FOODS.CONVERSION}
+                element={
+                  <ProtectedRoute>
+                    <FoodConversion />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.FOODS.REGISTER}
+                element={
+                  <ProtectedRoute>
+                    <FoodRegister />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.USERS.ITEM}
+                element={
+                  <ProtectedRoute>
+                    <RegisterdFood />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Router>
+        </ValidateErrorProvider>
       </UserDataProvider>
     </AuthProvider>
   );
