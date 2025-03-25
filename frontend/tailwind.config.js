@@ -11,18 +11,21 @@ module.exports = {
       colors: {
         primary: {
           light: "#FFC05A",
-          DEFAULT: "#FF6E2B"
+          DEFAULT: "#FF6E2B",
+          deep: "#f59e0b",
         } ,
         secondary: "#77C043",
+        black: "#333333",
         background: "#FFEEC3",
         header: "#FF763C",
-        text: "#333333",
         hover: "#FF915F",
         hoverWhite: "#EDEEEE",
+        hoverGray: "#DDDDDD",
         error: "#C42F30",
         errorYellow: "#FFFF00",
         shadow: "#AAA",
         redBar: "#FF3838",
+        delete: "#DC2626"
       },
       borderWidth: {
         "40": "40px",

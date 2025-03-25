@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_10_224419) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_15_061652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,12 +24,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_10_224419) do
   end
 
   create_table "foods", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name", limit: 20, null: false
     t.integer "calorie", null: false
-    t.string "food_image", null: false
+    t.string "food_image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.check_constraint "calorie > 0", name: "greater_than_0"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_foods_on_user_id"
+    t.check_constraint "calorie > 0 AND calorie < 10000", name: "calorie_check"
   end
 
   create_table "users", force: :cascade do |t|
@@ -41,4 +43,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_10_224419) do
   end
 
   add_foreign_key "calories", "users"
+  add_foreign_key "foods", "users"
 end

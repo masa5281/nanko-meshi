@@ -3,9 +3,9 @@ import { createUserApi } from "../api/userApi";
 import { signUp } from "../config/firebase";
 import { ROUTES } from "../utils/constants";
 // コンポーネント
-import { InputField } from "../components/Auth/InputField";
-import { AuthButton } from "../components/Auth/AuthButton";
-import { GoogleButton } from "../components/Auth/GoogleButton";
+import { AuthInputField } from "../components/InputField/AuthInputField"
+import { AuthSubmitButton } from "../components/Button/AuthSubmitButton"
+import { GoogleButton } from "../components/Button/GoogleButton";
 // ライブラリ
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
@@ -80,7 +80,7 @@ export const SignUp = () => {
           <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col mb-4">
             <FormProvider {...methods}>
               <ValidateErrorContext.Provider value={validateErrors} >
-                <InputField
+                <AuthInputField
                   type="text"
                   placeholder="ユーザー名"
                   fieldName="name"
@@ -90,7 +90,7 @@ export const SignUp = () => {
                   }}
                   iconComponent={<FaUser />}
                 />
-                <InputField
+                <AuthInputField
                   type="email"
                   placeholder="メールアドレス"
                   fieldName="email"
@@ -103,7 +103,7 @@ export const SignUp = () => {
                   }}
                   iconComponent={<IoMail />}
                 />
-                <InputField
+                <AuthInputField
                   type="password"
                   placeholder="パスワード"
                   fieldName="password"
@@ -113,7 +113,7 @@ export const SignUp = () => {
                   }}
                   iconComponent={<IoMdLock />}
                 />
-                <InputField
+                <AuthInputField
                   type="password"
                   placeholder="パスワード（確認）"
                   fieldName="password_confirm"
@@ -125,7 +125,7 @@ export const SignUp = () => {
                 />
               </ValidateErrorContext.Provider>
             </FormProvider>
-            <AuthButton>新規登録</AuthButton>
+            <AuthSubmitButton>新規登録</AuthSubmitButton>
           </form>
           <GoogleButton handleSignInGoogle={handleSignInGoogle}>Googleで登録</GoogleButton>
         </div>

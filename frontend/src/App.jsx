@@ -2,8 +2,10 @@
 import { ROUTES } from "./utils/constants";
 // コンポーネント
 import { Header } from "./components/Header/Header";
-import { CalorieInput } from "./components/CalorieInput/CalorieInput";
+import { CalorieInput } from "./pages/CalorieInput";
 import { FoodConversion } from "./components/FoodConversion/FoodConversion";
+import { FoodRegister } from "./pages/FoodRegister";
+import { RegisterdFood } from "./pages/RegisterdFood";
 import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";
 import { PasswordResetForm } from "./pages/PasswordResetForm"
@@ -13,6 +15,9 @@ import { GuestRoute } from "./Routes/GuestRoute";
 import { AuthProvider } from "./context/AuthContext";
 // ライブラリ
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ReactModal from "react-modal";
+
+ReactModal.setAppElement('#root');
 
 export const App = () => {
   return (
@@ -65,6 +70,22 @@ export const App = () => {
             element={
               <ProtectedRoute>
                 <FoodConversion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.FOODS.REGISTER}
+            element={
+              <ProtectedRoute>
+                <FoodRegister />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.USERS.ITEM}
+            element={
+              <ProtectedRoute>
+                <RegisterdFood />
               </ProtectedRoute>
             }
           />

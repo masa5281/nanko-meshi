@@ -10,3 +10,24 @@ export const getFoodsApi = async () => {
     throw error;
   }
 };
+
+// FormData送信の準備
+export const createFoodFormData = (foodName, foodCalorie, foodImage) => {
+  const formData = new FormData();
+  formData.append("food[name]", foodName);
+  formData.append("food[calorie]", foodCalorie);
+  if (foodImage && foodImage instanceof File) {
+    formData.append("food[food_image]", foodImage);
+  }
+  return formData;
+};
+
+// 食品を削除
+export const deleteFoodApi = async (foodId) => {
+  try {
+    const response = await axiosClient.delete(`${API_ENDPOINTS.FOODS.BASE}/${foodId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
