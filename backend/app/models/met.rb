@@ -1,0 +1,2 @@
+class Met < ApplicationRecord
+end
