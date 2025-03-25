@@ -9,6 +9,7 @@ ja:
         firebase_uid: 認証ID
         name: ユーザー名
         avatar: プロフィール画像
+        weight: 体重
       calorie:
         burned_calorie: カロリー
         recorded_at: 登録日
@@ -24,6 +25,11 @@ ja:
               blank: "%{attribute}を入力してください"
               taken: "%{attribute}はすでに登録済みです"
               too_long: "%{attribute}は20文字以内で入力してください"
+            weight:
+              blank: "%{attribute}を入力してください"
+              not_a_number: "%{attribute}は数字で入力してください"
+              greater_than: "%{attribute}は20kg以上で入力してください"
+              less_than: "%{attribute}は150kg以下で入力してください"
         calorie:
           attributes:
             burned_calorie:
