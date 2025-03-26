@@ -4,6 +4,7 @@ ja:
       user: ユーザー
       calorie: カロリー
       food: 食品
+      met: 運動強度
     attributes:
       user:
         firebase_uid: 認証ID
@@ -17,6 +18,9 @@ ja:
         name: 食品名
         calorie: カロリー
         food_image: 食品画像
+      met:
+        activity_name: 活動名
+        mets_value: MET値
     errors:
       models:
         user:

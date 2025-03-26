@@ -2,6 +2,7 @@
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
 import { DateInput } from "./DateInput";
+import { InputValidateErrors } from "../InputField/InputValidateErrors";
 // モジュール
 import { API_ENDPOINTS, ROUTES } from "../../utils/constants";
 import { axiosClient } from "../../config/axiosClient";
@@ -10,21 +11,29 @@ import { createCalorieApi } from "../../api/calorieApi";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ErrorMessage } from "@hookform/error-message";
 // アイコン
 import { MdAccessTimeFilled } from "react-icons/md";
 // カスタムフック
 import { useUserDataContext } from "../../context/UserDataContext";
+import { useValidateError } from "../../context/ValidateErrorContext";
 
 export const MetsCalorieForm = () => {
   const methods = useForm({
     mode: "onBlur",
     criteriaMode: "all"
   });
-  const { register, watch, handleSubmit } = methods;
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
   const [dbMetsData, setDbMetsData] = useState("");
   const [recordedDate, setRecordedDate] = useState(new Date());
   const { dbUserData } = useUserDataContext();
   const navigate = useNavigate();
+  const { validateErrors, setValidateErrors } = useValidateError();
 
   useEffect(() => {
     const getMets = async () => {
@@ -48,7 +57,7 @@ export const MetsCalorieForm = () => {
         }
       });
     } catch (error) {
-      console.error(error);
+      setValidateErrors(error.response.data);
     }
   };
 
@@ -68,13 +77,32 @@ export const MetsCalorieForm = () => {
       <form onSubmit={handleSubmit(createMetsCalorie)}>
         <select
           defaultValue=""
-          {...register("activityType")}
+          {...register("activityType", {
+            required: "運動項目を選択してください"
+          })}
         >
           <option value="" disabled>運動項目を選択</option>
           {dbMetsData && dbMetsData.map((met) =>
             <option key={met.id} value={met.mets_value}>{met.activity_name}</option>
           )}
         </select>
+        <ErrorMessage
+          errors={errors}
+          name="activityType"
+          render={({ message }) =>
+            message ? (
+              <p className="pl-2 text-error text-xs font-bold text-left">{message}</p>
+            ) : null
+          }
+        />
+        {validateErrors?.["weight"] && (
+          validateErrors["weight"].map((error, index) =>
+            error ? (
+              <p key={index} className="pl-2 text-error text-xs font-bold text-left">{error}</p>
+            ) : null
+          )
+        )}
+
         <InputField
           id="activeTime"
           type="text"
@@ -82,11 +110,17 @@ export const MetsCalorieForm = () => {
           fieldName="activeTime"
           iconComponent={<MdAccessTimeFilled />}
           labelName="運動時間（分）"
+          validationRule={{
+            required: "運動時間を入力してください",
+            min: { value: 1, message: "運動時間は1分以上で入力してください" },
+          }}
         />
         <DateInput
           recordedDate={recordedDate}
           setRecordedDate={setRecordedDate}
         />
+        <InputValidateErrors errors={validateErrors} column="recorded_at" />
+
         <SubmitButton>食べ物に換算</SubmitButton>
       </form>
     </FormProvider>
