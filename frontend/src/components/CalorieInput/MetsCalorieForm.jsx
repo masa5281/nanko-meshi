@@ -1,6 +1,7 @@
 // コンポーネント
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
+import { DateInput } from "./DateInput";
 // モジュール
 import { API_ENDPOINTS } from "../../utils/constants";
 import { axiosClient } from "../../config/axiosClient";
@@ -17,6 +18,7 @@ export const MetsCalorieForm = () => {
   });
   const { handleSubmit } = methods;
   const [dbMetsData, setDbMetsData] = useState("");
+  const [recordedDate, setRecordedDate] = useState(new Date());
 
   useEffect(() => {
     const getMets = async () => {
@@ -46,6 +48,10 @@ export const MetsCalorieForm = () => {
           fieldName="activeTime"
           iconComponent={<MdAccessTimeFilled />}
           labelName="運動時間（分）"
+        />
+        <DateInput
+          recordedDate={recordedDate}
+          setRecordedDate={setRecordedDate}
         />
         <SubmitButton>食べ物に換算</SubmitButton>
       </form>
