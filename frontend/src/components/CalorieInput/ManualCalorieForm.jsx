@@ -60,7 +60,7 @@ export const ManualCalorieForm = () => {
             columnName="burned_calorie"
           />
 
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col">
             <DateInput recordedDate={recordedDate} setRecordedDate={setRecordedDate} />
             <InputValidateErrors errors={validateErrors} column="recorded_at" />
           </div>
