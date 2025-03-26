@@ -2,7 +2,7 @@
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton";
 import { IconWrapper } from "../components/IconWrapper";
 // モジュール
-import { setWeight } from "../utils/formUtils";
+import { selectPlaceholder, setWeight } from "../utils/formUtils";
 import { useAuth } from "../context/AuthContext";
 import { getUserApi, updateUserApi } from "../api/userApi";
 import { ROUTES } from "../utils/constants";
@@ -30,6 +30,10 @@ export const WeightRegister = () => {
   const { register, watch, handleSubmit, formState: { errors } } = methods;
   const selectWeight = watch("userWeight");
 
+  useEffect(() => {
+    selectPlaceholder(selectWeight, setIsTextPlaceholder);
+  }, [selectWeight]);
+
   const handleUpdateUser = async () => {
     try {
       const userData = await getUserApi(user.uid);
@@ -46,18 +50,6 @@ export const WeightRegister = () => {
       setValidateErrors(error.response.data);
     }
   };
-
-  // 体重選択のプレースホルダーを制御
-  useEffect(() => {
-    const selectPlaceholder = () => {
-      if (selectWeight === "") {
-        setIsTextPlaceholder(true);
-      } else {
-        setIsTextPlaceholder(false);
-      }
-    }
-    selectPlaceholder();
-  }, [selectWeight])
 
   return (
     <FormProvider {...methods}>

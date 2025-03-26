@@ -3,10 +3,12 @@ import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
 import { DateInput } from "./DateInput";
 import { InputValidateErrors } from "../InputField/InputValidateErrors";
+import { IconWrapper } from "../IconWrapper";
 // モジュール
 import { API_ENDPOINTS, ROUTES } from "../../utils/constants";
 import { axiosClient } from "../../config/axiosClient";
 import { createCalorieApi } from "../../api/calorieApi";
+import { selectPlaceholder } from "../../utils/formUtils";
 // ライブラリ
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -18,7 +20,6 @@ import { FaFire } from "react-icons/fa6";
 // カスタムフック
 import { useUserDataContext } from "../../context/UserDataContext";
 import { useValidateError } from "../../context/ValidateErrorContext";
-import { IconWrapper } from "../IconWrapper";
 
 export const MetsCalorieForm = () => {
   const methods = useForm({
@@ -51,6 +52,10 @@ export const MetsCalorieForm = () => {
     getMets();
   }, []);
 
+  useEffect(() => {
+    selectPlaceholder(selectActivityType, setIsTextPlaceholder);
+  }, [selectActivityType]);
+
   const createMetsCalorie = async () => {
     try {
       const metsCalorie = metsCalcToCalorie();
@@ -75,18 +80,6 @@ export const MetsCalorieForm = () => {
 
     return calcCalorie;
   };
-
-  // 運動項目のプレースホルダーを制御
-  useEffect(() => {
-    const selectPlaceholder = () => {
-      if (selectActivityType === "") {
-        setIsTextPlaceholder(true);
-      } else {
-        setIsTextPlaceholder(false);
-      }
-    }
-    selectPlaceholder();
-  }, [selectActivityType])
 
   return (
     <FormProvider {...methods}>

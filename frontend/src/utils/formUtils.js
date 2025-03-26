@@ -13,3 +13,12 @@ export const setWeight = () => {
   }
   return weights;
 };
+
+// プルダウンのプレースホルダーを制御
+export const selectPlaceholder = (selectType, setIsTextPlaceholder) => {
+  if (selectType === "") {
+    setIsTextPlaceholder(true);
+  } else {
+    setIsTextPlaceholder(false);
+  }
+};
