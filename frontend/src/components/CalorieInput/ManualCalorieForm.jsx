@@ -1,6 +1,3 @@
-// モジュール
-import { createCalorieApi } from "../../api/calorieApi";
-import { ROUTES } from "../../utils/constants";
 // コンポーネント
 import { DateInput } from "./DateInput";
 import { InputValidateErrors } from "../InputField/InputValidateErrors";
@@ -8,43 +5,35 @@ import { SubmitButton } from "../Button/SubmitButton"
 import { InputField } from "../InputField/InputField";
 // ライブラリ
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 // アイコン
 import { FaFire } from "react-icons/fa6";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
+import { useCalorieApi } from "../../hooks/useCalorieApi";
 
 export const ManualCalorieForm = () => {
   const [recordedDate, setRecordedDate] = useState(new Date());
-  const navigate = useNavigate();
   const { validateErrors, setValidateErrors } = useValidateError();
-
   const methods = useForm({
     mode: "onBlur",
     criteriaMode: "all"
   });
-  const { watch, handleSubmit, setValue } = methods;
+  const { watch, handleSubmit } = methods;
   const manulaCalorie = watch("calorie");
+  const { createCalorie } = useCalorieApi();
 
-  const createManualCalorie = async () => {
+  const handleCreateCalorie = async () => {
     try {
-      await createCalorieApi(manulaCalorie, recordedDate.toDateString());
-      navigate(ROUTES.FOODS.CONVERSION, {
-        state: {
-          burnedCalorie: manulaCalorie,
-        }
-      });
+      await createCalorie(manulaCalorie, recordedDate)
     } catch (error) {
       setValidateErrors(error.response.data);
-    } finally {
-      setValue("calorie", "");
     }
   };
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(createManualCalorie)}>
+      <form onSubmit={handleSubmit(handleCreateCalorie)}>
         <div className="flex justify-center gap-4 px-3 mb-6">
           <InputField
             id="calorie"

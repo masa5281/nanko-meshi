@@ -5,14 +5,12 @@ import { DateInput } from "./DateInput";
 import { InputValidateErrors } from "../InputField/InputValidateErrors";
 import { IconWrapper } from "../IconWrapper";
 // モジュール
-import { API_ENDPOINTS, ROUTES } from "../../utils/constants";
 import { axiosClient } from "../../config/axiosClient";
-import { createCalorieApi } from "../../api/calorieApi";
 import { selectPlaceholder } from "../../utils/formUtils";
+import { API_ENDPOINTS } from "../../utils/constants";
 // ライブラリ
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
 // アイコン
 import { MdAccessTimeFilled } from "react-icons/md";
@@ -20,6 +18,7 @@ import { FaFire } from "react-icons/fa6";
 // カスタムフック
 import { useUserDataContext } from "../../context/UserDataContext";
 import { useValidateError } from "../../context/ValidateErrorContext";
+import { useCalorieApi } from "../../hooks/useCalorieApi";
 
 export const MetsCalorieForm = () => {
   const methods = useForm({
@@ -35,10 +34,10 @@ export const MetsCalorieForm = () => {
   const [dbMetsData, setDbMetsData] = useState("");
   const [recordedDate, setRecordedDate] = useState(new Date());
   const { dbUserData } = useUserDataContext();
-  const navigate = useNavigate();
   const { validateErrors, setValidateErrors } = useValidateError();
   const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
   const selectActivityType = watch("activityType");
+  const { createCalorie } = useCalorieApi();
 
   useEffect(() => {
     const getMets = async () => {
@@ -46,7 +45,7 @@ export const MetsCalorieForm = () => {
         const response = await axiosClient.get(API_ENDPOINTS.METS.BASE);
         setDbMetsData(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     getMets();
@@ -56,15 +55,10 @@ export const MetsCalorieForm = () => {
     selectPlaceholder(selectActivityType, setIsTextPlaceholder);
   }, [selectActivityType]);
 
-  const createMetsCalorie = async () => {
+  const handleCreateCalorie = async () => {
     try {
       const metsCalorie = metsCalcToCalorie();
-      await createCalorieApi(metsCalorie, recordedDate.toString());
-      navigate(ROUTES.FOODS.CONVERSION, {
-        state: {
-          burnedCalorie: metsCalorie
-        }
-      });
+      await createCalorie(metsCalorie, recordedDate);
     } catch (error) {
       setValidateErrors(error.response.data);
     }
@@ -83,7 +77,7 @@ export const MetsCalorieForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(createMetsCalorie)}>
+      <form onSubmit={handleSubmit(handleCreateCalorie)}>
         <div className="max-w-[432px] mx-auto mb-3">
           <label
             htmlFor="activityType"
@@ -144,16 +138,11 @@ export const MetsCalorieForm = () => {
               }
             }}
           />
-
           <div className="flex flex-col">
-            <DateInput
-              recordedDate={recordedDate}
-              setRecordedDate={setRecordedDate}
-            />
+            <DateInput recordedDate={recordedDate} setRecordedDate={setRecordedDate} />
             <InputValidateErrors errors={validateErrors} column="recorded_at" />
           </div>
         </div>
-
         <SubmitButton>食べ物に換算</SubmitButton>
       </form>
     </FormProvider>

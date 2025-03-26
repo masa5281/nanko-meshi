@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 export const CalorieInput = () => {
   return (
-    <main className="h-screen">
+    <main>
       <div className="container mx-auto pt-8 pb-8 text-center">
         <div className="mb-20">
           <motion.h2 className="relative inline-block mb-3 text-black text-5xl font-bold gradient-marker">
