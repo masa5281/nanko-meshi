@@ -1,7 +1,6 @@
 // モジュール
 import { createCalorieApi } from "../../api/calorieApi";
 import { ROUTES } from "../../utils/constants";
-import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { DateInput } from "./DateInput";
 import { InputValidateErrors } from "../InputField/InputValidateErrors";
@@ -14,13 +13,11 @@ import { FormProvider, useForm } from "react-hook-form";
 // アイコン
 import { FaFire } from "react-icons/fa6";
 // カスタムフック
-import { useAuth } from "../../context/AuthContext";
 import { useValidateError } from "../../context/ValidateErrorContext";
 
 export const ManualCalorieForm = () => {
   const [recordedDate, setRecordedDate] = useState(new Date());
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { validateErrors, setValidateErrors } = useValidateError();
 
   const methods = useForm({
@@ -28,16 +25,14 @@ export const ManualCalorieForm = () => {
     criteriaMode: "all"
   });
   const { watch, handleSubmit, setValue } = methods;
-  const foodCalorie = watch("calorie");
+  const manulaCalorie = watch("calorie");
 
   const createManualCalorie = async () => {
     try {
-      await createCalorieApi(foodCalorie, recordedDate.toDateString(), user.uid);
-      const dbUserData = await getUserApi(user.uid);
+      await createCalorieApi(manulaCalorie, recordedDate.toDateString());
       navigate(ROUTES.FOODS.CONVERSION, {
         state: {
-          burned_calorie: foodCalorie,
-          userName: dbUserData.name
+          burnedCalorie: manulaCalorie,
         }
       });
     } catch (error) {

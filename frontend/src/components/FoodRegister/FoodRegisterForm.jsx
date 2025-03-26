@@ -35,7 +35,6 @@ export const FoodRegisterForm = () => {
   const handleInputFile = (e) => {
     e.preventDefault();
     if (inputRef.current) {
-      console.log(inputRef.current);
       inputRef.current.click();
     }
   };
