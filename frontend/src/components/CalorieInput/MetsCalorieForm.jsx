@@ -81,8 +81,6 @@ export const MetsCalorieForm = () => {
     return calcCalorie;
   };
 
-  console.log(validateErrors);
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(handleCreateCalorie)}>
@@ -140,9 +138,11 @@ export const MetsCalorieForm = () => {
             validationRule={{
               required: "運動時間を入力してください",
               min: { value: 1, message: "運動時間は1分以上で入力してください" },
-              pattern: {
-                value: /^[0-9]+$/,
-                message: "運動時間は数字で入力してください"
+              validate: {
+                firstZero: (value) =>
+                  /^0/.test(value) ? "先頭に0を入力しないでください" : null,
+                checkActiveTime: (value) =>
+                  /^[0-9]+$/.test(value) || "運動時間は数字で入力してください"
               }
             }}
           />

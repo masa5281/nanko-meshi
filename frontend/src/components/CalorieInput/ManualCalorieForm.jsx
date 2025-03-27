@@ -52,9 +52,11 @@ export const ManualCalorieForm = () => {
             validationRule={{
               required: "カロリーを入力してください",
               min: { value: 1, message: "カロリーは1以上で入力してください" },
-              pattern: {
-                value: /^[0-9]+$/,
-                message: "カロリーは数字で入力してください"
+              validate: {
+                firstZero: (value) =>
+                  /^0/.test(value) ? "先頭に0を入力しないでください" : null,
+                checkCalorieNum: (value) =>
+                  /^[0-9]+$/.test(value) || "カロリーは数字で入力してください",
               }
             }}
             columnName="burned_calorie"
