@@ -83,7 +83,7 @@ export const MetsCalorieForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleCreateCalorie)}>
+      <form onSubmit={handleSubmit(handleCreateCalorie)} className="mb-4">
         <div className="max-w-[432px] mx-auto mb-3">
           <label
             htmlFor="activityType"
