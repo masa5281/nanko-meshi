@@ -11,13 +11,13 @@ import { ja } from 'date-fns/locale/ja';
 
 export const DateInput = (props) => {
   const { fieldName } = props;
-  const { control,  formState: { errors } } = useFormContext();
+  const { control, formState: { errors } } = useFormContext();
 
   // React Datepcikerの表示を日本語化
   registerLocale('ja', ja);
 
   return (
-    <>
+    <div>
       <label
         htmlFor="calendar"
         className="flex items-center pl-3 font-bold"><FaCalendarDays className="mr-0.5 text-lg"
@@ -47,6 +47,6 @@ export const DateInput = (props) => {
           ) : null
         }
       />
-    </>
+    </div>
   );
 };

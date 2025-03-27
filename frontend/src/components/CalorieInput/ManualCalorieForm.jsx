@@ -61,11 +61,9 @@ export const ManualCalorieForm = () => {
             }}
             columnName="burned_calorie"
           />
-
-          <div className="flex flex-col">
-            <DateInput fieldName="manualDate" />
-          </div>
+          <DateInput fieldName="manualDate" />
         </div>
+
         <SubmitButton>食べ物に換算</SubmitButton>
       </form>
     </FormProvider>

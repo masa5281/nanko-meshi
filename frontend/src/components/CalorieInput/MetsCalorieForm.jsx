@@ -146,10 +146,9 @@ export const MetsCalorieForm = () => {
               }
             }}
           />
-          <div className="flex flex-col">
-            <DateInput fieldName="metsDate" />
-          </div>
+          <DateInput fieldName="metsDate" />
         </div>
+        
         <SubmitButton>食べ物に換算</SubmitButton>
       </form>
     </FormProvider>
