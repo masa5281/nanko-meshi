@@ -1,10 +1,8 @@
 // コンポーネント
 import { DateInput } from "./DateInput";
-import { InputValidateErrors } from "../InputField/InputValidateErrors";
 import { SubmitButton } from "../Button/SubmitButton"
 import { InputField } from "../InputField/InputField";
 // ライブラリ
-import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 // アイコン
 import { FaFire } from "react-icons/fa6";
@@ -13,21 +11,30 @@ import { useValidateError } from "../../context/ValidateErrorContext";
 import { useCalorieApi } from "../../hooks/useCalorieApi";
 
 export const ManualCalorieForm = () => {
-  const [recordedDate, setRecordedDate] = useState(new Date());
-  const { validateErrors, setValidateErrors } = useValidateError();
   const methods = useForm({
     mode: "onBlur",
-    criteriaMode: "all"
+    criteriaMode: "all",
+    defaultValues: {
+      manualDate: new Date(),
+    }
   });
-  const { watch, handleSubmit } = methods;
+  const {
+    watch,
+    handleSubmit,
+    setError
+  } = methods;
   const manulaCalorie = watch("calorie");
+  const recordedDate = watch("manualDate");
+  const { setValidateErrors } = useValidateError();
   const { createCalorie } = useCalorieApi();
 
   const handleCreateCalorie = async () => {
     try {
       await createCalorie(manulaCalorie, recordedDate)
     } catch (error) {
-      setValidateErrors(error.response.data);
+      const { recorded_at: dateError, ...otherError } = error.response.data;
+      setError("manualDate", { type: "manual", message: dateError[0] });
+      setValidateErrors(otherError);
     }
   };
 
@@ -45,13 +52,16 @@ export const ManualCalorieForm = () => {
             validationRule={{
               required: "カロリーを入力してください",
               min: { value: 1, message: "カロリーは1以上で入力してください" },
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "カロリーは数字で入力してください"
+              }
             }}
             columnName="burned_calorie"
           />
 
           <div className="flex flex-col">
-            <DateInput recordedDate={recordedDate} setRecordedDate={setRecordedDate} />
-            <InputValidateErrors errors={validateErrors} column="recorded_at" />
+            <DateInput fieldName="manualDate" />
           </div>
         </div>
         <SubmitButton>食べ物に換算</SubmitButton>

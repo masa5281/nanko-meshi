@@ -2,7 +2,6 @@
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
 import { DateInput } from "./DateInput";
-import { InputValidateErrors } from "../InputField/InputValidateErrors";
 import { IconWrapper } from "../IconWrapper";
 // モジュール
 import { axiosClient } from "../../config/axiosClient";
@@ -23,22 +22,27 @@ import { useCalorieApi } from "../../hooks/useCalorieApi";
 export const MetsCalorieForm = () => {
   const methods = useForm({
     mode: "onBlur",
-    criteriaMode: "all"
+    criteriaMode: "all",
+    defaultValues: {
+      metsDate: new Date(),
+    }
   });
   const {
     register,
     watch,
+    setError,
     handleSubmit,
     formState: { errors },
   } = methods;
   const [dbMetsData, setDbMetsData] = useState("");
-  const [recordedDate, setRecordedDate] = useState(new Date());
   const { dbUserData } = useUserDataContext();
   const { validateErrors, setValidateErrors } = useValidateError();
   const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
   const selectActivityType = watch("activityType");
+  const recordedDate = watch("metsDate");
   const { createCalorie } = useCalorieApi();
 
+  // Mets情報をDBから取得
   useEffect(() => {
     const getMets = async () => {
       try {
@@ -60,7 +64,9 @@ export const MetsCalorieForm = () => {
       const metsCalorie = metsCalcToCalorie();
       await createCalorie(metsCalorie, recordedDate);
     } catch (error) {
-      setValidateErrors(error.response.data);
+      const { recorded_at: dateError, ...otherError } = error.response.data;
+      setError("metsDate", { type: "manual", message: dateError[0] });
+      setValidateErrors(otherError);
     }
   };
 
@@ -74,6 +80,8 @@ export const MetsCalorieForm = () => {
 
     return calcCalorie;
   };
+
+  console.log(validateErrors);
 
   return (
     <FormProvider {...methods}>
@@ -139,8 +147,7 @@ export const MetsCalorieForm = () => {
             }}
           />
           <div className="flex flex-col">
-            <DateInput recordedDate={recordedDate} setRecordedDate={setRecordedDate} />
-            <InputValidateErrors errors={validateErrors} column="recorded_at" />
+            <DateInput fieldName="metsDate" />
           </div>
         </div>
         <SubmitButton>食べ物に換算</SubmitButton>
