@@ -13,6 +13,7 @@ import { PasswordResetSuccess } from "./pages/PasswordResetSuccess"
 import { WeightRegister } from "./pages/WeightRegister";
 import { ProtectedRoute } from "./Routes/ProtectedRoute";
 import { GuestRoute } from "./Routes/GuestRoute";
+import { WeightCheckNavigator } from "./Routes/WeightCheckNavigator";
 import { AuthProvider } from "./context/AuthContext";
 import { UserDataProvider } from "./context/UserDataContext";
 // ライブラリ
@@ -65,8 +66,10 @@ export const App = () => {
               <Route
                 path={ROUTES.AUTH.WEIGHT}
                 element={
-                  <ProtectedRoute skipWeightCheck={true}>
-                    <WeightRegister />
+                  <ProtectedRoute>
+                    <WeightCheckNavigator skipWeightCheck={true}>
+                      <WeightRegister />
+                    </WeightCheckNavigator>
                   </ProtectedRoute>
                 }
               />
@@ -74,7 +77,9 @@ export const App = () => {
                 path={ROUTES.CALORIE.INPUT}
                 element={
                   <ProtectedRoute>
-                    <CalorieInput />
+                    <WeightCheckNavigator>
+                      <CalorieInput />
+                    </WeightCheckNavigator>
                   </ProtectedRoute>
                 }
               />
@@ -82,7 +87,9 @@ export const App = () => {
                 path={ROUTES.FOODS.CONVERSION}
                 element={
                   <ProtectedRoute>
-                    <FoodConversion />
+                    <WeightCheckNavigator>
+                      <FoodConversion />
+                    </WeightCheckNavigator>
                   </ProtectedRoute>
                 }
               />
@@ -90,7 +97,9 @@ export const App = () => {
                 path={ROUTES.FOODS.REGISTER}
                 element={
                   <ProtectedRoute>
-                    <FoodRegister />
+                    <WeightCheckNavigator>
+                      <FoodRegister />
+                    </WeightCheckNavigator>
                   </ProtectedRoute>
                 }
               />
@@ -98,7 +107,9 @@ export const App = () => {
                 path={ROUTES.USERS.ITEM}
                 element={
                   <ProtectedRoute>
-                    <RegisterdFood />
+                    <WeightCheckNavigator>
+                      <RegisterdFood />
+                    </WeightCheckNavigator>
                   </ProtectedRoute>
                 }
               />
