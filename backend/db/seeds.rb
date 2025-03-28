@@ -7,57 +7,93 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-user = User.find_or_create_by(firebase_uid: "rvo1lUXPXngy4gSKV94pQmoxCjh2") do |u|
+user = User.find_or_create_by!(firebase_uid: "ZwVVw6cxxzYSE8r5gAruHgJvNyv1") do |u|
   u.name = "開発者"
   u.avatar = nil
   u.weight = 70
 end
 
-food_names = [ "ポテトチップス うすしお味", "たけのこの里", "牛丼 並盛", "ハーゲンダッツ", "てりやきマックバーガー" ]
-calories = [ 336, 383, 683, 240, 477 ]
-food_names.each_with_index do |food_name, index|
-  calorie = calories[index]
-  user.foods.create!(
-    name: food_name,
-    calorie: calorie,
-    food_image: nil
-  )
+foods = [
+  {
+    name: "ポテトチップス うすしお味",
+    calorie: 336
+  },
+  {
+    name: "たけのこの里",
+    calorie: 383
+  },
+  {
+    name: "牛丼 並盛",
+    calorie: 683
+  },
+  {
+    name: "ハーゲンダッツ",
+    calorie: 240
+  },
+  {
+    name: "てりやきマックバーガー",
+    calorie: 477
+  },
+]
+foods.each do |food|
+  user.foods.find_or_create_by!(**food)
 end
 
-activity_names = [
-  "ウォーキング（3.2km/h・18分45秒/km）",
-  "ウォーキング（4.8km/h・12分30秒/km）",
-  "ウォーキング（6.4km/h・9分23秒/km）",
-  "ジョギング（6.4km/h・9分23秒/km）",
-  "ジョギング（8km/h・7分30秒/km）",
-  "ジョギング（8.6km/h・6分59秒/km）",
-  "ジョギング（9.2km/h・6分31秒/km）",
-  "ランニング（10km/h・6分/km）",
-  "ランニング（10.8km/h・5分33秒/km）",
-  "ランニング（14.5km/h・4分08秒/km）",
-  "ヨガ・ストレッチ",
-  "筋トレ（腹筋、腕立て伏せ、スクワット等）",
-  "筋トレ（ベンチプレス、デッドリフト等）"
+
+activities = [
+  {
+    activity_name: "ウォーキング（3.2km/h・18分45秒/km）",
+    mets_value: "2.0"
+  },
+  {
+    activity_name: "ウォーキング（4.8km/h・12分30秒/km）",
+    mets_value: "3.5"
+  },
+  {
+    activity_name: "ウォーキング（6.4km/h・9分23秒/km）",
+    mets_value: "5.0"
+  },
+  {
+    activity_name: "ジョギング（6.4km/h・9分23秒/km）",
+    mets_value: "6.0"
+  },
+  {
+    activity_name: "ジョギング（8km/h・7分30秒/km）",
+    mets_value: "7.0"
+  },
+  {
+    activity_name: "ジョギング（8.6km/h・6分59秒/km）",
+    mets_value: "7.4"
+  },
+  {
+    activity_name: "ジョギング（9.2km/h・6分31秒/km）",
+    mets_value: "7.8"
+  },
+  {
+    activity_name: "ランニング（10km/h・6分/km）",
+    mets_value: "8.3"
+  },
+  {
+    activity_name: "ランニング（10.8km/h・5分33秒/km）",
+    mets_value: "11.0"
+  },
+  {
+    activity_name: "ランニング（14.5km/h・4分08秒/km）",
+    mets_value: "15.0"
+  },
+  {
+    activity_name: "ヨガ・ストレッチ",
+    mets_value: "2.5"
+  },
+  {
+    activity_name: "筋トレ（腹筋、腕立て伏せ、スクワット等）",
+    mets_value: "3.5"
+  },
+  {
+    activity_name: "筋トレ（ベンチプレス、デッドリフト等）",
+    mets_value: "6.0"
+  },
 ]
-mets_values = [
-  2.0,
-  3.5,
-  5.0,
-  6.0,
-  7.0,
-  7.4,
-  7.8,
-  8.3,
-  11.0,
-  15.0,
-  2.5,
-  3.5,
-  6.0
-]
-activity_names.each_with_index do |activity_name, index|
-  mets_value = mets_values[index]
-  Met.create!(
-    activity_name: activity_name,
-    mets_value: mets_value
-  )
+activities.each do |acticity|
+  Met.find_or_create_by!(**acticity)
 end
