@@ -3,20 +3,20 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user = User.find_by(firebase_uid: params[:firebase_uid])
-    render json: user
+    render json: user.as_json(only: [:id, :name, :avatar, :weight])
   end
 
   def create
     user = User.find_by(firebase_uid: params[:firebase_uid])
     # 既にユーザー登録済みの場合は新規登録をしない
     if user
-      render json: { status: 200, user: user }
+      head :no_content
       return
     end
 
     user = User.new(user_params)
     if user.save
-      render json: { status: 200, user: user }
+      head :created
     else
       render json: user.errors, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
   def update
     user = User.find_by(firebase_uid: params[:firebase_uid])
     if user.update(user_params)
-      render json: user
+      render json: user.as_json(only: [:id, :weight])
     else
       render json: user.errors, status: :unprocessable_entity
     end
