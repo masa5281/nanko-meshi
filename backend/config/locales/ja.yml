@@ -32,8 +32,8 @@ ja:
             weight:
               blank: "%{attribute}を入力してください"
               not_a_number: "%{attribute}は数字で入力してください"
-              greater_than: "%{attribute}は20kg以上で入力してください"
-              less_than: "%{attribute}は150kg以下で入力してください"
+              greater_than: "%{attribute}は%{count}より大きい値で入力してください"
+              less_than: "%{attribute}は%{count}より小さい値で入力してください"
         calorie:
           attributes:
             burned_calorie:
