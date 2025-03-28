@@ -44,15 +44,24 @@ export const MetsCalorieForm = () => {
 
   // Mets情報をDBから取得
   useEffect(() => {
+    const abortController = new AbortController();
     const getMets = async () => {
       try {
-        const response = await axiosClient.get(API_ENDPOINTS.METS.BASE);
+        //AbortControllerとaxiosの紐付け
+        const response = await axiosClient.get(API_ENDPOINTS.METS.BASE, { signal: abortController.signal });
         setDbMetsData(response.data);
       } catch (error) {
+        if (error.name === "CanceledError") {
+          return;
+        }
         console.error(error);
       }
     }
     getMets();
+    return () => {
+      //アンマウント時に通信を中止
+      abortController.abort();
+    }
   }, []);
 
   useEffect(() => {
@@ -148,7 +157,7 @@ export const MetsCalorieForm = () => {
           />
           <DateInput fieldName="metsDate" />
         </div>
-        
+
         <SubmitButton>食べ物に換算</SubmitButton>
       </form>
     </FormProvider>
