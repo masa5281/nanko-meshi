@@ -1,55 +1,46 @@
-// モジュール
-import { createCalorieApi } from "../../api/calorieApi";
-import { ROUTES } from "../../utils/constants";
-import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { DateInput } from "./DateInput";
-import { InputValidateErrors } from "../InputField/InputValidateErrors";
 import { SubmitButton } from "../Button/SubmitButton"
 import { InputField } from "../InputField/InputField";
 // ライブラリ
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 // アイコン
 import { FaFire } from "react-icons/fa6";
 // カスタムフック
-import { useAuth } from "../../context/AuthContext";
 import { useValidateError } from "../../context/ValidateErrorContext";
+import { useCalorieApi } from "../../hooks/useCalorieApi";
 
 export const ManualCalorieForm = () => {
-  const [recordedDate, setRecordedDate] = useState(new Date());
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  const { validateErrors, setValidateErrors } = useValidateError();
-
   const methods = useForm({
     mode: "onBlur",
-    criteriaMode: "all"
+    criteriaMode: "all",
+    defaultValues: {
+      manualDate: new Date(),
+    }
   });
-  const { watch, handleSubmit, setValue } = methods;
-  const foodCalorie = watch("calorie");
+  const {
+    watch,
+    handleSubmit,
+    setError
+  } = methods;
+  const manulaCalorie = watch("calorie");
+  const recordedDate = watch("manualDate");
+  const { setValidateErrors } = useValidateError();
+  const { createCalorie } = useCalorieApi();
 
-  const createManualCalorie = async () => {
+  const handleCreateCalorie = async () => {
     try {
-      await createCalorieApi(foodCalorie, recordedDate.toDateString(), user.uid);
-      const dbUserData = await getUserApi(user.uid);
-      navigate(ROUTES.FOODS.CONVERSION, {
-        state: {
-          burned_calorie: foodCalorie,
-          userName: dbUserData.name
-        }
-      });
+      await createCalorie(manulaCalorie, recordedDate)
     } catch (error) {
-      setValidateErrors(error.response.data);
-    } finally {
-      setValue("calorie", "");
+      const { recorded_at: dateError, ...otherError } = error.response.data;
+      setError("manualDate", { type: "manual", message: dateError[0] });
+      setValidateErrors(otherError);
     }
   };
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(createManualCalorie)}>
+      <form onSubmit={handleSubmit(handleCreateCalorie)}>
         <div className="flex justify-center gap-4 px-3 mb-6">
           <InputField
             id="calorie"
@@ -61,15 +52,18 @@ export const ManualCalorieForm = () => {
             validationRule={{
               required: "カロリーを入力してください",
               min: { value: 1, message: "カロリーは1以上で入力してください" },
+              validate: {
+                firstZero: (value) =>
+                  /^0/.test(value) ? "先頭に0を入力しないでください" : null,
+                checkCalorieNum: (value) =>
+                  /^[0-9]+$/.test(value) || "カロリーは数字で入力してください",
+              }
             }}
             columnName="burned_calorie"
           />
-
-          <div className="flex flex-col items-start">
-            <DateInput recordedDate={recordedDate} setRecordedDate={setRecordedDate} />
-            <InputValidateErrors errors={validateErrors} column="recorded_at" />
-          </div>
+          <DateInput fieldName="manualDate" />
         </div>
+
         <SubmitButton>食べ物に換算</SubmitButton>
       </form>
     </FormProvider>

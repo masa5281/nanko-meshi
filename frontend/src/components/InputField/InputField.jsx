@@ -1,16 +1,16 @@
 // コンポーネント
 import { InputValidateErrors } from "./InputValidateErrors";
 import { IconWrapper } from "../IconWrapper";
+// モジュール
+import { onChangeToText } from "../../utils/formUtils";
 // ライブラリ
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message"
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
-import { useFormUtils } from "../../hooks/useFormUtils";
 
 export const InputField = (props) => {
   const { validateErrors } = useValidateError();
-  const { onChangeToText } = useFormUtils();
   const {
     type,
     placeholder,
@@ -25,6 +25,7 @@ export const InputField = (props) => {
   } = props;
   const {
     register,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
@@ -49,7 +50,8 @@ export const InputField = (props) => {
             if (handleOnChange) {
               handleOnChange(e, columnName);
             }
-            onChangeToText(e, fieldName);
+            const halfWith = onChangeToText(e);
+            setValue(fieldName, halfWith);
           }
         })}
       />

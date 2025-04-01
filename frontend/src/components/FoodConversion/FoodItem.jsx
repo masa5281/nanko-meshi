@@ -2,10 +2,10 @@
 import { AnimateProgress } from "./AnimateProgress";
 
 export const FoodItem = (props) => {
-  const { food, manualCalorie } = props;
+  const { food, inputCalorie } = props;
 
-  const calorieToFoodCount = (foodCalorie) => Math.round((manualCalorie / foodCalorie) * 10) / 10;
-  const foodPercentage = (foodCalorie) => Math.round((manualCalorie / foodCalorie) * 100);
+  const calorieToFoodCount = (foodCalorie) => Math.round((inputCalorie / foodCalorie) * 10) / 10;
+  const foodPercentage = (foodCalorie) => Math.round((inputCalorie / foodCalorie) * 100);
 
   return (
     <li className="flex p-4 bg-white rounded-lg shadow-sm shadow-shadow">

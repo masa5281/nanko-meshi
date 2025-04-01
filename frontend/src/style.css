@@ -25,3 +25,7 @@ body {
 .modal--open {
   overflow: hidden;
 }
+
+.placeholder {
+  color: #777;
+}

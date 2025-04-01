@@ -2,7 +2,7 @@ class Api::V1::CaloriesController < ApplicationController
   def create
     calorie = @current_user.calories.new(calorie_params)
     if calorie.save
-      render json: calorie
+      head :created
     else
       render json: calorie.errors, status: :unprocessable_entity
     end

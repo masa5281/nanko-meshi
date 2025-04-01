@@ -6,29 +6,33 @@ export const ROUTES = {
     SIGN_UP: "/sign_up",
     SIGN_IN: "/sign_in",
     PASSWORD_RESET: "/password_reset",
-    PASSWORD_SENT: "/password_sent"
+    PASSWORD_SENT: "/password_sent",
+    WEIGHT: "/weight",
   },
   USERS: {
-    ITEM: "/users/item"
+    ITEM: "/users/item",
   },
   FOODS: {
     CONVERSION: "/foods/conversion",
     REGISTER: "/foods/register",
   },
   CALORIE: {
-    INPUT: "/calorie/input"
-  }
+    INPUT: "/calorie/input",
+  },
 };
 
 // APIエンドポイント
 export const API_ENDPOINTS = {
   USERS: {
-    BASE: `${API_VERSION}/users`
+    BASE: `${API_VERSION}/users`,
   },
   FOODS: {
-    BASE: `${API_VERSION}/foods`
+    BASE: `${API_VERSION}/foods`,
   },
   CALORIE: {
-    BASE: `${API_VERSION}/calories`
-  }
-}
+    BASE: `${API_VERSION}/calories`,
+  },
+  METS: {
+    BASE: `${API_VERSION}/mets`,
+  },
+};

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_15_061652) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_25_213243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,12 +34,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_15_061652) do
     t.check_constraint "calorie > 0 AND calorie < 10000", name: "calorie_check"
   end
 
+  create_table "mets", force: :cascade do |t|
+    t.string "activity_name", null: false
+    t.float "mets_value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_name"], name: "index_mets_on_activity_name", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "firebase_uid", null: false
     t.string "name", null: false
     t.string "avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "weight"
+    t.check_constraint "weight > 0", name: "greater_than_0"
+    t.check_constraint "weight > 19 AND weight < 151", name: "weight_check"
   end
 
   add_foreign_key "calories", "users"
