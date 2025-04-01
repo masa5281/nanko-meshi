@@ -11,6 +11,7 @@ import { SignIn } from "./pages/SignIn";
 import { PasswordResetForm } from "./pages/PasswordResetForm"
 import { PasswordResetSuccess } from "./pages/PasswordResetSuccess"
 import { WeightRegister } from "./pages/WeightRegister";
+import { Profile } from "./pages/Profile";
 import { ProtectedRoute } from "./Routes/ProtectedRoute";
 import { GuestRoute } from "./Routes/GuestRoute";
 import { WeightCheckNavigator } from "./Routes/WeightCheckNavigator";
@@ -109,6 +110,16 @@ export const App = () => {
                   <ProtectedRoute>
                     <WeightCheckNavigator>
                       <RegisterdFood />
+                    </WeightCheckNavigator>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.USERS.PROFILE}
+                element={
+                  <ProtectedRoute>
+                    <WeightCheckNavigator>
+                      <Profile />
                     </WeightCheckNavigator>
                   </ProtectedRoute>
                 }

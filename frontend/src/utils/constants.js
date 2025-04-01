@@ -11,6 +11,7 @@ export const ROUTES = {
   },
   USERS: {
     ITEM: "/users/item",
+    PROFILE: "/users/profile"
   },
   FOODS: {
     CONVERSION: "/foods/conversion",
