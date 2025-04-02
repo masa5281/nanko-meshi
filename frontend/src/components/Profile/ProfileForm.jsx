@@ -74,6 +74,7 @@ export const ProfileForm = () => {
         setIsOpen(false);
         console.log("途中");
       }
+
       await updateUserApi(
         userName,
         userWeight,
@@ -95,7 +96,7 @@ export const ProfileForm = () => {
       position: "top-center",
       hideProgressBar: true,
       theme: "colored",
-      autoClose: 3000,
+      autoClose: 4000,
     });
   };
 
@@ -104,7 +105,7 @@ export const ProfileForm = () => {
       position: "top-center",
       hideProgressBar: true,
       theme: "colored",
-      autoClose: 3000,
+      autoClose: 4000,
     });
   };
 
@@ -127,7 +128,7 @@ export const ProfileForm = () => {
           </motion.div>
         )}
       >
-        <h3>パスワードを入力してください</h3>
+        <h3 className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">本人確認のため<br />パスワードを入力してください</h3>
         <form onSubmit={handleSubmit(handleUpdateUser)}>
           <InputField
             id="userPassword"
@@ -138,7 +139,7 @@ export const ProfileForm = () => {
             labelName="パスワード"
             className="mb-4"
           />
-          <SubmitButton notifyClick={verifyUserNotofy}>更新</SubmitButton>
+          <SubmitButton className={"w-full"} notifyClick={verifyUserNotofy}>更新</SubmitButton>
         </form>
       </Modal>
 
@@ -186,16 +187,31 @@ export const ProfileForm = () => {
           className="mb-4"
           columnName="name"
         />
-        <InputField
-          id="userEmail"
-          type="text"
-          placeholder="メールアドレスを入力してください"
-          fieldName="userEmail"
-          iconComponent={<IoMail />}
-          labelName="メールアドレス"
-          className="mb-4"
-          columnName="email"
-        />
+        {user.providerData[0].providerId === "google.com" ? (
+          <InputField
+            id="userEmail"
+            type="text"
+            placeholder="メールアドレスを入力してください"
+            fieldName="userEmail"
+            iconComponent={<IoMail />}
+            labelName="メールアドレス"
+            className="mb-4 pointer-events-none"
+            inputClassName="bg-gray-300"
+            columnName="email"
+            disabled={true}
+          />
+        ) : (
+          <InputField
+            id="userEmail"
+            type="text"
+            placeholder="メールアドレスを入力してください"
+            fieldName="userEmail"
+            iconComponent={<IoMail />}
+            labelName="メールアドレス"
+            className="mb-4"
+            columnName="email"
+          />
+        )}
         <div className="relative mb-6">
           <label htmlFor="userWeight" className="flex items-center pl-3 font-bold">
             <IconWrapper size={20}>

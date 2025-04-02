@@ -11,7 +11,7 @@ export const modalStyle = {
     position: "relative",
     top: "50%",
     left: "50%",
-    maxWidth: "350px",
+    maxWidth: "420px",
     padding: "30px 40px",
     borderRadius: "10px",
     textAlign: "center",
