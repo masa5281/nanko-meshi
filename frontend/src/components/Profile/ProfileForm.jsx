@@ -6,11 +6,12 @@ import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
 import { IconWrapper } from "../IconWrapper";
 // ライブラリ
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail } from "firebase/auth";
 import { motion } from "motion/react";
 import Modal from 'react-modal';
+import { ToastContainer, toast } from 'react-toastify';
 // アイコン
 import { FaUser } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
@@ -22,7 +23,7 @@ import { IoMdLock } from "react-icons/io";
 import { useUserDataContext } from "../../context/UserDataContext";
 import { useAuth } from "../../context/AuthContext";
 // モーダルのスタイル
-import { modalStyle } from "../../theme/modalStyle"
+import { modalStyle } from "../../theme/modalStyle";
 
 export const ProfileForm = () => {
   const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
@@ -87,8 +88,30 @@ export const ProfileForm = () => {
     }
   };
 
+  const updateUserNotofy = () => {
+    if (user.email !== userEmail) return;
+
+    toast.success("プロフィールを更新しました", {
+      position: "top-center",
+      hideProgressBar: true,
+      theme: "colored",
+      autoClose: 3000,
+    });
+  };
+
+  const verifyUserNotofy = () => {
+    toast.info(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>, {
+      position: "top-center",
+      hideProgressBar: true,
+      theme: "colored",
+      autoClose: 3000,
+    });
+  };
+
   return (
     <div>
+      <ToastContainer />
+
       <Modal
         isOpen={isOpen}
         style={modalStyle}
@@ -115,7 +138,7 @@ export const ProfileForm = () => {
             labelName="パスワード"
             className="mb-4"
           />
-          <SubmitButton>更新</SubmitButton>
+          <SubmitButton notifyClick={verifyUserNotofy}>更新</SubmitButton>
         </form>
       </Modal>
 
@@ -198,7 +221,7 @@ export const ProfileForm = () => {
           <span className="absolute bottom-3 right-10 pointer-events-none">kg</span>
         </div>
 
-        <SubmitButton className="w-full">更新</SubmitButton>
+        <SubmitButton className="w-full" notifyClick={updateUserNotofy}>更新</SubmitButton>
       </form>
     </div>
   );
