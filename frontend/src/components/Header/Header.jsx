@@ -17,6 +17,7 @@ import logo from "../../images/logo.png"
 import { PiSignOutBold } from "react-icons/pi";
 import { PiSignInBold } from "react-icons/pi";
 import { BiSolidBowlRice } from "react-icons/bi";
+import { FaUser } from "react-icons/fa6";
 // flowbite-reactのカスタムテーマ
 import { headerCustomTheme } from "../../theme/theme";
 // カスタムフック
@@ -68,6 +69,9 @@ export const Header = () => {
               </Link>
               <Link to={ROUTES.USERS.ITEM}>
                 <Dropdown.Item icon={BiSolidBowlRice}>登録した食品</Dropdown.Item>
+              </Link>
+              <Link to={ROUTES.USERS.PROFILE}>
+                <Dropdown.Item icon={FaUser}>アカウント設定</Dropdown.Item>
               </Link>
             </Dropdown>
           </nav>
