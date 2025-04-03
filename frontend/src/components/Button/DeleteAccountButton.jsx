@@ -1,11 +1,12 @@
 // モジュール
 import { deleteUserApi } from "../../api/userApi";
+import { provider } from "../../config/firebase";
 // ライブラリ
 import { motion } from "motion/react";
 import Modal from 'react-modal';
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
+import { deleteUser, EmailAuthProvider, reauthenticateWithCredential, reauthenticateWithPopup } from "firebase/auth";
 // コンポーネント
 import { InputField } from "../InputField/InputField";
 // アイコン
@@ -28,11 +29,17 @@ export const DeleteAccountButton = () => {
 
   const handleDeleteUser = async () => {
     try {
-      const credential = EmailAuthProvider.credential(
-        user.email,
-        userPassword,
-      );
-      await reauthenticateWithCredential(user, credential);
+      // ログイン方式別の再認証
+      if (user.providerData[0].providerId === "google.com") {
+        await reauthenticateWithPopup(user, provider);
+      } else {
+        const emailCredential = EmailAuthProvider.credential(
+          user.email,
+          userPassword,
+        );
+        await reauthenticateWithCredential(user, emailCredential);
+      }
+
       await deleteUserApi(user.uid);
       await deleteUser(user);
       deleteUserNotofy();
@@ -43,7 +50,7 @@ export const DeleteAccountButton = () => {
   };
 
   const deleteUserNotofy = () => {
-    toast.success("ユーザーを削除しました", {
+    toast.success("退会が完了しました", {
       position: "top-center",
       hideProgressBar: true,
       theme: "colored",
@@ -69,26 +76,38 @@ export const DeleteAccountButton = () => {
         )}
       >
         <h3 className="inline-block w-full mb-3 text-2xl text-black font-bold">退会</h3>
-        <p className="mb-3">
-          アカウント削除後は復元できません。<br />よろしければパスワード入力後に<br />削除を実行してください。
-        </p>
-        <form onSubmit={handleSubmit(handleDeleteUser)}>
-          <InputField
-            id="userPassword"
-            type="password"
-            placeholder="パスワードを入力してください"
-            fieldName="userPassword"
-            iconComponent={<IoMdLock />}
-            labelName="パスワード"
-            className="mb-4"
-          />
-          <button
-            type="submit"
-            className="w-full inline-block relative mx-auto px-[54px] py-2 border-black border-2 rounded-full bg-delete text-white font-bold hover:brightness-110"
-          >
-            アカウントを削除
-          </button>
-        </form>
+        {user.providerData[0].providerId === "google.com" ? (
+          <>
+            <p className="mb-3">アカウント削除後は復元できません。<br />再ログイン後にアカウントが削除されます。</p>
+            <button
+              className="w-full inline-block relative mx-auto px-[54px] py-2 border-black border-2 rounded-full bg-delete text-white font-bold hover:brightness-110"
+              onClick={handleDeleteUser}
+            >
+              アカウントを削除
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="mb-3">アカウント削除後は復元できません。<br />よろしければパスワード入力後に<br />削除を実行してください。</p>
+            <form onSubmit={handleSubmit(handleDeleteUser)}>
+              <InputField
+                id="userPassword"
+                type="password"
+                placeholder="パスワードを入力してください"
+                fieldName="userPassword"
+                iconComponent={<IoMdLock />}
+                labelName="パスワード"
+                className="mb-4"
+              />
+              <button
+                type="submit"
+                className="w-full inline-block relative mx-auto px-[54px] py-2 border-black border-2 rounded-full bg-delete text-white font-bold hover:brightness-110"
+              >
+                アカウントを削除
+              </button>
+            </form>
+          </>
+        )}
       </Modal>
 
       <button
