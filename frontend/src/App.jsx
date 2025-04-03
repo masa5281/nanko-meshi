@@ -17,6 +17,7 @@ import { GuestRoute } from "./Routes/GuestRoute";
 import { WeightCheckNavigator } from "./Routes/WeightCheckNavigator";
 import { AuthProvider } from "./context/AuthContext";
 import { UserDataProvider } from "./context/UserDataContext";
+import { ToastContainer } from 'react-toastify';
 // ライブラリ
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ReactModal from "react-modal";
@@ -29,6 +30,7 @@ export const App = () => {
     <AuthProvider>
       <UserDataProvider>
         <ValidateErrorProvider>
+          <ToastContainer />
           <Router>
             <Header />
             <Routes>

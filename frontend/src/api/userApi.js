@@ -44,3 +44,13 @@ export const updateUserApi = async (userName, userWeight, userImage, uid) => {
     throw error;
   }
 };
+
+// ユーザーを削除
+export const deleteUserApi = async (uid) => {
+  try {
+    const response = await axiosClient.delete(`${API_ENDPOINTS.USERS.BASE}/${uid}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
