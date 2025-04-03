@@ -1,6 +1,6 @@
 // コンポーネント
 import { InputValidateErrors } from "./InputValidateErrors";
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 // モジュール
 import { onChangeToText } from "../../utils/formUtils";
 // ライブラリ
@@ -34,12 +34,12 @@ export const InputField = (props) => {
   return (
     <div className={className}>
       <label htmlFor={id} className="flex items-center pl-3 font-bold">
-        <IconWrapper size={20}>
+        <IconProvider size={20}>
           <div className="mr-0.5">
             {iconComponent}
           </div>
           {labelName}
-        </IconWrapper>
+        </IconProvider>
       </label>
       <input
         id={id}

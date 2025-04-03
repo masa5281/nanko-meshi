@@ -16,7 +16,7 @@ import { LuCameraOff } from "react-icons/lu";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
 import { useFormUtils } from "../../hooks/useFormUtils";
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 
 export const FoodRegisterForm = () => {
   const inputRef = useRef(null);
@@ -58,9 +58,9 @@ export const FoodRegisterForm = () => {
             <img src={previewImage} alt="" className="w-full h-full object-cover" />
           ) : (
             <div className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <IconWrapper size={40}>
+              <IconProvider size={40}>
                 <LuCameraOff className="mb-1" />
-              </IconWrapper>
+              </IconProvider>
               <span className="text-xl">NO IMAGE</span>
             </div>
           )}

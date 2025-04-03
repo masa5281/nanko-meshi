@@ -1,6 +1,6 @@
 import { IconContext } from "react-icons/lib";
 
-export const IconWrapper = (props) => {
+export const IconProvider = (props) => {
   const {
     size,
     color,

@@ -22,7 +22,7 @@ import { FaUser } from "react-icons/fa6";
 import { headerCustomTheme } from "../../theme/theme";
 // カスタムフック
 import { useAuth } from "../../context/AuthContext";
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 
 export const Header = () => {
   const [userImage, setUserImage] = useState("");
@@ -77,9 +77,9 @@ export const Header = () => {
           </nav>
         ) : (
           <Link to={ROUTES.AUTH.SIGN_IN} className="flex flex-col items-center text-white font-bold hover:text-hoverWhite">
-            <IconWrapper size={26}>
+            <IconProvider size={26}>
               <PiSignInBold />
-            </IconWrapper>
+            </IconProvider>
             ログイン
           </Link>
         )

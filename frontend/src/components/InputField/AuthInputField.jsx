@@ -1,5 +1,5 @@
 // コンポーネント
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 // ライブラリ
 import { useFormContext } from "react-hook-form"
 import { ErrorMessage } from "@hookform/error-message"
@@ -29,9 +29,9 @@ export const AuthInputField = (props) => {
         {...register(fieldName, validationRule)}
       />
       <div className="absolute top-1 left-1 p-1 rounded-full bg-black">
-        <IconWrapper size={24} color="#fff">
+        <IconProvider size={24} color="#fff">
           {iconComponent}
-        </IconWrapper>
+        </IconProvider>
       </div>
       <ErrorMessage
         errors={errors}

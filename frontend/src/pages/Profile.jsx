@@ -1,6 +1,6 @@
 // コンポーネント
-import { PasswordResetButton } from "../components/Button/PasswordResetButton";
-import { DeleteAccountButton } from "../components/Button/DeleteAccountButton";
+import { PasswordResetForm } from "../components/Profile/PasswordResetForm";
+import { DeleteAccountForm } from "../components/Profile/DeleteAccountForm";
 // ライブラリ
 import { FormProvider, useForm } from "react-hook-form";
 import { ProfileForm } from "../components/Profile/ProfileForm";
@@ -33,9 +33,9 @@ export const Profile = () => {
         </div>
         <div className="flex justify-center gap-4">
           {user.providerData[0].providerId !== "google.com" && (
-            <PasswordResetButton />
+            <PasswordResetForm />
           )}
-          <DeleteAccountButton />
+          <DeleteAccountForm />
         </div>
       </div>
     </FormProvider>

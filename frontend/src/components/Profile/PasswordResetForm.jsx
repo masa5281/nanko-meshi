@@ -11,7 +11,7 @@ import { modalStyle } from "../../theme/modalStyle";
 // カスタムフック
 import { useAuth } from "../../context/AuthContext";
 
-export const PasswordResetButton = () => {
+export const PasswordResetForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
 
@@ -27,10 +27,6 @@ export const PasswordResetButton = () => {
 
   const passwordResetNotofy = () => {
     toast.info(<p>パスワード再設定用のメールを<br />送信しました。</p>, {
-      position: "top-center",
-      hideProgressBar: true,
-      theme: "colored",
-      autoClose: 4000,
     });
   };
 

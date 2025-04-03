@@ -7,7 +7,7 @@ import { Dropdown } from "flowbite-react";
 import { useFormContext } from "react-hook-form";
 import Modal from 'react-modal';
 import { motion } from "motion/react";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 // アイコン
 import { BsThreeDots } from "react-icons/bs";
 import { FaPencilAlt } from "react-icons/fa";
@@ -53,23 +53,16 @@ export const RegisterdFoodItem = () => {
 
   const updateFoodNotofy = () => {
     toast.success("食品を更新しました", {
-      position: "top-center",
-      hideProgressBar: true,
-      theme: "colored"
     });
   };
 
   const deleteFoodNotify = () => {
     toast.error("食品を削除しました", {
-      position: "top-center",
-      hideProgressBar: true,
-      theme: "colored"
     });
   };
 
   return (
     <div className="max-w-7xl mx-auto text-center">
-      <ToastContainer />
       <h2 className="inline-block mb-8 px-5 py-3 bg-black rounded-full text-white text-3xl">登録した食品</h2>
 
       <Modal

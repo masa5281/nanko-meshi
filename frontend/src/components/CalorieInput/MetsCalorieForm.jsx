@@ -2,7 +2,7 @@
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
 import { DateInput } from "./DateInput";
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 // モジュール
 import { axiosClient } from "../../config/axiosClient";
 import { selectPlaceholder } from "../../utils/formUtils";
@@ -98,12 +98,12 @@ export const MetsCalorieForm = () => {
             htmlFor="activityType"
             className="flex items-center pl-3 font-bold"
           >
-            <IconWrapper size={20}>
+            <IconProvider size={20}>
               <div className="mr-0.5">
                 <FaFire />
               </div>
               運動項目
-            </IconWrapper>
+            </IconProvider>
           </label>
           <select
             id="activityType"

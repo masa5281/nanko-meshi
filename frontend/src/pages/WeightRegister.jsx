@@ -1,6 +1,6 @@
 // コンポーネント
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton";
-import { IconWrapper } from "../components/IconWrapper";
+import { IconProvider } from "../components/IconProvider";
 // モジュール
 import { selectPlaceholder, setWeight } from "../utils/formUtils";
 import { useAuth } from "../context/AuthContext";
@@ -60,9 +60,9 @@ export const WeightRegister = () => {
           <form onSubmit={handleSubmit(handleUpdateUser)} className="flex flex-col">
             <div className="relative mb-4">
               <label htmlFor="userWeight" className="absolute top-1 left-1 p-1 rounded-full bg-black">
-                <IconWrapper size={24} color="#fff">
+                <IconProvider size={24} color="#fff">
                   <GiWeightScale />
-                </IconWrapper>
+                </IconProvider>
               </label>
               <select
                 id="userWeight"

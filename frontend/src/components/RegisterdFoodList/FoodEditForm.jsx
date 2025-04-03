@@ -1,7 +1,7 @@
 // コンポーネント
 import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 import { CloseModalButton } from "../Button/CloseModalButton";
 // モジュール
 import { useFormUtils } from "../../hooks/useFormUtils";
@@ -67,9 +67,9 @@ export const FoodEditForm = (props) => {
           <input type="file" className="hidden" ref={inputRef} onChange={onFileInputChange} />
           <button className="relative w-full h-full hover:brightness-105 transition-all duration-200" onClick={handleInputFile}>
             <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
-              <IconWrapper>
+              <IconProvider>
                 <FaCamera size={16} color="#fff" />
-              </IconWrapper>
+              </IconProvider>
             </div>
             {previewImage ? (
               <img src={previewImage} alt="" className="w-full h-full rounded-md object-cover" />

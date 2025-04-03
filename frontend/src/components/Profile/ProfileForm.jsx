@@ -4,7 +4,7 @@ import { selectPlaceholder, setWeight } from "../../utils/formUtils";
 // コンポーネント
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 // ライブラリ
 import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -95,21 +95,12 @@ export const ProfileForm = () => {
 
   const updateUserNotofy = () => {
     if (user.email !== userEmail) return;
-
     toast.success("プロフィールを更新しました", {
-      position: "top-center",
-      hideProgressBar: true,
-      theme: "colored",
-      autoClose: 4000,
     });
   };
 
   const verifyUserNotofy = () => {
     toast.info(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>, {
-      position: "top-center",
-      hideProgressBar: true,
-      theme: "colored",
-      autoClose: 4000,
     });
   };
 
@@ -162,9 +153,9 @@ export const ProfileForm = () => {
             onClick={handleInputFile}
           >
             <div className="absolute bottom-0 right-0 p-2 bg-primary-deep rounded-full">
-              <IconWrapper>
+              <IconProvider>
                 <FaCamera size={16} color="#fff" />
-              </IconWrapper>
+              </IconProvider>
             </div>
             {dbUserData.avatar ? (
               userImage ? (
@@ -174,9 +165,9 @@ export const ProfileForm = () => {
               )
             ) : (
               <div className="w-full flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <IconWrapper size={22}>
+                <IconProvider size={22}>
                   <LuCameraOff className="mb-1" />
-                </IconWrapper>
+                </IconProvider>
                 <span className="text-sm">NO IMAGE</span>
               </div>
             )}
@@ -231,12 +222,12 @@ export const ProfileForm = () => {
         )}
         <div className="mb-6">
           <label htmlFor="userWeight" className="flex items-center pl-3 font-bold">
-            <IconWrapper size={20}>
+            <IconProvider size={20}>
               <div className="mr-0.5">
                 <GiWeightScale />
               </div>
               体重
-            </IconWrapper>
+            </IconProvider>
           </label>
           <select
             id="userWeight"

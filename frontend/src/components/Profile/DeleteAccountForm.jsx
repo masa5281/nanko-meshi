@@ -17,7 +17,7 @@ import { modalStyle } from "../../theme/modalStyle";
 import { useFormContext } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 
-export const DeleteAccountButton = () => {
+export const DeleteAccountForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { watch, handleSubmit } = useFormContext();
   const { user } = useAuth();
@@ -51,10 +51,6 @@ export const DeleteAccountButton = () => {
 
   const deleteUserNotofy = () => {
     toast.success("退会が完了しました", {
-      position: "top-center",
-      hideProgressBar: true,
-      theme: "colored",
-      autoClose: 4000,
     });
   };
 
