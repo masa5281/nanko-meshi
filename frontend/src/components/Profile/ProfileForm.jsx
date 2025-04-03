@@ -24,13 +24,15 @@ import { useUserDataContext } from "../../context/UserDataContext";
 import { useAuth } from "../../context/AuthContext";
 // モーダルのスタイル
 import { modalStyle } from "../../theme/modalStyle";
+import { ErrorMessage } from "@hookform/error-message";
+import { useValidateError } from "../../context/ValidateErrorContext";
 
 export const ProfileForm = () => {
   const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [userImage, setUserImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
-  const { register, watch, handleSubmit } = useFormContext();
+  const { register, watch, handleSubmit, formState: { errors } } = useFormContext();
   const inputRef = useRef(null);
   const { dbUserData, setDbUserData } = useUserDataContext();
   const { user } = useAuth();
@@ -39,6 +41,7 @@ export const ProfileForm = () => {
   const userWeight = watch("userWeight");
   const userPassword = watch("userPassword");
   const weights = setWeight();
+  const { validateErrors, setValidateErrors } = useValidateError();
 
   useEffect(() => {
     selectPlaceholder(userWeight, setIsTextPlaceholder);
@@ -72,9 +75,9 @@ export const ProfileForm = () => {
         await reauthenticateWithCredential(user, credential);
         await verifyBeforeUpdateEmail(user, userEmail);
         setIsOpen(false);
-        console.log("途中");
+        verifyUserNotofy();
       }
-
+      
       await updateUserApi(
         userName,
         userWeight,
@@ -83,9 +86,10 @@ export const ProfileForm = () => {
       );
       const updateUserData = await getUserApi(user.uid);
       setDbUserData(updateUserData);
-      console.log("最後");
+      setValidateErrors([]);
+      updateUserNotofy();
     } catch (error) {
-      console.error(error);
+      setValidateErrors(error.response.data);
     }
   };
 
@@ -136,8 +140,12 @@ export const ProfileForm = () => {
             iconComponent={<IoMdLock />}
             labelName="パスワード"
             className="mb-4"
+            validationRule={{
+              required: "パスワードを入力してください",
+              minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
+            }}
           />
-          <SubmitButton className={"w-full"} notifyClick={verifyUserNotofy}>更新</SubmitButton>
+          <SubmitButton className={"w-full"}>更新</SubmitButton>
         </form>
       </Modal>
 
@@ -184,6 +192,10 @@ export const ProfileForm = () => {
           labelName="ユーザー名"
           className="mb-4"
           columnName="name"
+        validationRule={{
+          required: "ユーザー名を入力してください",
+          maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
+        }}
         />
         {user.providerData[0].providerId === "google.com" ? (
           <InputField
@@ -208,9 +220,16 @@ export const ProfileForm = () => {
             labelName="メールアドレス"
             className="mb-4"
             columnName="email"
+          validationRule={{
+            required: "メールアドレスを入力してください",
+            pattern: {
+              value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+              message: "有効なメールアドレスを入力してください"
+            }
+          }}
           />
         )}
-        <div className="relative mb-6">
+        <div className="mb-6">
           <label htmlFor="userWeight" className="flex items-center pl-3 font-bold">
             <IconWrapper size={20}>
               <div className="mr-0.5">
@@ -222,7 +241,7 @@ export const ProfileForm = () => {
           <select
             id="userWeight"
             defaultValue=""
-            className={`${isTextPlaceholder ? "placeholder" : ""} w-full border-black border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary`}
+            className={`${isTextPlaceholder ? "placeholder" : ""} w-full border-black border-2 rounded-full indent-2 hover:cursor-pointer focus:ring-2 focus:ring-primary focus:border-primary`}
             {...register("userWeight", {
               required: "体重を選択してください"
             })}
@@ -232,10 +251,26 @@ export const ProfileForm = () => {
               <option key={weight} value={weight}>{weight}</option>
             )}
           </select>
-          <span className="absolute bottom-3 right-10 pointer-events-none">kg</span>
+          <div className="relative"><span className="absolute bottom-3 right-10 pointer-events-none">kg</span></div>
+          <ErrorMessage
+            errors={errors}
+            name="userWeight"
+            render={({ message }) =>
+              message ? (
+                <p className="pl-2 text-error text-xs font-bold text-left">{message}</p>
+              ) : null
+            }
+          />
+          {validateErrors?.["weight"] && (
+            validateErrors["weight"].map((error, index) =>
+              error ? (
+                <p key={index} className="pl-2 text-error text-xs font-bold text-left">{error}</p>
+              ) : null
+            )
+          )}
         </div>
 
-        <SubmitButton className="w-full" notifyClick={updateUserNotofy}>更新</SubmitButton>
+        <SubmitButton className="w-full">更新</SubmitButton>
       </form>
     </>
   );

@@ -28,9 +28,9 @@ ReactModal.setAppElement('#root');
 export const App = () => {
   return (
     <AuthProvider>
+      <ToastContainer />
       <UserDataProvider>
         <ValidateErrorProvider>
-          <ToastContainer />
           <Router>
             <Header />
             <Routes>

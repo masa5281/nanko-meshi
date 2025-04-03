@@ -42,8 +42,8 @@ export const DeleteAccountButton = () => {
 
       await deleteUserApi(user.uid);
       await deleteUser(user);
-      deleteUserNotofy();
       setIsOpen(false);
+      deleteUserNotofy();
     } catch (error) {
       console.error(error);
     }
@@ -98,6 +98,10 @@ export const DeleteAccountButton = () => {
                 iconComponent={<IoMdLock />}
                 labelName="パスワード"
                 className="mb-4"
+                validationRule={{
+                  required: "パスワードを入力してください",
+                  minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
+                }}
               />
               <button
                 type="submit"

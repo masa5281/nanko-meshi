@@ -32,7 +32,7 @@ export const Profile = () => {
           <ProfileForm />
         </div>
         <div className="flex justify-center gap-4">
-          {!user.providerData[0].providerId === "google.com" && (
+          {user.providerData[0].providerId !== "google.com" && (
             <PasswordResetButton />
           )}
           <DeleteAccountButton />

@@ -67,7 +67,7 @@ export const WeightRegister = () => {
               <select
                 id="userWeight"
                 defaultValue=""
-                className={`${isTextPlaceholder ? "placeholder" : ""} w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary`}
+                className={`${isTextPlaceholder ? "placeholder" : ""} w-full py-2 border-none rounded-full indent-8 hover:cursor-pointer focus:ring-2 focus:ring-secondary focus:border-secondary`}
                 {...register("userWeight", {
                   required: "体重を選択してください"
                 })}
