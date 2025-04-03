@@ -11,7 +11,7 @@ import { useFormContext } from "react-hook-form";
 import { EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail } from "firebase/auth";
 import { motion } from "motion/react";
 import Modal from 'react-modal';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 // アイコン
 import { FaUser } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
@@ -110,9 +110,7 @@ export const ProfileForm = () => {
   };
 
   return (
-    <div>
-      <ToastContainer />
-
+    <>
       <Modal
         isOpen={isOpen}
         style={modalStyle}
@@ -143,7 +141,7 @@ export const ProfileForm = () => {
         </form>
       </Modal>
 
-      <form onSubmit={handleSubmit(handleUpdateUser)} className="px-10">
+      <form onSubmit={handleSubmit(handleUpdateUser)} className="px-5">
         <div className="w-28 h-28 mb-4 mx-auto border-2 border-black rounded-full ring-1 ring-black text-center">
           <input
             type="file"
@@ -152,7 +150,7 @@ export const ProfileForm = () => {
             onChange={onFileInputChange}
           />
           <button
-            className="w-full h-full relative bg-gray-100 rounded-full hover:brightness-110 transition-all duration-200"
+            className="w-full h-full relative bg-gray-100 rounded-full  transition-all duration-200 hover:brightness-110"
             onClick={handleInputFile}
           >
             <div className="absolute bottom-0 right-0 p-2 bg-primary-deep rounded-full">
@@ -239,6 +237,6 @@ export const ProfileForm = () => {
 
         <SubmitButton className="w-full" notifyClick={updateUserNotofy}>更新</SubmitButton>
       </form>
-    </div>
+    </>
   );
 };
