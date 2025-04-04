@@ -156,32 +156,20 @@ export const ProfileForm = ({
           columnName="name"
           validationRule={VALIDATE_MESSAGES.USER.NAME}
         />
-        {isGoogleUser ? (
-          <InputField
-            id="userEmail"
-            type="text"
-            placeholder="メールアドレスを入力してください"
-            fieldName="userEmail"
-            iconComponent={<IoMail />}
-            labelName="メールアドレス"
-            className="mb-4 pointer-events-none"
-            inputClassName="bg-gray-300"
-            columnName="email"
-            disabled={true}
-          />
-        ) : (
-          <InputField
-            id="userEmail"
-            type="text"
-            placeholder="メールアドレスを入力してください"
-            fieldName="userEmail"
-            iconComponent={<IoMail />}
-            labelName="メールアドレス"
-            className="mb-4"
-            columnName="email"
-            validationRule={VALIDATE_MESSAGES.AUTH.EMAIL}
-          />
-        )}
+        <InputField
+          id="userEmail"
+          type="text"
+          placeholder="メールアドレスを入力してください"
+          fieldName="userEmail"
+          iconComponent={<IoMail />}
+          labelName="メールアドレス"
+          className={`mb-4 ${isGoogleUser ? "pointer-events-none" : ""}`}
+          inputClassName={isGoogleUser ? "bg-gray-300" : ""}
+          columnName="email"
+          disabled={isGoogleUser ? true : false}
+          validationRule={VALIDATE_MESSAGES.AUTH.EMAIL}
+        />
+
         <div className="mb-6">
           <label htmlFor="userWeight" className="flex items-center pl-3 font-bold">
             <IconProvider size={20}>
