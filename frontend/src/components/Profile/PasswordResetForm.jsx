@@ -1,12 +1,10 @@
 // モジュール
 import { auth } from "../../config/firebase";
 // コンポーネント
-import { IconProvider } from "../IconProvider";
+import { CloseModalButton } from "../Button/CloseModalButton";
 // ライブラリ
 import { sendPasswordResetEmail } from "firebase/auth";
 import { toast } from 'react-toastify';
-// アイコン
-import { IoIosClose } from "react-icons/io";
 // カスタムフック
 import { useAuth } from "../../context/AuthContext";
 
@@ -36,14 +34,8 @@ export const PasswordResetForm = ({
         onClick={handlePasswordReset}>
         パスワード再設定メールを送信
       </button>
-      <button
-        onClick={closeUserModal}
-        className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200"
-      >
-        <IconProvider size={30}>
-          <IoIosClose />
-        </IconProvider>
-      </button>
+
+      <CloseModalButton closeUserModal={closeUserModal} />
     </>
   );
 };

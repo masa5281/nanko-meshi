@@ -3,13 +3,12 @@ import { deleteUserApi } from "../../api/userApi";
 import { provider } from "../../config/firebase";
 // コンポーネント
 import { InputField } from "../InputField/InputField";
-import { IconProvider } from "../IconProvider";
+import { CloseModalButton } from "../Button/CloseModalButton";
 // ライブラリ
 import { toast } from "react-toastify";
 import { deleteUser, EmailAuthProvider, reauthenticateWithCredential, reauthenticateWithPopup } from "firebase/auth";
 // アイコン
 import { IoMdLock } from "react-icons/io";
-import { IoIosClose } from "react-icons/io";
 // カスタムフック
 import { useFormContext } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
@@ -86,14 +85,7 @@ export const DeleteAccountForm = ({
           </button>
         </form>
       )}
-      <button
-        onClick={closeUserModal}
-        className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200"
-      >
-        <IconProvider size={30}>
-          <IoIosClose />
-        </IconProvider>
-      </button>
+      <CloseModalButton closeUserModal={closeUserModal} />
     </>
   );
 };

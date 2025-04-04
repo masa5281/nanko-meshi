@@ -1,12 +1,11 @@
 // コンポーネント
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
-import { IconProvider } from "../IconProvider";
+import { CloseModalButton } from "../Button/CloseModalButton";
 // ライブラリ
 import { useFormContext } from "react-hook-form";
 // アイコン
 import { IoMdLock } from "react-icons/io";
-import { IoIosClose } from "react-icons/io";
 
 export const PasswordAuthForm = ({
   handleUpdateUser,
@@ -35,14 +34,7 @@ export const PasswordAuthForm = ({
       />
       <SubmitButton className={"w-full"}>更新</SubmitButton>
 
-      <button
-        onClick={closeUserModal}
-        className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200"
-      >
-        <IconProvider size={30}>
-          <IoIosClose />
-        </IconProvider>
-      </button>
+      <CloseModalButton closeUserModal={closeUserModal} />
     </form>
   );
 };
