@@ -1,6 +1,7 @@
 // モジュール
 import { getUserApi, updateUserApi } from "../../api/userApi";
 import { selectPlaceholder, setWeight } from "../../utils/formUtils";
+import { useFormUtils } from "../../hooks/useFormUtils";
 // コンポーネント
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
@@ -31,31 +32,26 @@ export const ProfileForm = ({
   openUserModal,
   closeUserModal,
 }) => {
+  const weights = setWeight();
   const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
-  const [userImage, setUserImage] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
   const { register, watch, handleSubmit, setError, formState: { errors } } = useFormContext();
   const inputRef = useRef(null);
   const { dbUserData, setDbUserData } = useUserDataContext();
+  const { validateErrors, setValidateErrors } = useValidateError();
   const { user } = useAuth();
   const userName = watch("userName");
   const userEmail = watch("userEmail");
   const userWeight = watch("userWeight");
   const userPassword = watch("userPassword");
-  const weights = setWeight();
-  const { validateErrors, setValidateErrors } = useValidateError();
+  const {
+    userImage,
+    previewImage,
+    onFileInputChange,
+  } = useFormUtils();
 
   useEffect(() => {
     selectPlaceholder(userWeight, setIsTextPlaceholder);
   }, [userWeight]);
-
-  // ファイル選択後、画像をプレビュー用とアップロード用に保存
-  const onFileInputChange = (e) => {
-    if (!e.target.files) return;
-    const fileObject = e.target.files[0];
-    setPreviewImage(URL.createObjectURL(fileObject));
-    setUserImage(fileObject);
-  };
 
   // ボタン押下でinputが発火
   const handleInputFile = (e) => {
@@ -120,7 +116,7 @@ export const ProfileForm = ({
             type="file"
             className="hidden"
             ref={inputRef}
-            onChange={onFileInputChange}
+            onChange={(e) => onFileInputChange(e, "user")}
           />
           <button
             className="w-full h-full relative bg-gray-100 rounded-full  transition-all duration-200 hover:brightness-110"

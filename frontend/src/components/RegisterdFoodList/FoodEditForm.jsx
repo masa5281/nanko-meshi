@@ -64,7 +64,7 @@ export const FoodEditForm = (props) => {
 
       <form onSubmit={handleSubmit(handleUpdateFood)}>
         <div className="w-48 aspect-[4/3] mb-5 mx-auto rounded-md text-center overflow-visible">
-          <input type="file" className="hidden" ref={inputRef} onChange={onFileInputChange} />
+          <input type="file" className="hidden" ref={inputRef} onChange={(e) => onFileInputChange(e, "food")} />
           <button className="relative w-full h-full hover:brightness-105 transition-all duration-200" onClick={handleInputFile}>
             <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
               <IconProvider>
