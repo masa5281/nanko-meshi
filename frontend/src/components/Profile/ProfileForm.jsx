@@ -5,34 +5,36 @@ import { selectPlaceholder, setWeight } from "../../utils/formUtils";
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
 import { IconProvider } from "../IconProvider";
+import { CustomModal } from "../CustomModal";
+import { PasswordAuthForm } from "./PasswordAuthForm";
 // ライブラリ
 import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail } from "firebase/auth";
-import { motion } from "motion/react";
-import Modal from 'react-modal';
 import { toast } from 'react-toastify';
+import { ErrorMessage } from "@hookform/error-message";
 // アイコン
 import { FaUser } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
 import { GiWeightScale } from "react-icons/gi";
 import { LuCameraOff } from "react-icons/lu";
 import { FaCamera } from "react-icons/fa";
-import { IoMdLock } from "react-icons/io";
 // カスタムフック
 import { useUserDataContext } from "../../context/UserDataContext";
 import { useAuth } from "../../context/AuthContext";
-// モーダルのスタイル
-import { modalStyle } from "../../theme/modalStyle";
-import { ErrorMessage } from "@hookform/error-message";
 import { useValidateError } from "../../context/ValidateErrorContext";
 
-export const ProfileForm = () => {
+export const ProfileForm = ({
+  isOpen,
+  isGoogleUser,
+  modalType,
+  openUserModal,
+  closeUserModal,
+}) => {
   const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
   const [userImage, setUserImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
-  const { register, watch, handleSubmit, formState: { errors } } = useFormContext();
+  const { register, watch, handleSubmit, setError, formState: { errors } } = useFormContext();
   const inputRef = useRef(null);
   const { dbUserData, setDbUserData } = useUserDataContext();
   const { user } = useAuth();
@@ -61,10 +63,18 @@ export const ProfileForm = () => {
     inputRef.current.click();
   }
 
+  const updateUserNotofy = () => {
+    if (user.email !== userEmail) return;
+    toast.success("プロフィールを更新しました", {
+    });
+  };
+
+  const verifyUserNotofy = () => toast.info(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>);
+
   const handleUpdateUser = async () => {
     try {
       if (!isOpen && user.email !== userEmail) {
-        setIsOpen(true);
+        openUserModal("passwordAuth");
         return;
       }
       if (isOpen) {
@@ -74,10 +84,9 @@ export const ProfileForm = () => {
         );
         await reauthenticateWithCredential(user, credential);
         await verifyBeforeUpdateEmail(user, userEmail);
-        setIsOpen(false);
+        closeUserModal();
         verifyUserNotofy();
       }
-      
       await updateUserApi(
         userName,
         userWeight,
@@ -89,56 +98,21 @@ export const ProfileForm = () => {
       setValidateErrors([]);
       updateUserNotofy();
     } catch (error) {
+      if (error.code === "auth/invalid-credential") {
+        setError("userPassword", { type: "manual", message: "パスワードが違います" });
+        return;
+      }
       setValidateErrors(error.response.data);
     }
   };
 
-  const updateUserNotofy = () => {
-    if (user.email !== userEmail) return;
-    toast.success("プロフィールを更新しました", {
-    });
-  };
-
-  const verifyUserNotofy = () => {
-    toast.info(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>, {
-    });
-  };
-
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        style={modalStyle}
-        bodyOpenClassName="modal--open"
-        contentElement={(props, children) => (
-          <motion.div
-            {...props}
-            initial={{ opacity: 0.5, scale: 0, x: "-50%", y: "-50%" }}
-            animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
-            transition={{ type: "spring", duration: 0.5 }}
-          >
-            {children}
-          </motion.div>
-        )}
-      >
-        <h3 className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">本人確認のため<br />パスワードを入力してください</h3>
-        <form onSubmit={handleSubmit(handleUpdateUser)}>
-          <InputField
-            id="userPassword"
-            type="password"
-            placeholder="パスワードを入力してください"
-            fieldName="userPassword"
-            iconComponent={<IoMdLock />}
-            labelName="パスワード"
-            className="mb-4"
-            validationRule={{
-              required: "パスワードを入力してください",
-              minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
-            }}
-          />
-          <SubmitButton className={"w-full"}>更新</SubmitButton>
-        </form>
-      </Modal>
+      {modalType === "passwordAuth" && (
+        <CustomModal isOpen={isOpen}>
+          <PasswordAuthForm handleUpdateUser={handleUpdateUser} closeUserModal={closeUserModal} />
+        </CustomModal>
+      )}
 
       <form onSubmit={handleSubmit(handleUpdateUser)} className="px-5">
         <div className="w-28 h-28 mb-4 mx-auto border-2 border-black rounded-full ring-1 ring-black text-center">
@@ -183,12 +157,12 @@ export const ProfileForm = () => {
           labelName="ユーザー名"
           className="mb-4"
           columnName="name"
-        validationRule={{
-          required: "ユーザー名を入力してください",
-          maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
-        }}
+          validationRule={{
+            required: "ユーザー名を入力してください",
+            maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
+          }}
         />
-        {user.providerData[0].providerId === "google.com" ? (
+        {isGoogleUser ? (
           <InputField
             id="userEmail"
             type="text"
@@ -211,13 +185,13 @@ export const ProfileForm = () => {
             labelName="メールアドレス"
             className="mb-4"
             columnName="email"
-          validationRule={{
-            required: "メールアドレスを入力してください",
-            pattern: {
-              value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-              message: "有効なメールアドレスを入力してください"
-            }
-          }}
+            validationRule={{
+              required: "メールアドレスを入力してください",
+              pattern: {
+                value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                message: "有効なメールアドレスを入力してください"
+              }
+            }}
           />
         )}
         <div className="mb-6">

@@ -2,13 +2,13 @@
 import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
 import { IconProvider } from "../IconProvider";
-import { CloseModalButton } from "../Button/CloseModalButton";
 // モジュール
 import { useFormUtils } from "../../hooks/useFormUtils";
 import { useFoodApi } from "../../hooks/useFoodApi";
 // ライブラリ
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { toast } from 'react-toastify';
 // アイコン
 import { FaCamera } from "react-icons/fa";
 import { FaFire } from "react-icons/fa6";
@@ -16,19 +16,17 @@ import { BiSolidBowlRice } from "react-icons/bi";
 import { IoIosClose } from "react-icons/io";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
-import { useCloseModalContext, useNotifyContext } from "./RegisterdFoodItem";
 
 export const FoodEditForm = (props) => {
   const { setValidateErrors } = useValidateError();
   const { handleSubmit } = useFormContext();
   const { updateFood } = useFoodApi();
   const inputRef = useRef(null);
-  const closeModal = useCloseModalContext();
-  const { updateFoodNotofy } = useNotifyContext();
   const {
     selectFood,
     setSelectFood,
     setFoodList,
+    closeFoodModal,
   } = props;
   const {
     foodImage,
@@ -42,7 +40,7 @@ export const FoodEditForm = (props) => {
       setFoodList(prevFoodList =>
         prevFoodList.map(food => food.id === selectFood.id ? response : food)
       );
-      closeModal();
+      closeFoodModal();
     } catch (error) {
       setValidateErrors(error.response.data);
     }
@@ -57,6 +55,8 @@ export const FoodEditForm = (props) => {
     e.preventDefault();
     inputRef.current.click();
   }
+
+  const updateFoodNotofy = () => toast.success("食品を更新しました");
 
   return (
     <>
@@ -80,7 +80,6 @@ export const FoodEditForm = (props) => {
             )}
           </button>
         </div>
-
         <div className="flex flex-col gap-3">
           <InputField
             id="foodName"
@@ -96,7 +95,6 @@ export const FoodEditForm = (props) => {
             columnName="name"
             handleOnChange={handleOnChange}
           />
-
           <InputField
             id="foodCalorie"
             type="text"
@@ -112,18 +110,18 @@ export const FoodEditForm = (props) => {
             columnName="calorie"
             handleOnChange={handleOnChange}
           />
-          
-          <SubmitButton
-            className="w-full"
-            notifyClick={updateFoodNotofy}
-          >
-            更新
-          </SubmitButton>
+          <SubmitButton className="w-full" onClick={updateFoodNotofy}>更新</SubmitButton>
         </div>
       </form>
-      <CloseModalButton>
-        <IoIosClose />
-      </CloseModalButton>
+
+      <button
+        onClick={closeFoodModal}
+        className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200"
+      >
+        <IconProvider size={30}>
+          <IoIosClose />
+        </IconProvider>
+      </button>
     </>
   );
 };

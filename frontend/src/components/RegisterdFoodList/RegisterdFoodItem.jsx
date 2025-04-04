@@ -1,13 +1,11 @@
 // コンポーネント
 import { FoodEditForm } from "./FoodEditForm";
 import { FoodDeleteForm } from "./FoodDeleteForm";
+import { CustomModal } from "../CustomModal";
 // ライブラリ
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { useFormContext } from "react-hook-form";
-import Modal from 'react-modal';
-import { motion } from "motion/react";
-import { toast } from 'react-toastify';
 // アイコン
 import { BsThreeDots } from "react-icons/bs";
 import { FaPencilAlt } from "react-icons/fa";
@@ -16,14 +14,6 @@ import { FaTrashAlt } from "react-icons/fa";
 import { foodCustomTheme } from "../../theme/theme";
 // カスタムフック
 import { useFoodApi } from "../../hooks/useFoodApi";
-// モーダルのスタイル
-import { modalStyle } from "../../theme/modalStyle"
-
-const CloseModalContext = createContext();
-export const useCloseModalContext = () => useContext(CloseModalContext);
-
-const notifyContext = createContext();
-export const useNotifyContext = () => useContext(notifyContext);
 
 export const RegisterdFoodItem = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +22,7 @@ export const RegisterdFoodItem = () => {
   const { foodList, setFoodList } = useFoodApi();
   const { reset } = useFormContext();
 
-  const openModal = (type, food) => {
+  const openFoodModal = (type, food) => {
     setSelectFood(food);
     setModalType(type);
     setIsOpen(true);
@@ -45,61 +35,29 @@ export const RegisterdFoodItem = () => {
     }
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setSelectFood({});
-    document.querySelector("body").classList.remove("modal--open");
-  };
-
-  const updateFoodNotofy = () => {
-    toast.success("食品を更新しました", {
-    });
-  };
-
-  const deleteFoodNotify = () => {
-    toast.error("食品を削除しました", {
-    });
-  };
+  const closeFoodModal = () => setIsOpen(false);
 
   return (
     <div className="max-w-7xl mx-auto text-center">
       <h2 className="inline-block mb-8 px-5 py-3 bg-black rounded-full text-white text-3xl">登録した食品</h2>
 
-      <Modal
-        isOpen={isOpen}
-        style={modalStyle}
-        bodyOpenClassName="modal--open"
-        contentElement={(props, children) => (
-          <motion.div
-            {...props}
-            initial={{ opacity: 0.5, scale: 0, x: "-50%", y: "-50%" }}
-            animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
-            transition={{ type: "spring", duration: 0.5 }}
-          >
-            {children}
-          </motion.div>
+      <CustomModal isOpen={isOpen}>
+        {modalType === "edit" && selectFood && (
+          <FoodEditForm
+            selectFood={selectFood}
+            setSelectFood={setSelectFood}
+            setFoodList={setFoodList}
+            closeFoodModal={closeFoodModal}
+          />
         )}
-      >
-        <notifyContext.Provider value={{updateFoodNotofy, deleteFoodNotify}}>
-          <CloseModalContext.Provider value={closeModal}>
-            {modalType === "edit" && selectFood && (
-              <FoodEditForm
-                selectFood={selectFood}
-                setSelectFood={setSelectFood}
-                isOpen={isOpen}
-                setFoodList={setFoodList}
-              />
-            )}
-            {modalType === "delete" && selectFood && (
-              <FoodDeleteForm
-                selectFood={selectFood}
-                isOpen={isOpen}
-                setFoodList={setFoodList}
-              />
-            )}
-          </CloseModalContext.Provider>
-        </notifyContext.Provider>
-      </Modal>
+        {modalType === "delete" && selectFood && (
+          <FoodDeleteForm
+            selectFood={selectFood}
+            setFoodList={setFoodList}
+            closeFoodModal={closeFoodModal}
+          />
+        )}
+      </CustomModal>
 
       <ul className="grid grid-cols-3 gap-12 px-20">
         {foodList.map((food, index) => {
@@ -114,8 +72,8 @@ export const RegisterdFoodItem = () => {
                 inline={true}
                 theme={foodCustomTheme}
               >
-                <Dropdown.Item icon={FaPencilAlt} onClick={() => openModal("edit", food)}>編集</Dropdown.Item>
-                <Dropdown.Item icon={FaTrashAlt} onClick={() => openModal("delete", food)} className="text-delete">削除</Dropdown.Item>
+                <Dropdown.Item icon={FaPencilAlt} onClick={() => openFoodModal("edit", food)}>編集</Dropdown.Item>
+                <Dropdown.Item icon={FaTrashAlt} onClick={() => openFoodModal("delete", food)} className="text-delete">削除</Dropdown.Item>
               </Dropdown>
               <div className="mb-3 border-b-2">
                 <img src={food.food_image.thumb.url} alt="" className="mx-auto mb-3 rounded-lg" />
