@@ -1,6 +1,6 @@
 // モジュール
 import { createFoodFormData } from "../../api/foodApi";
-import { API_ENDPOINTS, ROUTES } from "../../utils/constants";
+import { API_ENDPOINTS, ROUTES, VALIDATE_MESSAGES } from "../../utils/constants";
 import { axiosClient } from "../../config/axiosClient";
 import { useFormUtils } from "../../hooks/useFormUtils";
 // コンポーネント
@@ -74,10 +74,7 @@ export const FoodRegisterForm = () => {
         iconComponent={<BiSolidBowlRice />}
         labelName="食品名"
         className="mb-4"
-        validationRule={{
-          required: "食品名を入力してください",
-          maxLength: { value: 20, message: "食品名は20文字以内で入力してください" }
-        }}
+        validationRule={VALIDATE_MESSAGES.FOOD.NAME}
         columnName="name"
       />
       <InputField
@@ -88,11 +85,7 @@ export const FoodRegisterForm = () => {
         iconComponent={<FaFire />}
         labelName="食品のカロリー（kcal）"
         className="mb-6"
-        validationRule={{
-          required: "カロリーを入力してください",
-          min: { value: 1, message: "カロリーは1以上で入力してください" },
-          max: { value: 9999, message: "カロリーは9999以下で入力してください" }
-        }}
+        validationRule={VALIDATE_MESSAGES.FOOD.CALORIE}
         columnName="calorie"
       />
       <SubmitButton className="w-full">登録</SubmitButton>

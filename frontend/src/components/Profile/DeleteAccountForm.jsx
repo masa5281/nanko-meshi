@@ -1,6 +1,7 @@
 // モジュール
 import { deleteUserApi } from "../../api/userApi";
 import { provider } from "../../config/firebase";
+import { VALIDATE_MESSAGES } from "../../utils/constants";
 // コンポーネント
 import { InputField } from "../InputField/InputField";
 import { CloseModalButton } from "../Button/CloseModalButton";
@@ -71,10 +72,7 @@ export const DeleteAccountForm = ({
             iconComponent={<IoMdLock />}
             labelName="パスワード"
             className="mb-4"
-            validationRule={{
-              required: "パスワードを入力してください",
-              minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
-            }}
+            validationRule={VALIDATE_MESSAGES.AUTH.PASSWORD}
           />
           <button
             type="submit"

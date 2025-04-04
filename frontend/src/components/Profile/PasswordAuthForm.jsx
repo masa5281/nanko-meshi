@@ -1,3 +1,5 @@
+// モジュール
+import { VALIDATE_MESSAGES } from "../../utils/constants";
 // コンポーネント
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
@@ -23,10 +25,7 @@ export const PasswordAuthForm = ({
         iconComponent={<IoMdLock />}
         labelName="パスワード"
         className="mb-4"
-        validationRule={{
-          required: "パスワードを入力してください",
-          minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
-        }}
+        validationRule={VALIDATE_MESSAGES.AUTH.PASSWORD}
       />
       <SubmitButton className={"w-full"}>更新</SubmitButton>
 

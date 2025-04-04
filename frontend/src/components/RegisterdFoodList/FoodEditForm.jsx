@@ -1,10 +1,11 @@
+// モジュール
+import { useFormUtils } from "../../hooks/useFormUtils";
+import { useFoodApi } from "../../hooks/useFoodApi";
+import { VALIDATE_MESSAGES } from "../../utils/constants";
 // コンポーネント
 import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
 import { IconProvider } from "../IconProvider";
-// モジュール
-import { useFormUtils } from "../../hooks/useFormUtils";
-import { useFoodApi } from "../../hooks/useFoodApi";
 // ライブラリ
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
@@ -88,10 +89,7 @@ export const FoodEditForm = (props) => {
             fieldName="foodName"
             iconComponent={<BiSolidBowlRice />}
             labelName="食品名"
-            validationRule={{
-              required: "食品名を入力してください",
-              maxLength: { value: 20, message: "食品名は20文字以内で入力してください" }
-            }}
+            validationRule={VALIDATE_MESSAGES.FOOD.NAME}
             columnName="name"
             handleOnChange={handleOnChange}
           />
@@ -102,11 +100,7 @@ export const FoodEditForm = (props) => {
             fieldName="foodCalorie"
             iconComponent={<FaFire />}
             labelName="食品のカロリー（kcal）"
-            validationRule={{
-              required: "カロリーを入力してください",
-              min: { value: 1, message: "カロリーは1以上で入力してください" },
-              max: { value: 9999, message: "カロリーは9999以下で入力してください" }
-            }}
+            validationRule={VALIDATE_MESSAGES.FOOD.CALORIE}
             columnName="calorie"
             handleOnChange={handleOnChange}
           />

@@ -1,6 +1,6 @@
 // モジュール
 import { auth } from "../config/firebase";
-import { ROUTES } from "../utils/constants";
+import { ROUTES, VALIDATE_MESSAGES } from "../utils/constants";
 // コンポーネント
 import { AuthInputField } from "../components/InputField/AuthInputField"
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton"
@@ -41,13 +41,7 @@ export const PasswordResetForm = () => {
                 type="email"
                 placeholder="メールアドレス"
                 fieldName="email"
-                validationRule={{
-                  required: "メールアドレスを入力してください",
-                  pattern: {
-                    value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                    message: "有効なメールアドレスを入力してください"
-                  }
-                }}
+                validationRule={VALIDATE_MESSAGES.AUTH.EMAIL}
                 iconComponent={<IoMail />}
               />
             </FormProvider>

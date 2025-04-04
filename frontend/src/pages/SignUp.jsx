@@ -1,7 +1,7 @@
 // モジュール
 import { createUserApi } from "../api/userApi";
 import { signUp } from "../config/firebase";
-import { ROUTES } from "../utils/constants";
+import { ROUTES, VALIDATE_MESSAGES } from "../utils/constants";
 // コンポーネント
 import { AuthInputField } from "../components/InputField/AuthInputField"
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton"
@@ -79,33 +79,21 @@ export const SignUp = () => {
                 type="text"
                 placeholder="ユーザー名"
                 fieldName="name"
-                validationRule={{
-                  required: "ユーザー名を入力してください",
-                  maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
-                }}
+                validationRule={VALIDATE_MESSAGES.USER.NAME}
                 iconComponent={<FaUser />}
               />
               <AuthInputField
                 type="email"
                 placeholder="メールアドレス"
                 fieldName="email"
-                validationRule={{
-                  required: "メールアドレスを入力してください",
-                  pattern: {
-                    value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                    message: "有効なメールアドレスを入力してください"
-                  }
-                }}
+                validationRule={VALIDATE_MESSAGES.AUTH.EMAIL}
                 iconComponent={<IoMail />}
               />
               <AuthInputField
                 type="password"
                 placeholder="パスワード"
                 fieldName="password"
-                validationRule={{
-                  required: "パスワードを入力してください",
-                  minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
-                }}
+                validationRule={VALIDATE_MESSAGES.AUTH.PASSWORD}
                 iconComponent={<IoMdLock />}
               />
               <AuthInputField

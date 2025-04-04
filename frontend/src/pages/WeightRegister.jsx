@@ -5,7 +5,7 @@ import { IconProvider } from "../components/IconProvider";
 import { selectPlaceholder, setWeight } from "../utils/formUtils";
 import { useAuth } from "../context/AuthContext";
 import { getUserApi, updateUserApi } from "../api/userApi";
-import { ROUTES } from "../utils/constants";
+import { ROUTES, VALIDATE_MESSAGES } from "../utils/constants";
 // ライブラリ
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -68,9 +68,7 @@ export const WeightRegister = () => {
                 id="userWeight"
                 defaultValue=""
                 className={`${isTextPlaceholder ? "placeholder" : ""} w-full py-2 border-none rounded-full indent-8 hover:cursor-pointer focus:ring-2 focus:ring-secondary focus:border-secondary`}
-                {...register("userWeight", {
-                  required: "体重を選択してください"
-                })}
+                {...register("userWeight", VALIDATE_MESSAGES.USER.WEIGHT)}
               >
                 <option value="" disabled>体重を選択</option>
                 {weights.map((weight) =>

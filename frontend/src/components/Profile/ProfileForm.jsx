@@ -2,6 +2,7 @@
 import { getUserApi, updateUserApi } from "../../api/userApi";
 import { selectPlaceholder, setWeight } from "../../utils/formUtils";
 import { useFormUtils } from "../../hooks/useFormUtils";
+import { VALIDATE_MESSAGES } from "../../utils/constants";
 // コンポーネント
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
@@ -153,10 +154,7 @@ export const ProfileForm = ({
           labelName="ユーザー名"
           className="mb-4"
           columnName="name"
-          validationRule={{
-            required: "ユーザー名を入力してください",
-            maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
-          }}
+          validationRule={VALIDATE_MESSAGES.USER.NAME}
         />
         {isGoogleUser ? (
           <InputField
@@ -181,13 +179,7 @@ export const ProfileForm = ({
             labelName="メールアドレス"
             className="mb-4"
             columnName="email"
-            validationRule={{
-              required: "メールアドレスを入力してください",
-              pattern: {
-                value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                message: "有効なメールアドレスを入力してください"
-              }
-            }}
+            validationRule={VALIDATE_MESSAGES.AUTH.EMAIL}
           />
         )}
         <div className="mb-6">
@@ -203,9 +195,7 @@ export const ProfileForm = ({
             id="userWeight"
             defaultValue=""
             className={`${isTextPlaceholder ? "placeholder" : ""} w-full border-black border-2 rounded-full indent-2 hover:cursor-pointer focus:ring-2 focus:ring-primary focus:border-primary`}
-            {...register("userWeight", {
-              required: "体重を選択してください"
-            })}
+            {...register("userWeight", VALIDATE_MESSAGES.USER.WEIGHT)}
           >
             <option value="" disabled>体重を選択</option>
             {weights.map((weight) =>

@@ -1,3 +1,5 @@
+// モジュール
+import { VALIDATE_MESSAGES } from "../../utils/constants";
 // コンポーネント
 import { DateInput } from "./DateInput";
 import { SubmitButton } from "../Button/SubmitButton"
@@ -49,21 +51,11 @@ export const ManualCalorieForm = () => {
             fieldName="calorie"
             iconComponent={<FaFire />}
             labelName="消費カロリー（kcal）"
-            validationRule={{
-              required: "カロリーを入力してください",
-              min: { value: 1, message: "カロリーは1以上で入力してください" },
-              validate: {
-                firstZero: (value) =>
-                  /^0/.test(value) ? "先頭に0を入力しないでください" : null,
-                checkCalorieNum: (value) =>
-                  /^[0-9]+$/.test(value) || "カロリーは数字で入力してください",
-              }
-            }}
+            validationRule={VALIDATE_MESSAGES.CALORIE.BURNED_CALORIE}
             columnName="burned_calorie"
           />
           <DateInput fieldName="manualDate" />
         </div>
-
         <SubmitButton>食べ物に換算</SubmitButton>
       </form>
     </FormProvider>
