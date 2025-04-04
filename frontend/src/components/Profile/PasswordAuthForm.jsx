@@ -15,10 +15,6 @@ export const PasswordAuthForm = ({
 
   return (
     <form onSubmit={handleSubmit(handleUpdateUser)}>
-      <h3 className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">
-        本人確認のため<br />
-        パスワードを入力してください
-      </h3>
       <InputField
         id="userPassword"
         type="password"

@@ -24,7 +24,6 @@ export const PasswordResetForm = ({
 
   return (
     <>
-      <h3 className="inline-block w-full mb-3 text-2xl text-black font-bold">パスワード再設定</h3>
       <p className="mb-3">
         登録済みのメールアドレスに<br />
         パスワード再設定のURLを送信します。

@@ -50,7 +50,6 @@ export const DeleteAccountForm = ({
 
   return (
     <>
-      <h3 className="inline-block w-full mb-3 text-2xl text-black font-bold">退会</h3>
       {isGoogleUser ? (
         <>
           <p className="mb-3">アカウント削除後は復元できません。<br />再ログイン後にアカウントが削除されます。</p>

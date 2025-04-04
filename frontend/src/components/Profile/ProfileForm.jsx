@@ -105,7 +105,7 @@ export const ProfileForm = ({
   return (
     <>
       {modalType === "passwordAuth" && (
-        <CustomModal isOpen={isOpen}>
+        <CustomModal isOpen={isOpen} title={<>本人確認のため<br />パスワードを入力してください</>}>
           <PasswordAuthForm handleUpdateUser={handleUpdateUser} closeUserModal={closeUserModal} />
         </CustomModal>
       )}

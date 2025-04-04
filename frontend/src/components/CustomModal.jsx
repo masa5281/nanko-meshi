@@ -4,6 +4,7 @@ import { modalStyle } from "../theme/modalStyle";
 
 export const CustomModal = ({
   isOpen,
+  title,
   children,
 }) => {
 
@@ -23,6 +24,7 @@ export const CustomModal = ({
         </motion.div>
       )}
     >
+      <h3 className="inline-block w-full mb-3 text-2xl text-black font-bold">{title}</h3>
       {children}
     </Modal>
   );
