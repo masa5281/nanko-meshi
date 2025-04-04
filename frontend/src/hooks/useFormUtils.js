@@ -17,10 +17,17 @@ export const useFormUtils = () => {
     }
   };
 
+  // ボタン押下でinputが発火
+  const handleInputFile = (e, targetRef) => {
+    e.preventDefault();
+    targetRef.current.click();
+  };
+
   return {
     foodImage,
     userImage,
     previewImage,
     onFileInputChange,
+    handleInputFile,
   };
 };

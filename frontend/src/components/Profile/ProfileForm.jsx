@@ -48,17 +48,12 @@ export const ProfileForm = ({
     userImage,
     previewImage,
     onFileInputChange,
+    handleInputFile,
   } = useFormUtils();
 
   useEffect(() => {
     selectPlaceholder(userWeight, setIsTextPlaceholder);
   }, [userWeight]);
-
-  // ボタン押下でinputが発火
-  const handleInputFile = (e) => {
-    e.preventDefault();
-    inputRef.current.click();
-  }
 
   const updateUserNotofy = () => {
     if (user.email !== userEmail) return;
@@ -121,7 +116,7 @@ export const ProfileForm = ({
           />
           <button
             className="w-full h-full relative bg-gray-100 rounded-full  transition-all duration-200 hover:brightness-110"
-            onClick={handleInputFile}
+            onClick={(e) => handleInputFile(e, inputRef)}
           >
             <div className="absolute bottom-0 right-0 p-2 bg-primary-deep rounded-full">
               <IconProvider>

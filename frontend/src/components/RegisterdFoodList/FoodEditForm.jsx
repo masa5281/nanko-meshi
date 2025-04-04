@@ -23,6 +23,7 @@ export const FoodEditForm = (props) => {
   const { handleSubmit } = useFormContext();
   const { updateFood } = useFoodApi();
   const inputRef = useRef(null);
+
   const {
     selectFood,
     setSelectFood,
@@ -33,6 +34,7 @@ export const FoodEditForm = (props) => {
     foodImage,
     previewImage,
     onFileInputChange,
+    handleInputFile,
   } = useFormUtils();
 
   const handleUpdateFood = async () => {
@@ -51,12 +53,6 @@ export const FoodEditForm = (props) => {
     setSelectFood(prev => ({ ...prev, [columnName]: e.target.value }));
   };
 
-  // ボタン押下でinputが発火
-  const handleInputFile = (e) => {
-    e.preventDefault();
-    inputRef.current.click();
-  }
-
   const updateFoodNotofy = () => toast.success("食品を更新しました");
 
   return (
@@ -66,7 +62,10 @@ export const FoodEditForm = (props) => {
       <form onSubmit={handleSubmit(handleUpdateFood)}>
         <div className="w-48 aspect-[4/3] mb-5 mx-auto rounded-md text-center overflow-visible">
           <input type="file" className="hidden" ref={inputRef} onChange={(e) => onFileInputChange(e, "food")} />
-          <button className="relative w-full h-full hover:brightness-105 transition-all duration-200" onClick={handleInputFile}>
+          <button
+            className="relative w-full h-full hover:brightness-105 transition-all duration-200"
+            onClick={(e) => handleInputFile(e, inputRef)}
+          >
             <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
               <IconProvider>
                 <FaCamera size={16} color="#fff" />
