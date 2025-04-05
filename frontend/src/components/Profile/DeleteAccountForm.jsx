@@ -7,12 +7,13 @@ import { InputField } from "../InputField/InputField";
 import { CloseModalButton } from "../Button/CloseModalButton";
 // ライブラリ
 import { toast } from "react-toastify";
-import { deleteUser, EmailAuthProvider, reauthenticateWithCredential, reauthenticateWithPopup } from "firebase/auth";
+import { deleteUser, reauthenticateWithPopup } from "firebase/auth";
 // アイコン
 import { IoMdLock } from "react-icons/io";
 // カスタムフック
 import { useFormContext } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
+import { useFirebaseAuth } from "../../hooks/useFirebaseAuth";
 
 export const DeleteAccountForm = ({
   setIsOpen,
@@ -22,6 +23,7 @@ export const DeleteAccountForm = ({
   const { watch, handleSubmit, setError } = useFormContext();
   const { user } = useAuth();
   const userPassword = watch("userPassword");
+  const { emailAuth } = useFirebaseAuth();
 
   const deleteUserNotofy = () => toast.success("退会が完了しました");
 
@@ -31,11 +33,7 @@ export const DeleteAccountForm = ({
       if (isGoogleUser) {
         await reauthenticateWithPopup(user, provider);
       } else {
-        const emailCredential = EmailAuthProvider.credential(
-          user.email,
-          userPassword,
-        );
-        await reauthenticateWithCredential(user, emailCredential);
+        await emailAuth(userPassword);
       }
       await deleteUserApi(user.uid);
       await deleteUser(user);

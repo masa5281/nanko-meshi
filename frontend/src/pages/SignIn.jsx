@@ -1,32 +1,30 @@
 // モジュール
-import { createUserApi } from "../api/userApi";
-import { auth, signIn, provider } from "../config/firebase";
 import { ROUTES } from "../utils/constants";
 // コンポーネント
 import { AuthInputField } from "../components/InputField/AuthInputField"
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton"
 import { GoogleButton } from "../components/Button/GoogleButton";
 // ライブラリ
-import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
 // アイコン
 import { IoMail } from "react-icons/io5";
 import { IoMdLock } from "react-icons/io";
+// カスタムフック
+import { useFirebaseAuth } from "../hooks/useFirebaseAuth";
 
 export const SignIn = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-
   const methods = useForm({
     mode: "onBlur",
     criteriaMode: "all"
   });
   const { watch, handleSubmit } = methods;
+  const { signIn, signInGoogle } = useFirebaseAuth();
 
-  // ログイン（メアド、パスワード）
-  const handleSignIn = async (e) => {
+  const handleSignIn = async () => {
     try {
       await signIn(watch("email"), watch("password"));
       navigate(ROUTES.CALORIE.INPUT);
@@ -35,11 +33,9 @@ export const SignIn = () => {
     }
   };
 
-  // ログイン（Google）
   const handleSignInGoogle = async () => {
     try {
-      const googleUser = await signInWithPopup(auth, provider);
-      createUserApi(googleUser.user.uid, googleUser.user.displayName);
+      await signInGoogle();
       navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
       console.error(error);
@@ -84,4 +80,4 @@ export const SignIn = () => {
       </div>
     </div>
   );
-}
+};

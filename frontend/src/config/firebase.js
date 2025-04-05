@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,23 +13,3 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
-
-export const signUp = async (email, password) => {
-  try {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
-    return user;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export const signIn = async (email, password) => {
-  try {
-    const user = await signInWithEmailAndPassword(auth, email, password);
-    return user;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export const handleSignOut = async () => await signOut(auth);

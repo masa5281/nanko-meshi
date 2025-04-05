@@ -1,9 +1,9 @@
 // モジュール
 import { ROUTES } from "../../utils/constants";
-import { handleSignOut } from "../../config/firebase";
 import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { IconList } from "./IconList";
+import { IconProvider } from "../IconProvider";
 // ライブラリ
 import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
@@ -22,11 +22,12 @@ import { FaUser } from "react-icons/fa6";
 import { headerCustomTheme } from "../../theme/theme";
 // カスタムフック
 import { useAuth } from "../../context/AuthContext";
-import { IconProvider } from "../IconProvider";
+import { useFirebaseAuth } from "../../hooks/useFirebaseAuth";
 
 export const Header = () => {
   const [userImage, setUserImage] = useState("");
   const { user, isAuthReady } = useAuth();
+  const { handleSignOut } = useFirebaseAuth();
 
   useEffect(() => {
     if (!user) return;

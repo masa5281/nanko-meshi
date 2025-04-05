@@ -12,7 +12,7 @@ import { PasswordAuthForm } from "./PasswordAuthForm";
 // ライブラリ
 import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail } from "firebase/auth";
+import { verifyBeforeUpdateEmail } from "firebase/auth";
 import { toast } from 'react-toastify';
 import { ErrorMessage } from "@hookform/error-message";
 // アイコン
@@ -25,6 +25,7 @@ import { FaCamera } from "react-icons/fa";
 import { useUserDataContext } from "../../context/UserDataContext";
 import { useAuth } from "../../context/AuthContext";
 import { useValidateError } from "../../context/ValidateErrorContext";
+import { useFirebaseAuth } from "../../hooks/useFirebaseAuth";
 
 export const ProfileForm = ({
   isOpen,
@@ -44,6 +45,7 @@ export const ProfileForm = ({
   const userEmail = watch("userEmail");
   const userWeight = watch("userWeight");
   const userPassword = watch("userPassword");
+  const { emailAuth } = useFirebaseAuth();
   const {
     userImage,
     previewImage,
@@ -70,11 +72,7 @@ export const ProfileForm = ({
         return;
       }
       if (isOpen) {
-        const credential = EmailAuthProvider.credential(
-          user.email,
-          userPassword,
-        );
-        await reauthenticateWithCredential(user, credential);
+        await emailAuth(userPassword);
         await verifyBeforeUpdateEmail(user, userEmail);
         closeUserModal();
         verifyUserNotofy();

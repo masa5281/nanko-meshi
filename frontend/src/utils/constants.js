@@ -38,7 +38,7 @@ export const API_ENDPOINTS = {
   },
 };
 
-// バリデーションメッセージ
+// バリデーションメッセージ（useForm）
 export const VALIDATE_MESSAGES = {
   AUTH: {
     EMAIL: {
