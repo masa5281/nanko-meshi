@@ -2,11 +2,11 @@
 import { deleteUserApi } from "../../api/userApi";
 import { provider } from "../../config/firebase";
 import { VALIDATE_MESSAGES } from "../../utils/constants";
+import { deleteNotify } from "../../utils/toastNotify";
 // コンポーネント
 import { InputField } from "../InputField/InputField";
 import { CloseModalButton } from "../Button/CloseModalButton";
 // ライブラリ
-import { toast } from "react-toastify";
 import { deleteUser, reauthenticateWithPopup } from "firebase/auth";
 // アイコン
 import { IoMdLock } from "react-icons/io";
@@ -25,8 +25,6 @@ export const DeleteAccountForm = ({
   const userPassword = watch("userPassword");
   const { emailAuth } = useFirebaseAuth();
 
-  const deleteUserNotofy = () => toast.success("退会が完了しました");
-
   const handleDeleteUser = async () => {
     try {
       // ログイン方式別の再認証
@@ -38,7 +36,7 @@ export const DeleteAccountForm = ({
       await deleteUserApi(user.uid);
       await deleteUser(user);
       setIsOpen(false);
-      deleteUserNotofy();
+      deleteNotify("退会が完了しました");
     } catch (error) {
       if (error.code === "auth/invalid-credential") {
         setError("userPassword", { type: "manual", message: "パスワードが違います" });

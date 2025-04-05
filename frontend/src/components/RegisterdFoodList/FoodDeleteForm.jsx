@@ -1,7 +1,7 @@
 import { useFoodApi } from "../../hooks/useFoodApi";
 import { IoIosClose } from "react-icons/io";
 import { IconProvider } from "../IconProvider";
-import { toast } from 'react-toastify';
+import { deleteNotify } from "../../utils/toastNotify";
 
 export const FoodDeleteForm = ({
   selectFood,
@@ -17,13 +17,11 @@ export const FoodDeleteForm = ({
         prevFoodList.filter(food => food.id !== selectFood.id)
       );
       closeFoodModal();
-      deleteFoodNotify();
+      deleteNotify("食品を削除しました");
     } catch (error) {
       console.error(error);
     }
   };
-
-  const deleteFoodNotify = () => toast.error("食品を削除しました");
 
   return (
     <>

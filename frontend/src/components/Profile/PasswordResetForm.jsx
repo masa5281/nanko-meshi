@@ -1,11 +1,7 @@
-// モジュール
 import { auth } from "../../config/firebase";
-// コンポーネント
+import { passwordResetNotify } from "../../utils/toastNotify";
 import { CloseModalButton } from "../Button/CloseModalButton";
-// ライブラリ
 import { sendPasswordResetEmail } from "firebase/auth";
-import { toast } from 'react-toastify';
-// カスタムフック
 import { useAuth } from "../../context/AuthContext";
 
 export const PasswordResetForm = ({
@@ -14,12 +10,10 @@ export const PasswordResetForm = ({
 }) => {
   const { user } = useAuth();
 
-  const passwordResetNotofy = () => toast.info(<p>パスワード再設定用のメールを<br />送信しました。</p>);
-
   const handlePasswordReset = () => {
     sendPasswordResetEmail(auth, user.email);
     setIsOpen(false);
-    passwordResetNotofy();
+    passwordResetNotify(<p>パスワード再設定用のメールを<br />送信しました。</p>);
   };
 
   return (

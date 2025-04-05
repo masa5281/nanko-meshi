@@ -3,6 +3,7 @@ import { getUserApi, updateUserApi } from "../../api/userApi";
 import { selectPlaceholder, setWeight } from "../../utils/formUtils";
 import { useFormUtils } from "../../hooks/useFormUtils";
 import { VALIDATE_MESSAGES } from "../../utils/constants";
+import { updateNotify, verifyNotify } from "../../utils/toastNotify";
 // コンポーネント
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
@@ -13,7 +14,6 @@ import { PasswordAuthForm } from "./PasswordAuthForm";
 import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { verifyBeforeUpdateEmail } from "firebase/auth";
-import { toast } from 'react-toastify';
 import { ErrorMessage } from "@hookform/error-message";
 // アイコン
 import { FaUser } from "react-icons/fa6";
@@ -57,14 +57,6 @@ export const ProfileForm = ({
     selectPlaceholder(userWeight, setIsTextPlaceholder);
   }, [userWeight]);
 
-  const updateUserNotofy = () => {
-    if (user.email !== userEmail) return;
-    toast.success("プロフィールを更新しました", {
-    });
-  };
-
-  const verifyUserNotofy = () => toast.info(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>);
-
   const handleUpdateUser = async () => {
     try {
       if (!isOpen && user.email !== userEmail) {
@@ -75,7 +67,7 @@ export const ProfileForm = ({
         await emailAuth(userPassword);
         await verifyBeforeUpdateEmail(user, userEmail);
         closeUserModal();
-        verifyUserNotofy();
+        verifyNotify(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>);
       }
       await updateUserApi(
         userName,
@@ -86,7 +78,9 @@ export const ProfileForm = ({
       const updateUserData = await getUserApi(user.uid);
       setDbUserData(updateUserData);
       setValidateErrors([]);
-      updateUserNotofy();
+
+      if (user.email !== userEmail) return;
+      updateNotify("プロフィールを更新しました");
     } catch (error) {
       if (error.code === "auth/invalid-credential") {
         setError("userPassword", { type: "manual", message: "パスワードが違います" });

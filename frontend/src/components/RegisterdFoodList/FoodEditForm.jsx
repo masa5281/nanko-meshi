@@ -2,6 +2,7 @@
 import { useFormUtils } from "../../hooks/useFormUtils";
 import { useFoodApi } from "../../hooks/useFoodApi";
 import { VALIDATE_MESSAGES } from "../../utils/constants";
+import { updateNotify } from "../../utils/toastNotify";
 // コンポーネント
 import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
@@ -9,7 +10,6 @@ import { IconProvider } from "../IconProvider";
 // ライブラリ
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { toast } from 'react-toastify';
 // アイコン
 import { FaCamera } from "react-icons/fa";
 import { FaFire } from "react-icons/fa6";
@@ -50,8 +50,6 @@ export const FoodEditForm = ({
   const handleOnChange = (e, columnName) => {
     setSelectFood(prev => ({ ...prev, [columnName]: e.target.value }));
   };
-
-  const updateFoodNotofy = () => toast.success("食品を更新しました");
 
   return (
     <form onSubmit={handleSubmit(handleUpdateFood)}>
@@ -98,7 +96,12 @@ export const FoodEditForm = ({
           columnName="calorie"
           handleOnChange={handleOnChange}
         />
-        <SubmitButton className="w-full" onClick={updateFoodNotofy}>更新</SubmitButton>
+        <SubmitButton
+          className="w-full"
+          onClick={() => updateNotify("食品を更新しました")}
+        >
+          更新
+        </SubmitButton>
       </div>
 
       <button
