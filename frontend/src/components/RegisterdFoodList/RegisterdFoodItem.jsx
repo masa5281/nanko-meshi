@@ -41,23 +41,25 @@ export const RegisterdFoodItem = () => {
     <div className="max-w-7xl mx-auto text-center">
       <h2 className="inline-block mb-8 px-5 py-3 bg-black rounded-full text-white text-3xl">登録した食品</h2>
 
-      <CustomModal isOpen={isOpen}>
-        {modalType === "edit" && selectFood && (
+      {modalType === "edit" && selectFood && (
+        <CustomModal isOpen={isOpen} title={"食品情報を変更"}>
           <FoodEditForm
             selectFood={selectFood}
             setSelectFood={setSelectFood}
             setFoodList={setFoodList}
             closeFoodModal={closeFoodModal}
           />
-        )}
-        {modalType === "delete" && selectFood && (
+        </CustomModal>
+      )}
+      {modalType === "delete" && selectFood && (
+        <CustomModal isOpen={isOpen} title={"食品を削除しますか？"}>
           <FoodDeleteForm
             selectFood={selectFood}
             setFoodList={setFoodList}
             closeFoodModal={closeFoodModal}
           />
-        )}
-      </CustomModal>
+        </CustomModal>
+      )}
 
       <ul className="grid grid-cols-3 gap-12 px-20">
         {foodList.map((food, index) => {

@@ -18,18 +18,16 @@ import { IoIosClose } from "react-icons/io";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
 
-export const FoodEditForm = (props) => {
+export const FoodEditForm = ({
+  selectFood,
+  setSelectFood,
+  setFoodList,
+  closeFoodModal,
+}) => {
   const { setValidateErrors } = useValidateError();
   const { handleSubmit } = useFormContext();
   const { updateFood } = useFoodApi();
   const inputRef = useRef(null);
-
-  const {
-    selectFood,
-    setSelectFood,
-    setFoodList,
-    closeFoodModal,
-  } = props;
   const {
     foodImage,
     previewImage,
@@ -56,56 +54,52 @@ export const FoodEditForm = (props) => {
   const updateFoodNotofy = () => toast.success("食品を更新しました");
 
   return (
-    <>
-      <h3 className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">食品情報を変更</h3>
-
-      <form onSubmit={handleSubmit(handleUpdateFood)}>
-        <div className="w-48 aspect-[4/3] mb-5 mx-auto rounded-md text-center overflow-visible">
-          <input type="file" className="hidden" ref={inputRef} onChange={(e) => onFileInputChange(e, "food")} />
-          <button
-            className="relative w-full h-full hover:brightness-105 transition-all duration-200"
-            onClick={(e) => handleInputFile(e, inputRef)}
-          >
-            <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
-              <IconProvider>
-                <FaCamera size={16} color="#fff" />
-              </IconProvider>
-            </div>
-            {previewImage ? (
-              <img src={previewImage} alt="" className="w-full h-full rounded-md object-cover" />
-            ) : (
-              selectFood.food_image && (
-                <img src={selectFood.food_image.url} alt="" className="w-full h-full rounded-md object-cover" />
-              )
-            )}
-          </button>
-        </div>
-        <div className="flex flex-col gap-3">
-          <InputField
-            id="foodName"
-            type="text"
-            placeholder="例：チョコレート"
-            fieldName="foodName"
-            iconComponent={<BiSolidBowlRice />}
-            labelName="食品名"
-            validationRule={VALIDATE_MESSAGES.FOOD.NAME}
-            columnName="name"
-            handleOnChange={handleOnChange}
-          />
-          <InputField
-            id="foodCalorie"
-            type="text"
-            placeholder="例：300"
-            fieldName="foodCalorie"
-            iconComponent={<FaFire />}
-            labelName="食品のカロリー（kcal）"
-            validationRule={VALIDATE_MESSAGES.FOOD.CALORIE}
-            columnName="calorie"
-            handleOnChange={handleOnChange}
-          />
-          <SubmitButton className="w-full" onClick={updateFoodNotofy}>更新</SubmitButton>
-        </div>
-      </form>
+    <form onSubmit={handleSubmit(handleUpdateFood)}>
+      <div className="w-48 aspect-[4/3] mb-5 mx-auto rounded-md text-center overflow-visible">
+        <input type="file" className="hidden" ref={inputRef} onChange={(e) => onFileInputChange(e, "food")} />
+        <button
+          className="relative w-full h-full hover:brightness-105 transition-all duration-200"
+          onClick={(e) => handleInputFile(e, inputRef)}
+        >
+          <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
+            <IconProvider>
+              <FaCamera size={16} color="#fff" />
+            </IconProvider>
+          </div>
+          {previewImage ? (
+            <img src={previewImage} alt="" className="w-full h-full rounded-md object-cover" />
+          ) : (
+            selectFood.food_image && (
+              <img src={selectFood.food_image.url} alt="" className="w-full h-full rounded-md object-cover" />
+            )
+          )}
+        </button>
+      </div>
+      <div className="flex flex-col gap-3">
+        <InputField
+          id="foodName"
+          type="text"
+          placeholder="例：チョコレート"
+          fieldName="foodName"
+          iconComponent={<BiSolidBowlRice />}
+          labelName="食品名"
+          validationRule={VALIDATE_MESSAGES.FOOD.NAME}
+          columnName="name"
+          handleOnChange={handleOnChange}
+        />
+        <InputField
+          id="foodCalorie"
+          type="text"
+          placeholder="例：300"
+          fieldName="foodCalorie"
+          iconComponent={<FaFire />}
+          labelName="食品のカロリー（kcal）"
+          validationRule={VALIDATE_MESSAGES.FOOD.CALORIE}
+          columnName="calorie"
+          handleOnChange={handleOnChange}
+        />
+        <SubmitButton className="w-full" onClick={updateFoodNotofy}>更新</SubmitButton>
+      </div>
 
       <button
         onClick={closeFoodModal}
@@ -115,6 +109,6 @@ export const FoodEditForm = (props) => {
           <IoIosClose />
         </IconProvider>
       </button>
-    </>
+    </form>
   );
 };

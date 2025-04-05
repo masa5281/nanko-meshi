@@ -27,14 +27,12 @@ export const FoodDeleteForm = ({
 
   return (
     <>
-      <p className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">食品を削除しますか？</p>
       <button
         onClick={handleDeleteFood}
         className="w-full inline-block relative mx-auto px-12 py-2 border-black border-2 rounded-full bg-delete text-white font-bold hover:bg-hover"
       >
         削除
       </button>
-      
       <button
         onClick={closeFoodModal}
         className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200"
