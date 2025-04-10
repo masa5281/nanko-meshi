@@ -68,6 +68,7 @@ export const ProfileForm = ({
         await verifyBeforeUpdateEmail(user, userEmail);
         closeUserModal();
         verifyNotify(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>);
+        return;
       }
       await updateUserApi(
         userName,
@@ -78,8 +79,6 @@ export const ProfileForm = ({
       const updateUserData = await getUserApi(user.uid);
       setDbUserData(updateUserData);
       setValidateErrors([]);
-
-      if (user.email !== userEmail) return;
       updateNotify("プロフィールを更新しました");
     } catch (error) {
       if (error.code === "auth/invalid-credential") {
