@@ -32,11 +32,14 @@ class Api::V1::UsersController < ApplicationController
 
   def destroy
     user = User.find_by(firebase_uid: params[:firebase_uid])
-    if user
-      user.destroy
-      head :no_content
+    if user.present?
+      if user&.destroy
+        head :no_content
+      else
+        render json: user.errors, status: :unprocessable_entity
+      end
     else
-      render json: user.errors, status: :unprocessable_entity
+      render status: :not_found
     end
   end
 
@@ -47,6 +50,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find_by(firebase_uid: params[:firebase_uid])
+    @user = User.find_by!(firebase_uid: params[:firebase_uid])
   end
 end
