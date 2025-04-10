@@ -1,7 +1,7 @@
-import { createUserWithEmailAndPassword, EmailAuthProvider, reauthenticateWithCredential, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, EmailAuthProvider, reauthenticateWithCredential, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { useAuth } from "../context/AuthContext";
 import { auth, provider } from "../config/firebase";
-import { createUserApi } from "../api/userApi";
+import { createUserApi, deleteUserApi } from "../api/userApi";
 
 export const useFirebaseAuth = () => {
   const { user } = useAuth();
@@ -35,12 +35,22 @@ export const useFirebaseAuth = () => {
     await reauthenticateWithCredential(user, credential);
   };
 
+  // ユーザーの削除
+  const deleteAccount = async (uid) => {
+    try {
+      await deleteUserApi(uid);
+      await deleteUser(user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return {
     signUp,
     signIn,
-    signOut,
     handleSignOut,
     signInGoogle,
     emailAuth,
+    deleteAccount,
   };
 };

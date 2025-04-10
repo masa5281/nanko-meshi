@@ -1,5 +1,4 @@
 // モジュール
-import { deleteUserApi } from "../../api/userApi";
 import { provider } from "../../config/firebase";
 import { VALIDATE_MESSAGES } from "../../utils/constants";
 import { deleteNotify } from "../../utils/toastNotify";
@@ -7,7 +6,7 @@ import { deleteNotify } from "../../utils/toastNotify";
 import { InputField } from "../InputField/InputField";
 import { CloseModalButton } from "../Button/CloseModalButton";
 // ライブラリ
-import { deleteUser, reauthenticateWithPopup } from "firebase/auth";
+import { reauthenticateWithPopup } from "firebase/auth";
 // アイコン
 import { IoMdLock } from "react-icons/io";
 // カスタムフック
@@ -23,7 +22,7 @@ export const DeleteAccountForm = ({
   const { watch, handleSubmit, setError } = useFormContext();
   const { user } = useAuth();
   const userPassword = watch("userPassword");
-  const { emailAuth } = useFirebaseAuth();
+  const { emailAuth, deleteAccount } = useFirebaseAuth();
 
   const handleDeleteUser = async () => {
     try {
@@ -33,8 +32,7 @@ export const DeleteAccountForm = ({
       } else {
         await emailAuth(userPassword);
       }
-      await deleteUserApi(user.uid);
-      await deleteUser(user);
+      await deleteAccount(user.uid);
       setIsOpen(false);
       deleteNotify("退会が完了しました");
     } catch (error) {
