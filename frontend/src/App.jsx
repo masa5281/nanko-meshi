@@ -1,7 +1,7 @@
 // モジュール
 import { ROUTES } from "./utils/constants";
 import { setupAxiosStateError } from "./config/axiosClient";
-// コンポーネント
+// Pages
 import { Header } from "./components/Header/Header";
 import { CalorieInput } from "./pages/CalorieInput";
 import { FoodConversion } from "./components/FoodConversion/FoodConversion";
@@ -14,6 +14,8 @@ import { PasswordResetSuccess } from "./pages/PasswordResetSuccess"
 import { WeightRegister } from "./pages/WeightRegister";
 import { Profile } from "./pages/Profile";
 import { Page404 } from "./pages/404";
+import { BarGraph } from "./pages/BarGraph";
+
 import { ProtectedRoute } from "./Routes/ProtectedRoute";
 import { GuestRoute } from "./Routes/GuestRoute";
 import { WeightCheckNavigator } from "./Routes/WeightCheckNavigator";
@@ -47,6 +49,12 @@ export const App = () => {
                 <div>
                   <Header />
                   <Routes>
+                    <Route
+                      path="*"
+                      element={
+                        <Page404 />
+                      }
+                    />
                     <Route
                       path={ROUTES.AUTH.SIGN_UP}
                       element={
@@ -140,9 +148,13 @@ export const App = () => {
                       }
                     />
                     <Route
-                      path="*"
+                      path={ROUTES.CALORIE.GRAPH}
                       element={
-                        <Page404 />
+                        <ProtectedRoute>
+                          <WeightCheckNavigator>
+                            <BarGraph />
+                          </WeightCheckNavigator>
+                        </ProtectedRoute>
                       }
                     />
                   </Routes>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export const IconList = (props) => {
-  const { link = "/", img, alt, menuName } = props;
+  const { link, img, alt, menuName } = props;
 
   return (
     <li className="w-28 h-full">

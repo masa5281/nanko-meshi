@@ -22,7 +22,7 @@ export const setupAxiosStateError = (setStateError) => {
       return response;
     },
     (error) => {
-      if (error.response?.status === 404) {
+      if (error.response && error.response.status === 404) {
         setStateError(404);
       }
       return Promise.reject(error);
