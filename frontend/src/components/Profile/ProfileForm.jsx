@@ -63,13 +63,6 @@ export const ProfileForm = ({
         openUserModal("passwordAuth");
         return;
       }
-      if (isOpen) {
-        await emailAuth(userPassword);
-        await verifyBeforeUpdateEmail(user, userEmail);
-        closeUserModal();
-        verifyNotify(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>);
-        return;
-      }
       await updateUserApi(
         userName,
         userWeight,
@@ -89,11 +82,18 @@ export const ProfileForm = ({
     }
   };
 
+  const verifyUpdateEmail = async () => {
+    await emailAuth(userPassword);
+    await verifyBeforeUpdateEmail(user, userEmail);
+    closeUserModal();
+    verifyNotify(<p>確認メールを送信しました。<br />リンクを開いて認証してください。</p>);
+  };
+
   return (
     <>
       {modalType === "passwordAuth" && (
         <CustomModal isOpen={isOpen} title={<>本人確認のため<br />パスワードを入力してください</>}>
-          <PasswordAuthForm handleUpdateUser={handleUpdateUser} closeUserModal={closeUserModal} />
+          <PasswordAuthForm verifyUpdateEmail={verifyUpdateEmail} closeUserModal={closeUserModal} />
         </CustomModal>
       )}
 

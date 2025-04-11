@@ -10,13 +10,13 @@ import { useFormContext } from "react-hook-form";
 import { IoMdLock } from "react-icons/io";
 
 export const PasswordAuthForm = ({
-  handleUpdateUser,
+  verifyUpdateEmail,
   closeUserModal,
 }) => {
   const { handleSubmit } = useFormContext();
 
   return (
-    <form onSubmit={handleSubmit(handleUpdateUser)}>
+    <form onSubmit={handleSubmit(verifyUpdateEmail)}>
       <InputField
         id="userPassword"
         type="password"
