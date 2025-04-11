@@ -35,23 +35,19 @@ export const Profile = () => {
 
   return (
     <FormProvider {...methods}>
-      {modalType === "passwordReset" && (
-        <CustomModal isOpen={isOpen} title={"パスワード再設定"}>
-          <PasswordResetForm
-            setIsOpen={setIsOpen}
-            closeUserModal={closeUserModal}
-          />
-        </CustomModal>
-      )}
-      {modalType === "delete" && (
-        <CustomModal isOpen={isOpen} title={"退会"}>
-          <DeleteAccountForm
-            setIsOpen={setIsOpen}
-            isGoogleUser={isGoogleUser}
-            closeUserModal={closeUserModal}
-          />
-        </CustomModal>
-      )}
+      <CustomModal isOpen={isOpen && modalType === "passwordReset"} title={"パスワード再設定"}>
+        <PasswordResetForm
+          setIsOpen={setIsOpen}
+          closeUserModal={closeUserModal}
+        />
+      </CustomModal>
+      <CustomModal isOpen={isOpen && modalType === "delete"} title={"退会"}>
+        <DeleteAccountForm
+          setIsOpen={setIsOpen}
+          isGoogleUser={isGoogleUser}
+          closeUserModal={closeUserModal}
+        />
+      </CustomModal>
 
       <div className="relative top-8 max-w-md mx-auto px-8 pt-12 pb-5 border-black border-4 rounded-md before:content-[''] before:absolute before:w-56 before:h-10 before:bg-background before:inline-block before:-top-5 before:left-1/2 before:-translate-x-1/2">
         <h2 className="absolute -top-7 left-1/2 -translate-x-1/2 w-52 mx-auto mb-5 py-2 rounded-full bg-black text-white text-2xl text-center">
