@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: %i[show update]
+  before_action :set_user, only: %i[show update destroy]
   skip_before_action :authenticate_request, only: %i[create]
 
   def show
@@ -31,15 +31,10 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find_by(firebase_uid: params[:firebase_uid])
-    if user.present?
-      if user&.destroy
-        head :no_content
-      else
-        render json: user.errors, status: :unprocessable_entity
-      end
+    if @user&.destroy
+      head :no_content
     else
-      render status: :not_found
+      render json: user.errors, status: :unprocessable_entity
     end
   end
 
