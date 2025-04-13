@@ -60,14 +60,13 @@ export const WeekGraph = () => {
 
   // DBのカロリーを該当の週のグラフに配置
   useEffect(() => {
-    if (!weekStartStr) return;
     const data = [];
     const week = ["月", "火", "水", "木", "金", "土", "日"];
     const targetIndex = isCurrentWeek ? (dayNum === 0 ? 6 : dayNum - 1) : 0;
+
     for (let i = 0; i < 7; i++) {
       const currentDate = new Date(startDate);
       currentDate.setDate(startDate.getDate() + i);
-
       const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
       const newCalorieList = calorieList.filter(calorie => calorie.recorded_at === dateStr);
       const sumCalorie = newCalorieList.reduce((totalCalorie, object) => totalCalorie + object.burned_calorie, 0);
@@ -83,9 +82,15 @@ export const WeekGraph = () => {
   }, [calorieList, startDate, weekStartStr, dayNum]);
 
   const onPrevWeek = () => {
-    const changeDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - 7);
-    setStateDate(changeDate);
-    setSelectDate(formatGraphDate(changeDate));
+    const prevWeekDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - 7);
+    setStateDate(prevWeekDate);
+    setSelectDate(formatGraphDate(prevWeekDate));
+  };
+
+  const onNextWeek = () => {
+    const nextWeekDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 7);
+    setStateDate(nextWeekDate);
+    setSelectDate(formatGraphDate(nextWeekDate));
   };
 
   return (
@@ -94,6 +99,9 @@ export const WeekGraph = () => {
       <p>{selectCalorie}<span>kcal</span></p>
       <p>{weekStartStr}週</p>
       <button onClick={onPrevWeek}>前週</button>
+      {!isCurrentWeek && (
+        <button onClick={onNextWeek}>翌週</button>
+      )}
 
       <ResponsiveContainer key={weekStartStr} width="100%" height={500} >
         <BarChart
