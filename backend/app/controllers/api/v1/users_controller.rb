@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+  before_action :set_user
   skip_before_action :authenticate_request, only: %i[create]
 
   def show
@@ -7,18 +7,16 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    user = User.find_by(firebase_uid: params[:firebase_uid])
-    # 既にユーザー登録済みの場合は新規登録をしない
-    if user
+    if @user.present?
       head :no_content
       return
     end
 
-    user = User.new(user_params)
-    if user.save
+    @user = User.new(user_params)
+    if @user.save
       head :created
     else
-      render json: user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
@@ -45,6 +43,15 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find_by!(firebase_uid: params[:firebase_uid])
+    begin
+      @user = User.find_by!(firebase_uid: params[:firebase_uid])
+    rescue ActiveRecord::RecordNotFound
+      if action_name == "create"
+        @user = nil
+      else
+        head :no_content
+        return
+      end
+    end
   end
 end
