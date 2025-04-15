@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BarChart,
   Bar,
@@ -99,8 +99,23 @@ export const WeekGraph = () => {
     setSelectDate(nextWeekDate);
   };
 
+  const customLegend = ({ payload }) => {
+    return (
+      <ul className='text-left'>
+        {
+          payload.map((entry, index) => (
+            <li key={`item-${index}`}>
+              <span className='inline-block w-3 h-3 mr-1 bg-primary rounded-md'></span>
+              {entry.value}
+            </li>
+          ))
+        }
+      </ul>
+    );
+  };
+
   return (
-    <div className='relative max-w-5xl mx-auto px-5 py-5 bg-white rounded-md'>
+    <div className='relative max-w-5xl mx-auto px-5 py-5 bg-white rounded-b-md'>
       <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraphDate(selectDate)}</p>
       <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
       <p className='absolute top-[80px] right-8'>{weekStartStr}週</p>
@@ -129,10 +144,10 @@ export const WeekGraph = () => {
             axisLine={false}
           />
           <Legend
+            content={customLegend}
             payload={[
               { value: "消費カロリー", type: "circle" }
             ]}
-            align='left'
             wrapperStyle={{
               marginLeft: "60px",
               paddingTop: "25px",
