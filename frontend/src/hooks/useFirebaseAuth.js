@@ -23,7 +23,7 @@ export const useFirebaseAuth = () => {
   // サインイン（Google）
   const signInGoogle = async () => {
     const googleUser = await signInWithPopup(auth, provider);
-    createUserApi(googleUser.user.uid, googleUser.user.displayName);
+    await createUserApi(googleUser.user.uid, googleUser.user.displayName);
   };
 
   // 再認証（Email）
