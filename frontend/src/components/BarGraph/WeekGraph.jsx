@@ -32,22 +32,17 @@ export const WeekGraph = () => {
 
   const CustomizedTick = ({ x, y, payload }) => (
     <g transform={`translate(${x},${y})`}>
-      <rect x={-17.5} y={-5} width={35} height={35} fill={selectRectColor(payload)} rx={100} ry={100} />
-      <text x={0} y={13} dy={5} textAnchor="middle" fontSize={14} fill={selectTextColor(payload)}>
+      <rect x={-17.5} y={-5} width={35} height={35} fill={selectColor(payload, "#FF3838", "#f0f0f0")} rx={100} ry={100} />
+      <text x={0} y={13} dy={5} textAnchor="middle" fontSize={14} fill={selectColor(payload, "#fff", "#333")}>
         {payload.value}
       </text>
     </g>
   );
 
-  const selectRectColor = (payload) => {
+  const selectColor = (payload, truthyColor, falsyColor) => {
     const selectWeek = selectDate.getDay() === 0 ? "日" : week[selectDate.getDay() - 1];
-    return (selectWeek === barData[payload.index].day) ? "#FF3838" : "#f0f0f0";
+    return (selectWeek === barData[payload.index].day) ? truthyColor : falsyColor;
   };
-
-  const selectTextColor = (payload) => {
-    const selectWeek = selectDate.getDay() === 0 ? "日" : week[selectDate.getDay() - 1];
-    return (selectWeek === barData[payload.index].day) ? "#fff" : "#333";
-  }
 
   // グラフ表示に合わせてフォーマット
   const formatGraphDate = (date, index = 0) => {
@@ -73,7 +68,7 @@ export const WeekGraph = () => {
   // DBのカロリーを該当の週のグラフに配置
   useEffect(() => {
     const data = [];
-    const targetIndex = isCurrentWeek ? (dayNum === 0 ? 6 : dayNum - 1) : 0;
+    const targetIndex = isCurrentWeek ? (selectDate.getDay() === 1 ? 0 : selectDate.getDay() - 1) : 0;
 
     for (let i = 0; i < 7; i++) {
       const currentDate = new Date(startDate);
@@ -104,21 +99,22 @@ export const WeekGraph = () => {
     setSelectDate(nextWeekDate);
   };
 
-
   return (
-    <div className='max-w-5xl mx-auto bg-white'>
-      <p>{selectDate ? formatGraphDate(selectDate) : formatGraphDate(today)}</p>
-      <p>{selectCalorie}<span>kcal</span></p>
-      <p>{weekStartStr}週</p>
-      <button onClick={onPrevWeek}>前週</button>
-      {!isCurrentWeek && (
-        <button onClick={onNextWeek}>翌週</button>
-      )}
+    <div className='relative max-w-5xl mx-auto px-5 py-5 bg-white rounded-md'>
+      <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraphDate(selectDate)}</p>
+      <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
+      <p className='absolute top-[80px] right-8'>{weekStartStr}週</p>
 
-      <ResponsiveContainer key={weekStartStr} width="100%" height={500} >
+      <ResponsiveContainer className={""} key={weekStartStr} width="100%" height={350} >
         <BarChart
           data={barData}
           barSize={50}
+          margin={{
+            top: 10,
+            right: 10,
+            left: -20,
+            bottom: 20,
+          }}
         >
           <XAxis
             dataKey="day"
@@ -127,14 +123,20 @@ export const WeekGraph = () => {
             tick={<CustomizedTick />}
           />
           <YAxis
-            ticks={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
+            ticks={[200, 400, 600, 800, 1000]}
             tickSize={0}
             tickMargin={10}
+            axisLine={false}
           />
           <Legend
             payload={[
               { value: "消費カロリー", type: "circle" }
             ]}
+            align='left'
+            wrapperStyle={{
+              marginLeft: "60px",
+              paddingTop: "25px",
+            }}
           />
           <CartesianGrid stroke="#d0d0d0" vertical={false} />
           <Bar
@@ -152,6 +154,21 @@ export const WeekGraph = () => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+
+      <div className='mr-3 text-lg text-right'>
+        <button
+          className="relative mr-4 before:content-[''] before:absolute before:top-2.5 before:-left-3 before:w-3 before:h-3 before:border-t-2 before:border-l-2 before:border-black before:-rotate-45"
+          onClick={onPrevWeek}
+        >
+          前週
+        </button>
+        <button
+          className={`${isCurrentWeek ? "text-gray-400 pointer-events-none before:border-gray-400" : null} relative mr-4 before:content-[''] before:absolute before:top-2.5 before:-right-3 before:w-3 before:h-3 before:border-t-2 before:border-l-2 before:border-black before:rotate-[135deg]`}
+          onClick={onNextWeek}
+        >
+          翌週
+        </button>
+      </div>
     </div>
   );
 };
