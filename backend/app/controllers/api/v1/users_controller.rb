@@ -31,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def destroy
-    if @user&.destroy
+    if @user.destroy
       head :no_content
     else
       render json: user.errors, status: :unprocessable_entity
