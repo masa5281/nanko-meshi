@@ -1,11 +1,12 @@
-// コンポーネント
-import { InputField } from "../InputField/InputField";
-import { SubmitButton } from "../Button/SubmitButton";
-import { IconWrapper } from "../IconWrapper";
-import { CloseModalButton } from "../Button/CloseModalButton";
 // モジュール
 import { useFormUtils } from "../../hooks/useFormUtils";
 import { useFoodApi } from "../../hooks/useFoodApi";
+import { VALIDATE_MESSAGES } from "../../utils/constants";
+import { updateNotify } from "../../utils/toastNotify";
+// コンポーネント
+import { InputField } from "../InputField/InputField";
+import { SubmitButton } from "../Button/SubmitButton";
+import { IconProvider } from "../IconProvider";
 // ライブラリ
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
@@ -16,24 +17,22 @@ import { BiSolidBowlRice } from "react-icons/bi";
 import { IoIosClose } from "react-icons/io";
 // カスタムフック
 import { useValidateError } from "../../context/ValidateErrorContext";
-import { useCloseModalContext, useNotifyContext } from "./RegisterdFoodItem";
 
-export const FoodEditForm = (props) => {
+export const FoodEditForm = ({
+  selectFood,
+  setSelectFood,
+  setFoodList,
+  closeFoodModal,
+}) => {
   const { setValidateErrors } = useValidateError();
   const { handleSubmit } = useFormContext();
   const { updateFood } = useFoodApi();
   const inputRef = useRef(null);
-  const closeModal = useCloseModalContext();
-  const { updateFoodNotofy } = useNotifyContext();
-  const {
-    selectFood,
-    setSelectFood,
-    setFoodList,
-  } = props;
   const {
     foodImage,
     previewImage,
     onFileInputChange,
+    handleInputFile,
   } = useFormUtils();
 
   const handleUpdateFood = async () => {
@@ -42,7 +41,7 @@ export const FoodEditForm = (props) => {
       setFoodList(prevFoodList =>
         prevFoodList.map(food => food.id === selectFood.id ? response : food)
       );
-      closeModal();
+      closeFoodModal();
     } catch (error) {
       setValidateErrors(error.response.data);
     }
@@ -52,78 +51,67 @@ export const FoodEditForm = (props) => {
     setSelectFood(prev => ({ ...prev, [columnName]: e.target.value }));
   };
 
-  // ボタン押下でinputが発火
-  const handleInputFile = (e) => {
-    e.preventDefault();
-    inputRef.current.click();
-  }
-
   return (
-    <>
-      <h3 className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">食品情報を変更</h3>
+    <form onSubmit={handleSubmit(handleUpdateFood)}>
+      <div className="w-48 aspect-[4/3] mb-5 mx-auto rounded-md text-center overflow-visible">
+        <input type="file" className="hidden" ref={inputRef} onChange={(e) => onFileInputChange(e, "food")} />
+        <button
+          className="relative w-full h-full hover:brightness-105 transition-all duration-200"
+          onClick={(e) => handleInputFile(e, inputRef)}
+        >
+          <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
+            <IconProvider>
+              <FaCamera size={16} color="#fff" />
+            </IconProvider>
+          </div>
+          {previewImage ? (
+            <img src={previewImage} alt="" className="w-full h-full rounded-md object-cover" />
+          ) : (
+            selectFood.food_image && (
+              <img src={selectFood.food_image.url} alt="" className="w-full h-full rounded-md object-cover" />
+            )
+          )}
+        </button>
+      </div>
+      <div className="flex flex-col gap-3">
+        <InputField
+          id="foodName"
+          type="text"
+          placeholder="例：チョコレート"
+          fieldName="foodName"
+          iconComponent={<BiSolidBowlRice />}
+          labelName="食品名"
+          validationRule={VALIDATE_MESSAGES.FOOD.NAME}
+          columnName="name"
+          handleOnChange={handleOnChange}
+        />
+        <InputField
+          id="foodCalorie"
+          type="text"
+          placeholder="例：300"
+          fieldName="foodCalorie"
+          iconComponent={<FaFire />}
+          labelName="食品のカロリー（kcal）"
+          validationRule={VALIDATE_MESSAGES.FOOD.CALORIE}
+          columnName="calorie"
+          handleOnChange={handleOnChange}
+        />
+        <SubmitButton
+          className="w-full"
+          onClick={() => updateNotify("食品を更新しました")}
+        >
+          更新
+        </SubmitButton>
+      </div>
 
-      <form onSubmit={handleSubmit(handleUpdateFood)}>
-        <div className="w-48 aspect-[4/3] mb-5 mx-auto rounded-md text-center overflow-visible">
-          <input type="file" className="hidden" ref={inputRef} onChange={onFileInputChange} />
-          <button className="relative w-full h-full hover:brightness-105 transition-all duration-200" onClick={handleInputFile}>
-            <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
-              <IconWrapper>
-                <FaCamera size={16} color="#fff" />
-              </IconWrapper>
-            </div>
-            {previewImage ? (
-              <img src={previewImage} alt="" className="w-full h-full rounded-md object-cover" />
-            ) : (
-              selectFood.food_image && (
-                <img src={selectFood.food_image.url} alt="" className="w-full h-full rounded-md object-cover" />
-              )
-            )}
-          </button>
-        </div>
-
-        <div className="flex flex-col gap-3">
-          <InputField
-            id="foodName"
-            type="text"
-            placeholder="例：チョコレート"
-            fieldName="foodName"
-            iconComponent={<BiSolidBowlRice />}
-            labelName="食品名"
-            validationRule={{
-              required: "食品名を入力してください",
-              maxLength: { value: 20, message: "食品名は20文字以内で入力してください" }
-            }}
-            columnName="name"
-            handleOnChange={handleOnChange}
-          />
-
-          <InputField
-            id="foodCalorie"
-            type="text"
-            placeholder="例：300"
-            fieldName="foodCalorie"
-            iconComponent={<FaFire />}
-            labelName="食品のカロリー（kcal）"
-            validationRule={{
-              required: "カロリーを入力してください",
-              min: { value: 1, message: "カロリーは1以上で入力してください" },
-              max: { value: 9999, message: "カロリーは9999以下で入力してください" }
-            }}
-            columnName="calorie"
-            handleOnChange={handleOnChange}
-          />
-          
-          <SubmitButton
-            className="w-full"
-            notifyClick={updateFoodNotofy}
-          >
-            更新
-          </SubmitButton>
-        </div>
-      </form>
-      <CloseModalButton>
-        <IoIosClose />
-      </CloseModalButton>
-    </>
+      <button
+        onClick={closeFoodModal}
+        className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200"
+      >
+        <IconProvider size={30}>
+          <IoIosClose />
+        </IconProvider>
+      </button>
+    </form>
   );
 };

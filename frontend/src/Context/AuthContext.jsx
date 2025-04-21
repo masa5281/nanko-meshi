@@ -13,18 +13,11 @@ export const AuthProvider = ({children}) => {
     if (!loading) setIsAuthReady(true)
   }, [loading])
 
-  const value = {
-    user,
-    loading,
-    isAuthReady,
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{user, loading, isAuthReady}}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// コンテキストを使用するための関数
 export const useAuth = () => useContext(AuthContext);

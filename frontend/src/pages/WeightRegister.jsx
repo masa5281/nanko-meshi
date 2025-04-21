@@ -1,11 +1,11 @@
 // コンポーネント
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton";
-import { IconWrapper } from "../components/IconWrapper";
+import { IconProvider } from "../components/IconProvider";
 // モジュール
 import { selectPlaceholder, setWeight } from "../utils/formUtils";
 import { useAuth } from "../context/AuthContext";
 import { getUserApi, updateUserApi } from "../api/userApi";
-import { ROUTES } from "../utils/constants";
+import { ROUTES, VALIDATE_MESSAGES } from "../utils/constants";
 // ライブラリ
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -60,17 +60,15 @@ export const WeightRegister = () => {
           <form onSubmit={handleSubmit(handleUpdateUser)} className="flex flex-col">
             <div className="relative mb-4">
               <label htmlFor="userWeight" className="absolute top-1 left-1 p-1 rounded-full bg-black">
-                <IconWrapper size={24} color="#fff">
+                <IconProvider size={24} color="#fff">
                   <GiWeightScale />
-                </IconWrapper>
+                </IconProvider>
               </label>
               <select
                 id="userWeight"
                 defaultValue=""
-                className={`${isTextPlaceholder ? "placeholder" : ""} w-full py-2 border-none rounded-full indent-8 focus:ring-2 focus:ring-secondary focus:border-secondary`}
-                {...register("userWeight", {
-                  required: "体重を選択してください"
-                })}
+                className={`${isTextPlaceholder ? "placeholder" : ""} w-full py-2 border-none rounded-full indent-8 hover:cursor-pointer focus:ring-2 focus:ring-secondary focus:border-secondary`}
+                {...register("userWeight", VALIDATE_MESSAGES.USER.WEIGHT)}
               >
                 <option value="" disabled>体重を選択</option>
                 {weights.map((weight) =>

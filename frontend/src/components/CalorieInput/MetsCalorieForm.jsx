@@ -2,11 +2,11 @@
 import { SubmitButton } from "../Button/SubmitButton";
 import { InputField } from "../InputField/InputField";
 import { DateInput } from "./DateInput";
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 // モジュール
 import { axiosClient } from "../../config/axiosClient";
 import { selectPlaceholder } from "../../utils/formUtils";
-import { API_ENDPOINTS } from "../../utils/constants";
+import { API_ENDPOINTS, VALIDATE_MESSAGES } from "../../utils/constants";
 // ライブラリ
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -81,11 +81,11 @@ export const MetsCalorieForm = () => {
 
   // Metsの計算結果
   const metsCalcToCalorie = () => {
-    const activeTime = watch("activeTime");
+    const activityTime = watch("activityTime");
     const selectMetsValue = watch("activityType");
     // 分を時間に変換し、小数第二位で四捨五入
-    const calcActiveTime = Math.round((activeTime / 60) * 100) / 100;
-    const calcCalorie = Math.round(selectMetsValue * dbUserData.weight * calcActiveTime * 1.05);
+    const calcActivityTime = Math.round((activityTime / 60) * 100) / 100;
+    const calcCalorie = Math.round(selectMetsValue * dbUserData.weight * calcActivityTime * 1.05);
 
     return calcCalorie;
   };
@@ -98,20 +98,18 @@ export const MetsCalorieForm = () => {
             htmlFor="activityType"
             className="flex items-center pl-3 font-bold"
           >
-            <IconWrapper size={20}>
+            <IconProvider size={20}>
               <div className="mr-0.5">
                 <FaFire />
               </div>
               運動項目
-            </IconWrapper>
+            </IconProvider>
           </label>
           <select
             id="activityType"
             className={`${isTextPlaceholder ? "placeholder" : ""} w-full border-black border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary`}
             defaultValue=""
-            {...register("activityType", {
-              required: "運動項目を選択してください"
-            })}
+            {...register("activityType", VALIDATE_MESSAGES.METS.ACTIVITY_TYPE)}
           >
             <option value="" disabled>運動項目を選択</option>
             {dbMetsData && dbMetsData.map((met) =>
@@ -138,22 +136,13 @@ export const MetsCalorieForm = () => {
 
         <div className="flex justify-center gap-4 px-3 mb-6">
           <InputField
-            id="activeTime"
+            id="activityTime"
             type="text"
             placeholder="例：30"
-            fieldName="activeTime"
+            fieldName="activityTime"
             iconComponent={<MdAccessTimeFilled />}
             labelName="運動時間（分）"
-            validationRule={{
-              required: "運動時間を入力してください",
-              min: { value: 1, message: "運動時間は1分以上で入力してください" },
-              validate: {
-                firstZero: (value) =>
-                  /^0/.test(value) ? "先頭に0を入力しないでください" : null,
-                checkActiveTime: (value) =>
-                  /^[0-9]+$/.test(value) || "運動時間は数字で入力してください"
-              }
-            }}
+            validationRule={VALIDATE_MESSAGES.METS.ACTIVITY_TIME}
           />
           <DateInput fieldName="metsDate" />
         </div>

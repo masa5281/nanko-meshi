@@ -3,12 +3,8 @@ import { axiosClient } from "../config/axiosClient";
 
 // 全ての食品情報を取得
 export const getFoodsApi = async () => {
-  try {
-    const response = await axiosClient.get(API_ENDPOINTS.FOODS.BASE);
-    return response.data
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosClient.get(API_ENDPOINTS.FOODS.BASE);
+  return response.data
 };
 
 // FormData送信の準備
@@ -24,10 +20,6 @@ export const createFoodFormData = (foodName, foodCalorie, foodImage) => {
 
 // 食品を削除
 export const deleteFoodApi = async (foodId) => {
-  try {
-    const response = await axiosClient.delete(`${API_ENDPOINTS.FOODS.BASE}/${foodId}`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosClient.delete(`${API_ENDPOINTS.FOODS.BASE}/${foodId}`);
+  return response.data;
 };

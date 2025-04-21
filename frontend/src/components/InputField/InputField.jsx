@@ -1,6 +1,6 @@
 // コンポーネント
 import { InputValidateErrors } from "./InputValidateErrors";
-import { IconWrapper } from "../IconWrapper";
+import { IconProvider } from "../IconProvider";
 // モジュール
 import { onChangeToText } from "../../utils/formUtils";
 // ライブラリ
@@ -20,8 +20,10 @@ export const InputField = (props) => {
     iconComponent,
     labelName,
     className = "",
+    inputClassName = "",
     columnName,
-    handleOnChange
+    handleOnChange,
+    disabled = false,
   } = props;
   const {
     register,
@@ -32,18 +34,19 @@ export const InputField = (props) => {
   return (
     <div className={className}>
       <label htmlFor={id} className="flex items-center pl-3 font-bold">
-        <IconWrapper size={20}>
+        <IconProvider size={20}>
           <div className="mr-0.5">
             {iconComponent}
           </div>
           {labelName}
-        </IconWrapper>
+        </IconProvider>
       </label>
       <input
         id={id}
         type={type}
         placeholder={placeholder}
-        className="w-full border-black border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
+        disabled={disabled}
+        className={`${inputClassName} w-full border-black border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary`}
         {...register(fieldName, {
           ...validationRule,
           onChange: (e) => {

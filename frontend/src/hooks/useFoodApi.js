@@ -9,38 +9,26 @@ export const useFoodApi = () => {
   // 食品一覧を取得
   useEffect(() => {
     const getFoods = async () => {
-      try {
-        const foodData = await getFoodsApi();
-        setFoodList(foodData);
-      } catch (error) {
-        throw error;
-      }
+      const foodData = await getFoodsApi();
+      setFoodList(foodData);
     }
     getFoods();
   }, []);
 
   // 食品を更新
   const updateFood = async (selectFood, foodImage) => {
-    try {
-      const data = createFoodFormData(
-        selectFood.name,
-        selectFood.calorie,
-        foodImage ? foodImage : selectFood.food_image
-      );
-      const response = await axiosClient.patch(`${API_ENDPOINTS.FOODS.BASE}/${selectFood.id}`, data);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+    const data = createFoodFormData(
+      selectFood.name,
+      selectFood.calorie,
+      foodImage ? foodImage : selectFood.food_image
+    );
+    const response = await axiosClient.patch(`${API_ENDPOINTS.FOODS.BASE}/${selectFood.id}`, data);
+    return response.data;
   };
 
   // 食品を削除
   const deleteFood = async (selectFood) => {
-    try {
-      await deleteFoodApi(selectFood.id);
-    } catch (error) {
-      throw error;
-    }
+    await deleteFoodApi(selectFood.id);
   };
 
   return {

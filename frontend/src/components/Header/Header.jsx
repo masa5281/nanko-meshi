@@ -1,9 +1,9 @@
 // モジュール
 import { ROUTES } from "../../utils/constants";
-import { handleSignOut } from "../../config/firebase";
 import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { IconList } from "./IconList";
+import { IconProvider } from "../IconProvider";
 // ライブラリ
 import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
@@ -17,15 +17,17 @@ import logo from "../../images/logo.png"
 import { PiSignOutBold } from "react-icons/pi";
 import { PiSignInBold } from "react-icons/pi";
 import { BiSolidBowlRice } from "react-icons/bi";
+import { FaUser } from "react-icons/fa6";
 // flowbite-reactのカスタムテーマ
 import { headerCustomTheme } from "../../theme/theme";
 // カスタムフック
 import { useAuth } from "../../context/AuthContext";
-import { IconWrapper } from "../IconWrapper";
+import { useFirebaseAuth } from "../../hooks/useFirebaseAuth";
 
 export const Header = () => {
   const [userImage, setUserImage] = useState("");
   const { user, isAuthReady } = useAuth();
+  const { handleSignOut } = useFirebaseAuth();
 
   useEffect(() => {
     if (!user) return;
@@ -69,13 +71,16 @@ export const Header = () => {
               <Link to={ROUTES.USERS.ITEM}>
                 <Dropdown.Item icon={BiSolidBowlRice}>登録した食品</Dropdown.Item>
               </Link>
+              <Link to={ROUTES.USERS.PROFILE}>
+                <Dropdown.Item icon={FaUser}>アカウント設定</Dropdown.Item>
+              </Link>
             </Dropdown>
           </nav>
         ) : (
           <Link to={ROUTES.AUTH.SIGN_IN} className="flex flex-col items-center text-white font-bold hover:text-hoverWhite">
-            <IconWrapper size={26}>
+            <IconProvider size={26}>
               <PiSignInBold />
-            </IconWrapper>
+            </IconProvider>
             ログイン
           </Link>
         )

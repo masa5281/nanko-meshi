@@ -1,17 +1,15 @@
-import { useCloseModalContext } from "../RegisterdFoodList/RegisterdFoodItem";
-import { IconWrapper } from "../IconWrapper";
+import { IoIosClose } from "react-icons/io";
+import { IconProvider } from "../IconProvider";
 
-export const CloseModalButton = ({children}) => {
-  const closeModal = useCloseModalContext();
-
+export const CloseModalButton = ({ closeUserModal }) => {
   return (
     <button
-      onClick={() => closeModal()}
+      onClick={closeUserModal}
       className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200"
     >
-      <IconWrapper size={30}>
-        {children}
-      </IconWrapper>
+      <IconProvider size={30}>
+        <IoIosClose />
+      </IconProvider>
     </button>
   );
 };

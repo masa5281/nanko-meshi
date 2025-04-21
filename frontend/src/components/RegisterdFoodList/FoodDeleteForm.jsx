@@ -1,20 +1,14 @@
-// コンポーネント
-import { CloseModalButton } from "../Button/CloseModalButton";
-// モジュール
 import { useFoodApi } from "../../hooks/useFoodApi";
-// アイコン
 import { IoIosClose } from "react-icons/io";
-// カスタムフック
-import { useCloseModalContext, useNotifyContext } from "./RegisterdFoodItem";
+import { IconProvider } from "../IconProvider";
+import { deleteNotify } from "../../utils/toastNotify";
 
-export const FoodDeleteForm = (props) => {
-  const closeModal = useCloseModalContext();
+export const FoodDeleteForm = ({
+  selectFood,
+  setFoodList,
+  closeFoodModal,
+}) => {
   const { deleteFood } = useFoodApi();
-  const { deleteFoodNotify } = useNotifyContext();
-  const {
-    selectFood,
-    setFoodList,
-  } = props;
 
   const handleDeleteFood = async () => {
     try {
@@ -22,7 +16,8 @@ export const FoodDeleteForm = (props) => {
       setFoodList(prevFoodList =>
         prevFoodList.filter(food => food.id !== selectFood.id)
       );
-      closeModal();
+      closeFoodModal();
+      deleteNotify("食品を削除しました");
     } catch (error) {
       console.error(error);
     }
@@ -30,19 +25,20 @@ export const FoodDeleteForm = (props) => {
 
   return (
     <>
-      <p className="inline-block w-full mb-4 pb-2 text-2xl text-black font-bold">食品を削除しますか？</p>
       <button
-        onClick={() => {
-          handleDeleteFood();
-          deleteFoodNotify();
-        }}
+        onClick={handleDeleteFood}
         className="w-full inline-block relative mx-auto px-12 py-2 border-black border-2 rounded-full bg-delete text-white font-bold hover:bg-hover"
       >
         削除
       </button>
-      <CloseModalButton>
-        <IoIosClose />
-      </CloseModalButton>
+      <button
+        onClick={closeFoodModal}
+        className="absolute top-1 right-1 rounded-full transition-all duration-200 hover:bg-gray-200"
+      >
+        <IconProvider size={30}>
+          <IoIosClose />
+        </IconProvider>
+      </button>
     </>
   );
 };

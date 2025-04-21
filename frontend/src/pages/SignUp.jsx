@@ -1,14 +1,10 @@
 // モジュール
-import { createUserApi } from "../api/userApi";
-import { signUp } from "../config/firebase";
-import { ROUTES } from "../utils/constants";
+import { ROUTES, VALIDATE_MESSAGES } from "../utils/constants";
 // コンポーネント
 import { AuthInputField } from "../components/InputField/AuthInputField"
 import { AuthSubmitButton } from "../components/Button/AuthSubmitButton"
 import { GoogleButton } from "../components/Button/GoogleButton";
 // ライブラリ
-import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../config/firebase";
 import { useForm, FormProvider } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
 // アイコン
@@ -17,6 +13,7 @@ import { IoMail } from "react-icons/io5";
 import { IoMdLock } from "react-icons/io";
 // カスタムフック
 import { useValidateError } from "../context/ValidateErrorContext";
+import { useFirebaseAuth } from "../hooks/useFirebaseAuth";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -26,12 +23,11 @@ export const SignUp = () => {
     criteriaMode: "all"
   });
   const { watch, setError, handleSubmit, getValues } = methods;
+  const { signUp, signInGoogle } = useFirebaseAuth();
 
-  // ユーザー登録（メアド、パスワード）
   const handleSignUp = async () => {
     try {
-      const emailUser = await signUp(watch("email"), watch("password"));
-      await createUserApi(emailUser.user.uid, watch("name"));
+      await signUp(watch("email"), watch("password"), watch("userName"));
       navigate(ROUTES.AUTH.WEIGHT);
     } catch (error) {
       firebaseErrorMessage(error.code);
@@ -39,11 +35,9 @@ export const SignUp = () => {
     }
   };
 
-  // ユーザー登録（Google）
   const handleSignInGoogle = async () => {
     try {
-      const googleUser = await signInWithPopup(auth, provider);
-      createUserApi(googleUser.user.uid, googleUser.user.displayName);
+      await signInGoogle();
       navigate(ROUTES.AUTH.WEIGHT);
     } catch (error) {
       console.error(error);
@@ -78,40 +72,28 @@ export const SignUp = () => {
               <AuthInputField
                 type="text"
                 placeholder="ユーザー名"
-                fieldName="name"
-                validationRule={{
-                  required: "ユーザー名を入力してください",
-                  maxLength: { value: 20, message: "ユーザー名は20文字以内で入力してください" }
-                }}
+                fieldName="userName"
+                validationRule={VALIDATE_MESSAGES.USER.NAME}
                 iconComponent={<FaUser />}
               />
               <AuthInputField
                 type="email"
                 placeholder="メールアドレス"
                 fieldName="email"
-                validationRule={{
-                  required: "メールアドレスを入力してください",
-                  pattern: {
-                    value: /^[a-zA-Z0-9_.-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                    message: "有効なメールアドレスを入力してください"
-                  }
-                }}
+                validationRule={VALIDATE_MESSAGES.AUTH.EMAIL}
                 iconComponent={<IoMail />}
               />
               <AuthInputField
                 type="password"
                 placeholder="パスワード"
                 fieldName="password"
-                validationRule={{
-                  required: "パスワードを入力してください",
-                  minLength: { value: 6, message: "パスワードは6文字以上で入力してください" }
-                }}
+                validationRule={VALIDATE_MESSAGES.AUTH.PASSWORD}
                 iconComponent={<IoMdLock />}
               />
               <AuthInputField
                 type="password"
                 placeholder="パスワード（確認）"
-                fieldName="password_confirm"
+                fieldName="passwordConfirm"
                 validationRule={{
                   required: "パスワード（確認用）を入力してください",
                   validate: (value) => value === getValues("password") || "パスワードが一致しません"

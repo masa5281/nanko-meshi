@@ -27,7 +27,6 @@ ja:
           attributes:
             name:
               blank: "%{attribute}を入力してください"
-              taken: "%{attribute}はすでに登録済みです"
               too_long: "%{attribute}は20文字以内で入力してください"
             weight:
               blank: "%{attribute}を入力してください"

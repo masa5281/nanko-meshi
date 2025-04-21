@@ -14,3 +14,18 @@ axiosClient.interceptors.request.use(async (request) => {
   }
   return request;
 });
+
+// レスポンス時にエラーコードがあれば格納
+export const setupAxiosStateError = (setStateError) => {
+  axiosClient.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response?.status === 404) {
+        setStateError(404);
+      }
+      return Promise.reject(error);
+    }
+  )
+};
