@@ -10,6 +10,7 @@ import {
   Cell,
 } from 'recharts';
 import { useCalorieApi } from '../../hooks/useCalorieApi';
+import { CustomTick, CustomLegend } from './CommonGraph';
 
 export const WeekGraph = () => {
   const { calorieList } = useCalorieApi();
@@ -27,15 +28,6 @@ export const WeekGraph = () => {
   const currentDayNum = today.getDay();
   const mondayDate = currentDayNum === 0 ? currentDate - 6 : currentDate - currentDayNum + 1;
   const [startDate, setStartDate] = useState(new Date(currentYear, currentMonth, mondayDate));
-
-  const CustomizedTick = ({ x, y, payload }) => (
-    <g transform={`translate(${x},${y})`}>
-      <rect x={-17.5} y={-5} width={35} height={35} fill={selectColor(payload, "#FF3838", "#f0f0f0")} rx={100} ry={100} />
-      <text x={0} y={13} dy={5} textAnchor="middle" fontSize={14} fill={selectColor(payload, "#fff", "#333")}>
-        {payload.value}
-      </text>
-    </g>
-  );
 
   const selectColor = (payload, truthyColor, falsyColor) => {
     const selectWeek = selectDate.getDay() === 0 ? "日" : week[selectDate.getDay() - 1];
@@ -101,21 +93,6 @@ export const WeekGraph = () => {
     setSelectDate(nextWeekDate);
   };
 
-  const customLegend = ({ payload }) => {
-    return (
-      <ul className='text-left'>
-        {
-          payload.map((entry, index) => (
-            <li key={`item-${index}`}>
-              <span className='inline-block w-3 h-3 mr-1 bg-primary rounded-md'></span>
-              {entry.value}
-            </li>
-          ))
-        }
-      </ul>
-    );
-  };
-
   return (
     <>
       <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraphDate(selectDate)}</p>
@@ -137,7 +114,7 @@ export const WeekGraph = () => {
             dataKey="day"
             tickSize={0}
             tickMargin={10}
-            tick={<CustomizedTick />}
+            tick={<CustomTick selectColor={selectColor} />}
           />
           <YAxis
             ticks={[200, 400, 600, 800, 1000]}
@@ -146,7 +123,7 @@ export const WeekGraph = () => {
             axisLine={false}
           />
           <Legend
-            content={customLegend}
+            content={<CustomLegend />}
             payload={[
               { value: "消費カロリー" }
             ]}
