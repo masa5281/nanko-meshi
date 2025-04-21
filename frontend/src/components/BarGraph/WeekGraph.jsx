@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   BarChart,
   Bar,
@@ -18,17 +18,15 @@ export const WeekGraph = () => {
   const [selectCalorie, setSelectCalorie] = useState("");
   const [barData, setBarData] = useState([]);
   const [isCurrentWeek, setIsCurrentWeek] = useState(true);
-  const week = ["月", "火", "水", "木", "金", "土", "日"];
+  const week = useMemo(() => ["月", "火", "水", "木", "金", "土", "日"], []);
 
   const today = new Date();
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth();
-  const date = today.getDate();
-  const dayNum = today.getDay();
-  const mondayDate = dayNum === 0 ? date - 6 : date - dayNum + 1;
-  const [startDate, setStateDate] = useState(new Date(currentYear, currentMonth, mondayDate));
-  const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 6);
-  const formatToday = new Date(currentYear, currentMonth, date);
+  const currentDate = today.getDate();
+  const currentDayNum = today.getDay();
+  const mondayDate = currentDayNum === 0 ? currentDate - 6 : currentDate - currentDayNum + 1;
+  const [startDate, setStartDate] = useState(new Date(currentYear, currentMonth, mondayDate));
 
   const CustomizedTick = ({ x, y, payload }) => (
     <g transform={`translate(${x},${y})`}>
@@ -41,7 +39,7 @@ export const WeekGraph = () => {
 
   const selectColor = (payload, truthyColor, falsyColor) => {
     const selectWeek = selectDate.getDay() === 0 ? "日" : week[selectDate.getDay() - 1];
-    return (selectWeek === barData[payload.index].day) ? truthyColor : falsyColor;
+    return (selectWeek === payload.value) ? truthyColor : falsyColor;
   };
 
   // グラフ表示に合わせてフォーマット
@@ -60,20 +58,24 @@ export const WeekGraph = () => {
   };
 
   useEffect(() => {
+    const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 6);
+    // 時刻を省いた今日の日付オブジェクト
+    const formatToday = new Date(currentYear, currentMonth, currentDate);
+
     const formatStartDate = () => `${startDate.getFullYear()}年${startDate.getMonth() + 1}月${startDate.getDate()}日`;
     setWeekStartStr(formatStartDate());
     setIsCurrentWeek(formatToday >= startDate && formatToday <= endDate);
-  }, [startDate]);
+  }, [startDate, currentYear, currentMonth, currentDate]);
 
-  // DBのカロリーを該当の週のグラフに配置
+  // DBのカロリーで週データを生成
   useEffect(() => {
     const data = [];
-    const targetIndex = isCurrentWeek ? (selectDate.getDay() === 1 ? 0 : selectDate.getDay() - 1) : 0;
+    const targetIndex = selectDate.getDay() === 1 ? 0 : selectDate.getDay() - 1;
 
     for (let i = 0; i < 7; i++) {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(startDate.getDate() + i);
-      const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
+      const baseDate = new Date(startDate);
+      baseDate.setDate(startDate.getDate() + i);
+      const dateStr = `${baseDate.getFullYear()}-${String(baseDate.getMonth() + 1).padStart(2, "0")}-${String(baseDate.getDate()).padStart(2, "0")}`;
       const newCalorieList = calorieList.filter(calorie => calorie.recorded_at === dateStr);
       const sumCalorie = newCalorieList.reduce((totalCalorie, object) => totalCalorie + object.burned_calorie, 0);
       if (i === targetIndex) {
@@ -85,17 +87,17 @@ export const WeekGraph = () => {
       })
     }
     setBarData(data);
-  }, [calorieList, startDate, weekStartStr, dayNum]);
+  }, [calorieList, startDate, weekStartStr, isCurrentWeek, selectDate, week]);
 
   const onPrevWeek = () => {
     const prevWeekDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - 7);
-    setStateDate(prevWeekDate);
+    setStartDate(prevWeekDate);
     setSelectDate(prevWeekDate);
   };
 
   const onNextWeek = () => {
     const nextWeekDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 7);
-    setStateDate(nextWeekDate);
+    setStartDate(nextWeekDate);
     setSelectDate(nextWeekDate);
   };
 
@@ -115,7 +117,7 @@ export const WeekGraph = () => {
   };
 
   return (
-    <div className='relative max-w-5xl mx-auto px-5 py-5 bg-white rounded-b-md'>
+    <>
       <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraphDate(selectDate)}</p>
       <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
       <p className='absolute top-[80px] right-8'>{weekStartStr}週</p>
@@ -127,7 +129,7 @@ export const WeekGraph = () => {
           margin={{
             top: 10,
             right: 10,
-            left: -20,
+            left: -10,
             bottom: 20,
           }}
         >
@@ -146,7 +148,7 @@ export const WeekGraph = () => {
           <Legend
             content={customLegend}
             payload={[
-              { value: "消費カロリー", type: "circle" }
+              { value: "消費カロリー" }
             ]}
             wrapperStyle={{
               marginLeft: "60px",
@@ -184,6 +186,6 @@ export const WeekGraph = () => {
           翌週
         </button>
       </div>
-    </div>
+    </>
   );
 };

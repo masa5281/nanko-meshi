@@ -4,7 +4,7 @@ import { MonthGraph } from "../components/BarGraph/MonthGraph";
 import { WeekGraph } from "../components/BarGraph/WeekGraph";
 
 export const BarGraph = () => {
-  const [graphType, setGraphType] = useState("week");
+  const [graphType, setGraphType] = useState("month");
 
   return (
     <div className="max-w-7xl mx-auto text-center">
@@ -12,14 +12,15 @@ export const BarGraph = () => {
       <div className="flex gap-4 max-w-5xl mx-auto">
         <GraphLabel labelName={"月"} graphName={"month"} graphType={graphType} setGraphType={setGraphType} />
         <GraphLabel labelName={"週"} graphName={"week"} graphType={graphType} setGraphType={setGraphType} />
-        <GraphLabel labelName={"日"} graphName={"day"} graphType={graphType} setGraphType={setGraphType} />
       </div>
-      {graphType === "month" && (
-        <MonthGraph />
-      )}
-      {graphType === "week" && (
-        <WeekGraph />
-      )}
+      <div className='relative max-w-5xl mx-auto px-5 py-5 bg-white rounded-b-md'>
+        {graphType === "month" && (
+          <MonthGraph />
+        )}
+        {graphType === "week" && (
+          <WeekGraph />
+        )}
+      </div>
     </div>
   );
 };
