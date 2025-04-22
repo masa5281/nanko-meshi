@@ -1,16 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import {
-  BarChart,
-  Bar,
-  Legend,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  Cell,
-} from 'recharts';
 import { useCalorieApi } from '../../hooks/useCalorieApi';
-import { CustomTick, CustomLegend } from './CommonGraph';
+import { CalorieBarGraph } from './CalorieBarGraph';
 
 export const WeekGraph = () => {
   const { calorieList } = useCalorieApi();
@@ -99,55 +89,14 @@ export const WeekGraph = () => {
       <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
       <p className='absolute top-[80px] right-8'>{weekStartStr}週</p>
 
-      <ResponsiveContainer className={""} key={weekStartStr} width="100%" height={350} >
-        <BarChart
-          data={barData}
-          barSize={50}
-          margin={{
-            top: 10,
-            right: 10,
-            left: -10,
-            bottom: 20,
-          }}
-        >
-          <XAxis
-            dataKey="day"
-            tickSize={0}
-            tickMargin={10}
-            tick={<CustomTick selectColor={selectColor} />}
-          />
-          <YAxis
-            ticks={[200, 400, 600, 800, 1000]}
-            tickSize={0}
-            tickMargin={10}
-            axisLine={false}
-          />
-          <Legend
-            content={<CustomLegend />}
-            payload={[
-              { value: "消費カロリー" }
-            ]}
-            wrapperStyle={{
-              marginLeft: "60px",
-              paddingTop: "25px",
-            }}
-          />
-          <CartesianGrid stroke="#d0d0d0" vertical={false} />
-          <Bar
-            dataKey="burnedCalorie"
-            fill="#FF6E2B"
-            radius={[5, 5, 0, 0]}
-            onClick={onClickGraph}
-          >
-            {barData.map((_, index) => (
-              <Cell
-                cursor="pointer"
-                key={index}
-              />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+      <CalorieBarGraph
+        key={weekStartStr}
+        barData={barData}
+        selectColor={selectColor}
+        onClickGraph={onClickGraph}
+        ticks={[200, 400, 600, 800, 1000]}
+        dataKey="day"
+      />
 
       <div className='mr-3 text-lg text-right'>
         <button

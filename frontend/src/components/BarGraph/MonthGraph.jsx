@@ -1,16 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import {
-  BarChart,
-  Bar,
-  Legend,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  Cell,
-} from 'recharts';
 import { useCalorieApi } from '../../hooks/useCalorieApi';
-import { CustomTick, CustomLegend } from './CommonGraph';
+import { CalorieBarGraph } from './CalorieBarGraph';
 
 export const MonthGraph = () => {
   const { calorieList } = useCalorieApi();
@@ -88,68 +78,27 @@ export const MonthGraph = () => {
       <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraphMonth(selectMonth)}</p>
       <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
 
-      <ResponsiveContainer className={""} width="100%" height={350} >
-        <BarChart
-          data={barData}
-          barSize={50}
-          margin={{
-            top: 10,
-            right: 10,
-            left: -10,
-            bottom: 20,
-          }}
-        >
-          <XAxis
-            dataKey="month"
-            tickSize={0}
-            tickMargin={10}
-            tick={<CustomTick selectColor={selectColor} />}
-          />
-          <YAxis
-            ticks={[2000, 4000, 6000, 8000, 10000]}
-            tickSize={0}
-            tickMargin={10}
-            axisLine={false}
-          />
-          <Legend
-            content={<CustomLegend />}
-            payload={[
-              { value: "消費カロリー" }
-            ]}
-            wrapperStyle={{
-              marginLeft: "60px",
-              paddingTop: "25px",
-            }}
-          />
-          <CartesianGrid stroke="#d0d0d0" vertical={false} />
-          <Bar
-            dataKey="burnedCalorie"
-            fill="#FF6E2B"
-            radius={[5, 5, 0, 0]}
-            onClick={onClickGraph}
-          >
-            {barData.map((_, index) => (
-              <Cell
-                cursor="pointer"
-                key={index}
-              />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+      <CalorieBarGraph
+        key={selectMonth}
+        barData={barData}
+        selectColor={selectColor}
+        onClickGraph={onClickGraph}
+        ticks={[2000, 4000, 6000, 8000, 10000]}
+        dataKey="month"
+      />
 
       <div className='mr-3 text-lg text-right'>
         <button
           className="relative mr-4 before:content-[''] before:absolute before:top-2.5 before:-left-3 before:w-3 before:h-3 before:border-t-2 before:border-l-2 before:border-black before:-rotate-45"
           onClick={onPrevYear}
         >
-          前週
+          前年
         </button>
         <button
           className={`${isCurrentYear ? "text-gray-400 pointer-events-none before:border-gray-400" : null} relative mr-4 before:content-[''] before:absolute before:top-2.5 before:-right-3 before:w-3 before:h-3 before:border-t-2 before:border-l-2 before:border-black before:rotate-[135deg]`}
           onClick={onNextYear}
         >
-          翌週
+          翌年
         </button>
       </div>
     </>
