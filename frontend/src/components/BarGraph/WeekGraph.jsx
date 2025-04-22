@@ -1,7 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+// モジュール
 import { useCalorieApi } from '../../hooks/useCalorieApi';
+import { currentMonth, currentYear, formatGraph, formatToday, mondayDate } from '../../utils/graphDate';
+// コンポーネント
 import { CalorieBarGraph } from './CalorieBarGraph';
 import { PeriodNavigation } from './PeriodNavigation';
+// ライブラリ
+import { useEffect, useMemo, useState } from 'react';
 
 export const WeekGraph = () => {
   const { calorieList } = useCalorieApi();
@@ -10,26 +14,12 @@ export const WeekGraph = () => {
   const [selectCalorie, setSelectCalorie] = useState("");
   const [barData, setBarData] = useState([]);
   const [isCurrentWeek, setIsCurrentWeek] = useState(true);
-  const week = useMemo(() => ["月", "火", "水", "木", "金", "土", "日"], []);
-
-  const today = new Date();
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth();
-  const currentDate = today.getDate();
-  const currentDayNum = today.getDay();
-  const mondayDate = currentDayNum === 0 ? currentDate - 6 : currentDate - currentDayNum + 1;
   const [startDate, setStartDate] = useState(new Date(currentYear, currentMonth, mondayDate));
+  const week = useMemo(() => ["月", "火", "水", "木", "金", "土", "日"], []);
 
   const selectColor = (payload, truthyColor, falsyColor) => {
     const selectWeek = selectDate.getDay() === 0 ? "日" : week[selectDate.getDay() - 1];
     return (selectWeek === payload.value) ? truthyColor : falsyColor;
-  };
-
-  // グラフ表示に合わせてフォーマット
-  const formatGraphDate = (date, index = 0) => {
-    const newDate = new Date(date);
-    newDate.setDate(newDate.getDate() + index);
-    return `${newDate.getFullYear()}年${newDate.getMonth() + 1}月${newDate.getDate()}日`;
   };
 
   // startDateに何日分足すかを処理
@@ -42,13 +32,11 @@ export const WeekGraph = () => {
 
   useEffect(() => {
     const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 6);
-    // 時刻を省いた今日の日付オブジェクト
-    const formatToday = new Date(currentYear, currentMonth, currentDate);
 
     const formatStartDate = () => `${startDate.getFullYear()}年${startDate.getMonth() + 1}月${startDate.getDate()}日`;
     setWeekStartStr(formatStartDate());
     setIsCurrentWeek(formatToday >= startDate && formatToday <= endDate);
-  }, [startDate, currentYear, currentMonth, currentDate]);
+  }, [startDate]);
 
   // DBのカロリーで週データを生成
   useEffect(() => {
@@ -86,10 +74,9 @@ export const WeekGraph = () => {
 
   return (
     <>
-      <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraphDate(selectDate)}</p>
+      <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraph(selectDate, "week")}</p>
       <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
       <p className='absolute top-[80px] right-8'>{weekStartStr}週</p>
-
       <CalorieBarGraph
         key={weekStartStr}
         barData={barData}
@@ -98,7 +85,6 @@ export const WeekGraph = () => {
         ticks={[200, 400, 600, 800, 1000]}
         dataKey="day"
       />
-
       <PeriodNavigation
         isCurrentState={isCurrentWeek}
         onPrev={onPrevWeek}

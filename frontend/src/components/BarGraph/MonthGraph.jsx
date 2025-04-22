@@ -1,31 +1,23 @@
-import { useEffect, useMemo, useState } from 'react';
+// モジュール
 import { useCalorieApi } from '../../hooks/useCalorieApi';
+import { currentYear, formatGraph, formatToday } from '../../utils/graphDate';
+// コンポーネント
 import { CalorieBarGraph } from './CalorieBarGraph';
 import { PeriodNavigation } from './PeriodNavigation';
+// ライブラリ
+import { useEffect, useMemo, useState } from 'react';
 
 export const MonthGraph = () => {
   const { calorieList } = useCalorieApi();
   const [selectMonth, setSelectMonth] = useState(new Date());
   const [selectCalorie, setSelectCalorie] = useState("");
   const [barData, setBarData] = useState([]);
-  const month = useMemo(() => ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"], []);
   const [isCurrentYear, setIsCurrentYear] = useState(true);
-
-  const today = new Date();
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth();
-  const currentDate = today.getDate();
   const [startYearDate, setStartYearDate] = useState(new Date(currentYear, 0, 1));
+  const month = useMemo(() => ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"], []);
 
   const selectColor = (payload, truthyColor, falsyColor) => {
     return (selectMonth.getMonth() === payload.index) ? truthyColor : falsyColor;
-  };
-
-  // グラフ表示に合わせてフォーマット
-  const formatGraphMonth = (date, index = 0) => {
-    const newDate = new Date(date);
-    newDate.setDate(newDate.getDate() + index);
-    return `${newDate.getFullYear()}年${newDate.getMonth() + 1}月`;
   };
 
   // 何月分足すかを処理
@@ -38,9 +30,8 @@ export const MonthGraph = () => {
 
   useEffect(() => {
     const endYearDate = new Date(startYearDate.getFullYear(), 11, 31);
-    const formatToday = new Date(currentYear, currentMonth, currentDate);
     setIsCurrentYear(formatToday >= startYearDate && formatToday <= endYearDate);
-  }, [currentYear, currentMonth, currentDate, startYearDate]);
+  }, [startYearDate]);
 
   // DBのカロリーを該当の月のグラフに配置
   useEffect(() => {
@@ -76,7 +67,7 @@ export const MonthGraph = () => {
 
   return (
     <>
-      <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraphMonth(selectMonth)}</p>
+      <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraph(selectMonth, "month")}</p>
       <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
 
       <CalorieBarGraph
