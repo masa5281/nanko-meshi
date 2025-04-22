@@ -22,7 +22,7 @@ export const WeekGraph = () => {
     return (selectWeek === payload.value) ? truthyColor : falsyColor;
   };
 
-  // startDateに何日分足すかを処理
+  // インデックスに応じて対象日を加算
   const onClickGraph = (data, index) => {
     const addStartDate = new Date(startDate);
     addStartDate.setDate(addStartDate.getDate() + index);
@@ -32,13 +32,12 @@ export const WeekGraph = () => {
 
   useEffect(() => {
     const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 6);
-
     const formatStartDate = () => `${startDate.getFullYear()}年${startDate.getMonth() + 1}月${startDate.getDate()}日`;
     setWeekStartStr(formatStartDate());
     setIsCurrentWeek(formatToday >= startDate && formatToday <= endDate);
   }, [startDate]);
 
-  // DBのカロリーで週データを生成
+  // DBのカロリーデータからグラフを生成
   useEffect(() => {
     const data = [];
     const targetIndex = selectDate.getDay() === 1 ? 0 : selectDate.getDay() - 1;
@@ -58,7 +57,7 @@ export const WeekGraph = () => {
       })
     }
     setBarData(data);
-  }, [calorieList, startDate, weekStartStr, isCurrentWeek, selectDate, week]);
+  }, [calorieList, startDate, selectDate, week]);
 
   const onPrevWeek = () => {
     const prevWeekDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - 7);

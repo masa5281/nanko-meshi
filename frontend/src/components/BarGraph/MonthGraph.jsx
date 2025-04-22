@@ -20,7 +20,7 @@ export const MonthGraph = () => {
     return (selectMonth.getMonth() === payload.index) ? truthyColor : falsyColor;
   };
 
-  // 何月分足すかを処理
+  // インデックスに応じて対象月を加算
   const onClickGraph = (data, index) => {
     const targetMonth = new Date(startYearDate);
     targetMonth.setMonth(targetMonth.getMonth() + index);
@@ -33,9 +33,10 @@ export const MonthGraph = () => {
     setIsCurrentYear(formatToday >= startYearDate && formatToday <= endYearDate);
   }, [startYearDate]);
 
-  // DBのカロリーを該当の月のグラフに配置
+  // DBのカロリーデータからグラフを生成
   useEffect(() => {
     const data = [];
+
     for (let i = 0; i < 12; i++) {
       const baseDate = new Date(startYearDate);
       baseDate.setMonth(baseDate.getMonth() + i);
@@ -69,7 +70,6 @@ export const MonthGraph = () => {
     <>
       <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraph(selectMonth, "month")}</p>
       <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
-
       <CalorieBarGraph
         key={selectMonth}
         barData={barData}
@@ -78,7 +78,6 @@ export const MonthGraph = () => {
         ticks={[2000, 4000, 6000, 8000, 10000]}
         dataKey="month"
       />
-
       <PeriodNavigation
         isCurrentState={isCurrentYear}
         onPrev={onPrevYear}
