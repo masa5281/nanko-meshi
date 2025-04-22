@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useCalorieApi } from '../../hooks/useCalorieApi';
 import { CalorieBarGraph } from './CalorieBarGraph';
+import { PeriodNavigation } from './PeriodNavigation';
 
 export const WeekGraph = () => {
   const { calorieList } = useCalorieApi();
@@ -98,20 +99,13 @@ export const WeekGraph = () => {
         dataKey="day"
       />
 
-      <div className='mr-3 text-lg text-right'>
-        <button
-          className="relative mr-4 before:content-[''] before:absolute before:top-2.5 before:-left-3 before:w-3 before:h-3 before:border-t-2 before:border-l-2 before:border-black before:-rotate-45"
-          onClick={onPrevWeek}
-        >
-          前週
-        </button>
-        <button
-          className={`${isCurrentWeek ? "text-gray-400 pointer-events-none before:border-gray-400" : null} relative mr-4 before:content-[''] before:absolute before:top-2.5 before:-right-3 before:w-3 before:h-3 before:border-t-2 before:border-l-2 before:border-black before:rotate-[135deg]`}
-          onClick={onNextWeek}
-        >
-          翌週
-        </button>
-      </div>
+      <PeriodNavigation
+        isCurrentState={isCurrentWeek}
+        onPrev={onPrevWeek}
+        onNext={onNextWeek}
+        prevText="前週"
+        nextText="翌週"
+      />
     </>
   );
 };
