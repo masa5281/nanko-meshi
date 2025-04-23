@@ -10,12 +10,13 @@ export const ROUTES = {
     WEIGHT: "/weight",
   },
   USERS: {
-    ITEM: "/users/item",
     PROFILE: "/users/profile",
   },
   FOODS: {
     CONVERSION: "/foods/conversion",
     REGISTER: "/foods/register",
+    REGISTERED: "/foods/registered",
+    ALL_REGISTERED: "/foods/all_registered",
   },
   CALORIE: {
     INPUT: "/calorie/input",
