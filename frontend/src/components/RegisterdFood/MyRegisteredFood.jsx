@@ -15,7 +15,7 @@ import { foodCustomTheme } from "../../theme/theme";
 // カスタムフック
 import { useFoodApi } from "../../hooks/useFoodApi";
 
-export const RegisterdFoodItem = () => {
+export const MyRegisteredFood = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectFood, setSelectFood] = useState({});
   const [modalType, setModalType] = useState("");
@@ -38,9 +38,7 @@ export const RegisterdFoodItem = () => {
   const closeFoodModal = () => setIsOpen(false);
 
   return (
-    <div className="max-w-7xl mx-auto text-center">
-      <h2 className="inline-block mb-8 px-5 py-3 bg-black rounded-full text-white text-3xl">登録した食品</h2>
-
+    <>
       {modalType === "edit" && selectFood && (
         <CustomModal isOpen={isOpen} title={"食品情報を変更"}>
           <FoodEditForm
@@ -51,15 +49,17 @@ export const RegisterdFoodItem = () => {
           />
         </CustomModal>
       )}
-      {modalType === "delete" && selectFood && (
-        <CustomModal isOpen={isOpen} title={"食品を削除しますか？"}>
-          <FoodDeleteForm
-            selectFood={selectFood}
-            setFoodList={setFoodList}
-            closeFoodModal={closeFoodModal}
-          />
-        </CustomModal>
-      )}
+      {
+        modalType === "delete" && selectFood && (
+          <CustomModal isOpen={isOpen} title={"食品を削除しますか？"}>
+            <FoodDeleteForm
+              selectFood={selectFood}
+              setFoodList={setFoodList}
+              closeFoodModal={closeFoodModal}
+            />
+          </CustomModal>
+        )
+      }
 
       <ul className="grid grid-cols-3 gap-12 px-20">
         {foodList.map((food, index) => {
@@ -86,6 +86,6 @@ export const RegisterdFoodItem = () => {
           )
         })}
       </ul>
-    </div>
+    </>
   );
 };

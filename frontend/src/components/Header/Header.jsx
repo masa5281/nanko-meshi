@@ -68,7 +68,7 @@ export const Header = () => {
               <Link to={ROUTES.AUTH.SIGN_IN} onClick={handleSignOut}>
                 <Dropdown.Item icon={PiSignOutBold}>ログアウト</Dropdown.Item>
               </Link>
-              <Link to={ROUTES.USERS.ITEM}>
+              <Link to={ROUTES.FOODS.REGISTERED}>
                 <Dropdown.Item icon={BiSolidBowlRice}>登録した食品</Dropdown.Item>
               </Link>
               <Link to={ROUTES.USERS.PROFILE}>
