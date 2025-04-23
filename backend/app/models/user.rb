@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :calories, dependent: :destroy
   has_many :foods, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_foods, through: :favorites, source: :food
 
   mount_uploader :avatar, AvatarUploader
 
