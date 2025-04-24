@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { MyRegisteredFood } from "../components/RegisterdFood/MyRegisteredFood";
-import { AllRegisteredFood } from "../components/RegisterdFood/AllRegisteredFood";
+import { MyRegisteredFood } from "../components/RegisteredFood/MyRegisteredFood";
+import { AllRegisteredFood } from "../components/RegisteredFood/AllRegisteredFood";
 import { motion } from "motion/react";
 import { useState } from "react";
 
