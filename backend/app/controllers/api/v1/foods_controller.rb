@@ -32,6 +32,11 @@ class Api::V1::FoodsController < ApplicationController
     end
   end
 
+  def other
+    foods = Food.where.not(user_id: current_user.id)
+    render json: foods
+  end
+
   private
 
   def food_params
