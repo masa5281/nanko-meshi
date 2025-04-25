@@ -4,7 +4,7 @@ import { MonthGraph } from "../components/BarGraph/MonthGraph";
 import { WeekGraph } from "../components/BarGraph/WeekGraph";
 
 export const BarGraph = () => {
-  const [graphType, setGraphType] = useState("month");
+  const [graphType, setGraphType] = useState("week");
 
   return (
     <div className="max-w-7xl mx-auto text-center">

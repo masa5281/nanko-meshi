@@ -4,7 +4,7 @@ import { ROUTES } from "../utils/constants";
 import { useEffect, useState } from "react";
 
 export const useCalorieApi = () => {
-  const [calorieList, setCalorieList] = useState([]);
+  const [calorieList, setCalorieList] = useState(null);
   const navigate = useNavigate();
 
   // カロリー一覧を取得
