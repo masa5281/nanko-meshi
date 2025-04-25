@@ -18,7 +18,7 @@ export const CalorieBarGraph = ({
   dataKey,
 }) => {
   return (
-    <ResponsiveContainer className={""} width="100%" height={350} >
+    <ResponsiveContainer width="100%" height={350} >
       <BarChart
         data={barData}
         barSize={50}
