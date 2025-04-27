@@ -19,7 +19,7 @@ export const MyRegisteredFood = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectFood, setSelectFood] = useState({});
   const [modalType, setModalType] = useState("");
-  const { foodList, setFoodList } = useFoodApi();
+  const { myFoodList, setMyFoodList } = useFoodApi();
   const { reset } = useFormContext();
 
   const openFoodModal = (type, food) => {
@@ -44,7 +44,7 @@ export const MyRegisteredFood = () => {
           <FoodEditForm
             selectFood={selectFood}
             setSelectFood={setSelectFood}
-            setFoodList={setFoodList}
+            setMyFoodList={setMyFoodList}
             closeFoodModal={closeFoodModal}
           />
         </CustomModal>
@@ -54,7 +54,7 @@ export const MyRegisteredFood = () => {
           <CustomModal isOpen={isOpen} title={"食品を削除しますか？"}>
             <FoodDeleteForm
               selectFood={selectFood}
-              setFoodList={setFoodList}
+              setMyFoodList={setMyFoodList}
               closeFoodModal={closeFoodModal}
             />
           </CustomModal>
@@ -62,7 +62,7 @@ export const MyRegisteredFood = () => {
       }
 
       <ul className="grid grid-cols-3 gap-12 px-20">
-        {foodList.map((food, index) => {
+        {myFoodList.map((food, index) => {
           return (
             <li key={index} className="relative px-8 py-4 bg-white rounded-lg shadow-sm shadow-shadow">
               <Dropdown label={

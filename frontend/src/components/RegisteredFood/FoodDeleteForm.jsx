@@ -5,7 +5,7 @@ import { deleteNotify } from "../../utils/toastNotify";
 
 export const FoodDeleteForm = ({
   selectFood,
-  setFoodList,
+  setMyFoodList,
   closeFoodModal,
 }) => {
   const { deleteFood } = useFoodApi();
@@ -13,8 +13,8 @@ export const FoodDeleteForm = ({
   const handleDeleteFood = async () => {
     try {
       await deleteFood(selectFood);
-      setFoodList(prevFoodList =>
-        prevFoodList.filter(food => food.id !== selectFood.id)
+      setMyFoodList(prevMyFoodList =>
+        prevMyFoodList.filter(food => food.id !== selectFood.id)
       );
       closeFoodModal();
       deleteNotify("食品を削除しました");

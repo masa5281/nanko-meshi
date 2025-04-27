@@ -15,7 +15,7 @@ export const ROUTES = {
   FOODS: {
     CONVERSION: "/foods/conversion",
     REGISTER: "/foods/register",
-    REGISTERED: "/foods/registered",
+    MY_REGISTERED: "/foods/my_registered",
     ALL_REGISTERED: "/foods/all_registered",
   },
   CALORIE: {

@@ -21,7 +21,7 @@ import { useValidateError } from "../../context/ValidateErrorContext";
 export const FoodEditForm = ({
   selectFood,
   setSelectFood,
-  setFoodList,
+  setMyFoodList,
   closeFoodModal,
 }) => {
   const { setValidateErrors } = useValidateError();
@@ -38,8 +38,8 @@ export const FoodEditForm = ({
   const handleUpdateFood = async () => {
     try {
       const response = await updateFood(selectFood, foodImage);
-      setFoodList(prevFoodList =>
-        prevFoodList.map(food => food.id === selectFood.id ? response : food)
+      setMyFoodList(prevMyFoodList =>
+        prevMyFoodList.map(food => food.id === selectFood.id ? response : food)
       );
       closeFoodModal();
     } catch (error) {

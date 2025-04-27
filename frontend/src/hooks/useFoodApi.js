@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { createFoodFormData, deleteFoodApi, getFoodsApi } from "../api/foodApi";
+import { createFoodFormData, deleteFoodApi, getMyFoodsApi, getOtherFoodApi } from "../api/foodApi";
 import { axiosClient } from "../config/axiosClient";
 import { API_ENDPOINTS } from "../utils/constants";
 
 export const useFoodApi = () => {
-  const [foodList, setFoodList] = useState([]);
+  const [myFoodList, setMyFoodList] = useState([]);
+  const [otherFoodList, setOtherFoodList] = useState([]);
 
-  // 食品一覧を取得
+  // ログインユーザーの食品一覧を取得
   useEffect(() => {
     const getFoods = async () => {
-      const foodData = await getFoodsApi();
-      setFoodList(foodData);
+      const foodData = await getMyFoodsApi();
+      setMyFoodList(foodData);
     }
     getFoods();
   }, []);
@@ -41,8 +42,9 @@ export const useFoodApi = () => {
   };
 
   return {
-    foodList,
-    setFoodList,
+    myFoodList,
+    setMyFoodList,
+    otherFoodList,
     deleteFood,
     updateFood,
   };

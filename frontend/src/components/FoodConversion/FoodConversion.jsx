@@ -1,5 +1,5 @@
 // モジュール
-import { getFoodsApi } from "../../api/foodApi";
+import { getMyFoodsApi } from "../../api/foodApi";
 import { useUserDataContext } from "../../context/UserDataContext";
 // コンポーネント
 import { FoodItem } from "./FoodItem";
@@ -8,21 +8,21 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const FoodConversion = () => {
-  const [foodList, setFoodList] = useState([]);
+  const [myFoodList, setMyFoodList] = useState([]);
   const state = useLocation();
   const inputCalorie = state.state?.burnedCalorie;
   const { dbUserData } = useUserDataContext();
 
   useEffect(() => {
-    const getFoodList = async () => {
+    const getMyFoodList = async () => {
       try {
-        const foodData = await getFoodsApi();
-        setFoodList(foodData);
+        const foodData = await getMyFoodsApi();
+        setMyFoodList(foodData);
       } catch (error) {
         console.error(error);
       }
     }
-    getFoodList();
+    getMyFoodList();
   }, []);
 
   return (
@@ -34,7 +34,7 @@ export const FoodConversion = () => {
         </div>
       </div>
       <ul className="grid grid-cols-2 gap-8 w-3/4 mx-auto">
-        {foodList.map((food) =>
+        {myFoodList.map((food) =>
           <FoodItem key={food.id} food={food} inputCalorie={inputCalorie} />
         )}
       </ul>
