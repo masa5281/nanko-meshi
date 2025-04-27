@@ -31,6 +31,7 @@ export const API_ENDPOINTS = {
   },
   FOODS: {
     BASE: `${API_VERSION}/foods`,
+    OTHER: `${API_VERSION}/foods/other`,
   },
   CALORIE: {
     BASE: `${API_VERSION}/calories`,
