@@ -24,7 +24,8 @@ export const WeekGraphContent = ({ calorieList }) => {
   const endDate = getGraphEndDate(startDate, "weekly");
   const isCurrentWeek = isDateInRange(formatToday, startDate, endDate);
 
-  const selectIndex = selectDate.getDay() === 1 ? 0 : selectDate.getDay() - 1;
+  // 日曜日なら6に、それ以外は-1（インデックス番号はグラフラベル合わせ）
+  const selectIndex = selectDate.getDay() === 0 ? 6 : selectDate.getDay() - 1;
   const selectCalorie = barData[selectIndex].burnedCalorie;
 
   const selectColor = (payload, truthyColor, falsyColor) => {
