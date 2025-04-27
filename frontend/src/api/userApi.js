@@ -1,6 +1,12 @@
 import { API_ENDPOINTS } from "../utils/constants";
 import { axiosClient } from "../config/axiosClient";
 
+// 全てのユーザーを取得
+export const getUsersApi = async () => {
+  const response = await axiosClient.get(API_ENDPOINTS.USERS.BASE);
+  return response.data;
+};
+
 // 特定のユーザーを取得
 export const getUserApi = async (uid) => {
   const response = await axiosClient.get(`${API_ENDPOINTS.USERS.BASE}/${uid}`);
