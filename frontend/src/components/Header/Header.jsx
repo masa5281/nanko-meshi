@@ -56,7 +56,7 @@ export const Header = () => {
             <ul className="flex items-center h-full mr-4">
               <IconList link={ROUTES.CALORIE.INPUT} img={fire} alt={"カロリー入力"} menuName={"カロリー入力"} />
               <IconList link={ROUTES.FOODS.REGISTER} img={food} alt={"食品登録"} menuName={"食品登録"} />
-              <IconList img={graph} alt={"総消費カロリー"} menuName={"総消費カロリー"} />
+              <IconList link={ROUTES.CALORIE.GRAPH} img={graph} alt={"総消費カロリー"} menuName={"総消費カロリー"} />
             </ul>
             <Dropdown label={
               <img src={userImage} alt="" className="" />

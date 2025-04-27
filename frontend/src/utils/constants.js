@@ -11,7 +11,7 @@ export const ROUTES = {
   },
   USERS: {
     ITEM: "/users/item",
-    PROFILE: "/users/profile"
+    PROFILE: "/users/profile",
   },
   FOODS: {
     CONVERSION: "/foods/conversion",
@@ -19,6 +19,7 @@ export const ROUTES = {
   },
   CALORIE: {
     INPUT: "/calorie/input",
+    GRAPH: "/calorie/graph",
   },
 };
 

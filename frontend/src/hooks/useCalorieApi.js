@@ -1,9 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { createCalorieApi } from "../api/calorieApi";
+import { createCalorieApi, getCalorieApi } from "../api/calorieApi";
 import { ROUTES } from "../utils/constants";
+import { useEffect, useState } from "react";
 
 export const useCalorieApi = () => {
+  const [calorieList, setCalorieList] = useState(null);
   const navigate = useNavigate();
+
+  // カロリー一覧を取得
+  useEffect(() => {
+    const getCalorie = async () => {
+      const calorieData = await getCalorieApi();
+      setCalorieList(calorieData);
+    }
+    getCalorie();
+  }, [])
 
   // カロリーを作成
   const createCalorie = async (calorie, recordedDate) => {
@@ -16,6 +27,7 @@ export const useCalorieApi = () => {
   };
 
   return {
+    calorieList,
     createCalorie,
   };
 };
