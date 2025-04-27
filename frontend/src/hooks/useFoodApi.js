@@ -15,6 +15,15 @@ export const useFoodApi = () => {
     getFoods();
   }, []);
 
+  // ログインユーザー以外の食品一覧を取得
+  useEffect(() => {
+    const getOtherFood = async () => {
+      const foodData = await getOtherFoodApi();
+      setOtherFoodList(foodData);
+    }
+    getOtherFood();
+  }, []);
+
   // 食品を更新
   const updateFood = async (selectFood, foodImage) => {
     const data = createFoodFormData(

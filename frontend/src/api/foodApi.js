@@ -4,7 +4,13 @@ import { axiosClient } from "../config/axiosClient";
 // 全ての食品情報を取得
 export const getFoodsApi = async () => {
   const response = await axiosClient.get(API_ENDPOINTS.FOODS.BASE);
-  return response.data
+  return response.data;
+};
+
+// ログインユーザー以外の食品情報を取得
+export const getOtherFoodApi = async () => {
+  const response = await axiosClient.get(API_ENDPOINTS.FOODS.OTHER);
+  return response.data;
 };
 
 // FormData送信の準備
