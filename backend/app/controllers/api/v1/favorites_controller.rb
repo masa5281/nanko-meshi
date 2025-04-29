@@ -1,7 +1,12 @@
 class Api::V1::FavoritesController < ApplicationController
+  def index
+    favorites = current_user.favorited_foods
+    render json: favorites
+  end
+
   def create
     @favorite = current_user.favorites.create!(favorite_params)
-    render json: @favorite
+    head :created
   end
 
   def destroy
