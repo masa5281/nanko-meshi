@@ -39,6 +39,9 @@ export const API_ENDPOINTS = {
   METS: {
     BASE: `${API_VERSION}/mets`,
   },
+  FAVORITES: {
+    BASE: `${API_VERSION}/favorites`
+  },
 };
 
 // バリデーションメッセージ（useForm）
