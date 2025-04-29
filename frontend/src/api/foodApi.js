@@ -29,3 +29,12 @@ export const deleteFoodApi = async (foodId) => {
   const response = await axiosClient.delete(`${API_ENDPOINTS.FOODS.BASE}/${foodId}`);
   return response.data;
 };
+
+// 食品をお気に入り登録
+export const createFavoriteFoodApi = async (foodId) => {
+  const response = await axiosClient.post(`${API_ENDPOINTS.FOODS.BASE}/${foodId}/favorites`, {
+    food_id: foodId
+  });
+  return response;
+};
+

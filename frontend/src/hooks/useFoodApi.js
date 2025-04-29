@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createFoodFormData, deleteFoodApi, getMyFoodsApi, getOtherFoodApi } from "../api/foodApi";
+import { createFavoriteFoodApi, createFoodFormData, deleteFoodApi, getMyFoodsApi, getOtherFoodApi } from "../api/foodApi";
 import { axiosClient } from "../config/axiosClient";
 import { API_ENDPOINTS } from "../utils/constants";
 
@@ -41,11 +41,17 @@ export const useFoodApi = () => {
     await deleteFoodApi(selectFood.id);
   };
 
+  // 食品をお気に入り登録
+  const createFavoriteFood = async (food) => {
+    await createFavoriteFoodApi(food.id);
+  };
+
   return {
     myFoodList,
     setMyFoodList,
     otherFoodList,
-    deleteFood,
     updateFood,
+    deleteFood,
+    createFavoriteFood,
   };
 };
