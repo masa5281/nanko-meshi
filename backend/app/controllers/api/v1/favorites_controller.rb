@@ -5,11 +5,22 @@ class Api::V1::FavoritesController < ApplicationController
   end
 
   def create
-    @favorite = current_user.favorites.create!(favorite_params)
-    head :created
+    favorite = current_user.favorites.new(favorite_params)
+    if favorite.save
+      head :created
+    else
+      render json: favorite.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    favorite = current_user.favorites.find_by(food_id: params[:food_id])
+    if favorite
+      favorite.destroy
+      head :no_content
+    else
+      render json: favorite.errors, status: :not_found
+    end
   end
 
   private

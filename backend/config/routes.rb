@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, param: :firebase_uid, only: %i[index show create update destroy]
       resources :foods, only: %i[index create update destroy] do
-        resources :favorites, only: %i[create destroy]
+        resource :favorites, only: %i[create destroy]
         get "other", on: :collection
       end
       resources :favorites, only: %i[index]
