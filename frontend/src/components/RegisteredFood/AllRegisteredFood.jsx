@@ -1,10 +1,39 @@
 import { useFoodApi } from "../../hooks/useFoodApi";
+import { TiStarOutline } from "react-icons/ti";
+import { IconProvider } from "../IconProvider";
 
 export const AllRegisteredFood = () => {
   const { otherFoodList } = useFoodApi();
-  console.log(otherFoodList);
+  const { createFavoriteFood } = useFoodApi();
+
+  const onFavoriteFood = async (food) => {
+    await createFavoriteFood(food);
+  };
 
   return (
-    <></>
+    <ul className="grid grid-cols-2 gap-8 w-3/4 mx-auto">
+      {otherFoodList.map((food) => {
+        return (
+          <li key={food.id} className="flex justify-between p-4 bg-white rounded-lg shadow-sm shadow-shadow">
+            <div className="max-w-32 max-h-32 mr-4 pr-4 border-r-2">
+              <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full rounded-sm" />
+            </div>
+            <div className="flex flex-col justify-between items-start flex-grow-2 max-w-64 w-full text-left">
+              <p className="mb-3 text-black text-md font-bold">{food.name}</p>
+              <p className="inline-block max-w-24 px-2 py-1 bg-primary-deep rounded-lg text-white text-lg">
+                <span className="text-3xl">{food.calorie}</span>
+                kcal
+              </p>
+            </div>
+            <div className="flex flex-col justify-between items-center">
+              <img src={food.user.avatar.icon.url} alt="" className="w-7 h-7 rounded-full" />
+              <IconProvider size={26}>
+                <TiStarOutline className="hover:cursor-pointer" onClick={() => onFavoriteFood(food)} />
+              </IconProvider>
+            </div>
+          </li>
+        )
+      })}
+    </ul>
   );
 };
