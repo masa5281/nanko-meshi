@@ -62,9 +62,9 @@ export const MyRegisteredFood = () => {
       }
 
       <ul className="grid grid-cols-3 gap-12 px-20">
-        {myFoodList.map((food, index) => {
+        {myFoodList.map((food) => {
           return (
-            <li key={index} className="relative px-8 py-4 bg-white rounded-lg shadow-sm shadow-shadow">
+            <li key={food.id} className="relative px-8 py-4 bg-white rounded-lg shadow-sm shadow-shadow">
               <Dropdown label={
                 <div className="p-1.5 bg-gray-200 rounded-full hover:bg-hoverGray">
                   <BsThreeDots />

@@ -128,7 +128,7 @@ export const App = () => {
                       }
                     />
                     <Route
-                      path={ROUTES.FOODS.REGISTERED}
+                      path={ROUTES.FOODS.MY_REGISTERED}
                       element={
                         <ProtectedRoute>
                           <WeightCheckNavigator>
