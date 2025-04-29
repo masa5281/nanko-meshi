@@ -1,13 +1,36 @@
 import { useFoodApi } from "../../hooks/useFoodApi";
 import { TiStarOutline } from "react-icons/ti";
 import { IconProvider } from "../IconProvider";
+import { TiStarFullOutline } from "react-icons/ti";
 
 export const AllRegisteredFood = () => {
-  const { otherFoodList } = useFoodApi();
-  const { createFavoriteFood } = useFoodApi();
+  const {
+    otherFoodList,
+    setOtherFoodList,
+    createFavoriteFood,
+    deleteFavoriteFood,
+  } = useFoodApi();
 
-  const onFavoriteFood = async (food) => {
-    await createFavoriteFood(food);
+  const handleCreateFavorite = async (food) => {
+    try {
+      await createFavoriteFood(food);
+      setOtherFoodList(prevOtherFoodList =>
+        prevOtherFoodList.map(prevFood => prevFood.id === food.id ? { ...prevFood, is_favorited: true } : prevFood)
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteFavorite = async (food) => {
+    try {
+      await deleteFavoriteFood(food);
+      setOtherFoodList(prevOtherFoodList =>
+        prevOtherFoodList.map(prevFood => prevFood.id === food.id ? { ...prevFood, is_favorited: false } : prevFood)
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -28,7 +51,11 @@ export const AllRegisteredFood = () => {
             <div className="flex flex-col justify-between items-center">
               <img src={food.user.avatar.icon.url} alt="" className="w-7 h-7 rounded-full" />
               <IconProvider size={26}>
-                <TiStarOutline className="hover:cursor-pointer" onClick={() => onFavoriteFood(food)} />
+                {food.is_favorited ? (
+                  <TiStarFullOutline className="hover:cursor-pointer" onClick={() => handleDeleteFavorite(food)} />
+                ) : (
+                  <TiStarOutline className="hover:cursor-pointer" onClick={() => handleCreateFavorite(food)} />
+                )}
               </IconProvider>
             </div>
           </li>

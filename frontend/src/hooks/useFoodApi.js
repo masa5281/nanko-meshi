@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { createFavoriteFoodApi, createFoodFormData, deleteFavoriteFoodApi, deleteFoodApi, getMyFoodsApi, getOtherFoodApi } from "../api/foodApi";
+import { createFavoriteFoodApi, createFoodFormData, deleteFavoriteFoodApi, deleteFoodApi, getFavoritedFoodAPI, getMyFoodsApi, getOtherFoodApi } from "../api/foodApi";
 import { axiosClient } from "../config/axiosClient";
 import { API_ENDPOINTS } from "../utils/constants";
 
 export const useFoodApi = () => {
   const [myFoodList, setMyFoodList] = useState([]);
   const [otherFoodList, setOtherFoodList] = useState([]);
+  const [favoritedFood, setFavoritedFood] = useState([]);
 
   // ログインユーザーの食品一覧を取得
   useEffect(() => {
@@ -41,6 +42,15 @@ export const useFoodApi = () => {
     await deleteFoodApi(selectFood.id);
   };
 
+  // お気に入り済み食品情報を取得
+  useEffect(() => {
+    const getFavoritedFood = async () => {
+      const foodData = await getFavoritedFoodAPI();
+      setFavoritedFood(foodData);
+    };
+    getFavoritedFood();
+  }, [])
+
   // 食品をお気に入り登録
   const createFavoriteFood = async (food) => {
     await createFavoriteFoodApi(food.id);
@@ -55,8 +65,11 @@ export const useFoodApi = () => {
     myFoodList,
     setMyFoodList,
     otherFoodList,
+    setOtherFoodList,
     updateFood,
     deleteFood,
+    favoritedFood,
+    setFavoritedFood,
     createFavoriteFood,
     deleteFavoriteFood,
   };
