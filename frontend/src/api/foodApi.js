@@ -38,3 +38,8 @@ export const createFavoriteFoodApi = async (foodId) => {
   return response;
 };
 
+// 食品のお気に入りを解除
+export const deleteFavoriteFoodApi = async (foodId) => {
+  const response = await axiosClient.delete(`${API_ENDPOINTS.FOODS.BASE}/${foodId}/favorites`);
+  return response.data;
+};

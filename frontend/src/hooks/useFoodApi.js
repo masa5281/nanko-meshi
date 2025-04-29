@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createFavoriteFoodApi, createFoodFormData, deleteFoodApi, getMyFoodsApi, getOtherFoodApi } from "../api/foodApi";
+import { createFavoriteFoodApi, createFoodFormData, deleteFavoriteFoodApi, deleteFoodApi, getMyFoodsApi, getOtherFoodApi } from "../api/foodApi";
 import { axiosClient } from "../config/axiosClient";
 import { API_ENDPOINTS } from "../utils/constants";
 
@@ -46,6 +46,11 @@ export const useFoodApi = () => {
     await createFavoriteFoodApi(food.id);
   };
 
+  // 食品のお気に入りを解
+  const deleteFavoriteFood = async (food) => {
+    await deleteFavoriteFoodApi(food.id);
+  };
+
   return {
     myFoodList,
     setMyFoodList,
@@ -53,5 +58,6 @@ export const useFoodApi = () => {
     updateFood,
     deleteFood,
     createFavoriteFood,
+    deleteFavoriteFood,
   };
 };
