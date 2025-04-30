@@ -19,6 +19,11 @@ export const RegisteredFood = () => {
     allFood: { x: 155 },
   };
 
+  const handleSelectTab = (tabName) => {
+    setSelectTab(tabName);
+    setSelectLabel("myFood");
+  };
+
   return (
     <FormProvider {...methods}>
       <div className="max-w-7xl mx-auto text-center">
@@ -26,13 +31,13 @@ export const RegisteredFood = () => {
           <div className=" flex gap-8 justify-center">
             <p
               className={`${selectTab === "registeredFood" ? "text-white" : "text-black"} z-10 hover:cursor-pointer`}
-              onClick={() => setSelectTab("registeredFood")}
+              onClick={() => handleSelectTab("registeredFood")}
             >
               登録した食品
             </p>
             <p
               className={`${selectTab === "allFood" ? "text-white" : "text-black"} z-10 hover:cursor-pointer`}
-              onClick={() => setSelectTab("allFood")}
+              onClick={() => handleSelectTab("allFood")}
             >
               みんなの食品
             </p>
@@ -49,7 +54,10 @@ export const RegisteredFood = () => {
 
         {selectTab === "registeredFood" && (
           <>
-            <select onChange={e => setSelectLabel(e.target.value)} className="mb-4 rounded-lg">
+            <select
+              value={selectLabel}
+              onChange={e => setSelectLabel(e.target.value)} className="mb-4 rounded-lg"
+            >
               <option value={"myFood"}>自分の食品</option>
               <option value={"favoriteFood"}>お気に入り食品</option>
             </select>
