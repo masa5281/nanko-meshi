@@ -1,37 +1,11 @@
 import { useFoodApi } from "../../hooks/useFoodApi";
-import { TiStarOutline } from "react-icons/ti";
-import { IconProvider } from "../IconProvider";
-import { TiStarFullOutline } from "react-icons/ti";
+import { FavoriteStar } from "./FavoriteStar";
 
 export const AllRegisteredFood = () => {
   const {
     otherFoodList,
     setOtherFoodList,
-    createFavoriteFood,
-    deleteFavoriteFood,
   } = useFoodApi();
-
-  const handleCreateFavorite = async (food) => {
-    try {
-      await createFavoriteFood(food);
-      setOtherFoodList(prevOtherFoodList =>
-        prevOtherFoodList.map(prevFood => prevFood.id === food.id ? { ...prevFood, is_favorited: true } : prevFood)
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleDeleteFavorite = async (food) => {
-    try {
-      await deleteFavoriteFood(food);
-      setOtherFoodList(prevOtherFoodList =>
-        prevOtherFoodList.map(prevFood => prevFood.id === food.id ? { ...prevFood, is_favorited: false } : prevFood)
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <ul className="grid grid-cols-2 gap-8 w-3/4 mx-auto">
@@ -49,19 +23,7 @@ export const AllRegisteredFood = () => {
                 </p>
                 <div className="flex items-center">
                   <img src={food.user.avatar.icon.url} alt="ユーザーアイコン" className="w-[30px] h-[30px] mr-1 rounded-full" />
-                  <IconProvider size={30} color="#FFC107">
-                    {food.is_favorited ? (
-                      <TiStarFullOutline
-                        className="hover:cursor-pointer"
-                        onClick={() => handleDeleteFavorite(food)}
-                      />
-                    ) : (
-                      <TiStarOutline
-                        className="hover:cursor-pointer"
-                        onClick={() => handleCreateFavorite(food)}
-                      />
-                    )}
-                  </IconProvider>
+                  <FavoriteStar food={food} setList={setOtherFoodList} />
                 </div>
               </div>
             </div>
