@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::API
   include FirebaseAuthenticator
+  # シリアライザの使用準備
+  include ActionController::Serialization
+  # 各モデルでcurrent_userを参照可能
+  serialization_scope :current_user
 
   # リクエスト毎に認証をチェック
   before_action :authenticate_request

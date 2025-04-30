@@ -36,13 +36,7 @@ class Api::V1::FoodsController < ApplicationController
   # ログインユーザー以外の食品情報
   def other
     foods = Food.includes(:user).where.not(user_id: current_user.id)
-    food_hashes = foods.as_json(include: {user: {only: [:avatar]}})
-    favorited_ids = Favorite.where(user_id: current_user.id).pluck(:food_id)
-    new_food_hashes = food_hashes.map do |food_hash|
-      favorited_flag = { "is_favorited" => favorited_ids.include?(food_hash["id"]) }
-      food_hash.merge(favorited_flag)
-    end
-    render json: new_food_hashes
+    render json: foods, each_serializer: FoodSerializer, include: ["user"]
   end
 
   private

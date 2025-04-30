@@ -1,7 +1,7 @@
 class Api::V1::FavoritesController < ApplicationController
   def index
     favorites = current_user.favorited_foods
-    render json: favorites
+    render json: favorites, each_serializer: FoodSerializer, include: ["user"]
   end
 
   def create
