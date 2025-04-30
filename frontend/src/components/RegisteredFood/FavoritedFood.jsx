@@ -30,8 +30,11 @@ export const FavoritedFood = () => {
             </div>
             <p className="mb-3 text-black text-xl font-bold">{food.name}</p>
             <p className="inline-block mb-3 px-2 py-1 bg-primary-deep rounded-lg text-white text-lg"><span className="text-3xl">{food.calorie}</span>kcal</p>
-            <IconProvider size={26}>
-              <TiStarFullOutline className="absolute top-3 right-3 hover:cursor-pointer" onClick={() => handleDeleteFavorite(food)} />
+            <IconProvider size={26} color="#FFC107">
+              <TiStarFullOutline
+                className="absolute top-3 right-3 hover:cursor-pointer"
+                onClick={() => handleDeleteFavorite(food)}
+              />
             </IconProvider>
           </li>
         )

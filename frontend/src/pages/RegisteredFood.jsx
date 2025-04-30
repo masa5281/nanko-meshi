@@ -1,9 +1,11 @@
-import { FormProvider, useForm } from "react-hook-form";
+// コンポーネント
 import { MyRegisteredFood } from "../components/RegisteredFood/MyRegisteredFood";
 import { AllRegisteredFood } from "../components/RegisteredFood/AllRegisteredFood";
+import { FavoritedFood } from "../components/RegisteredFood/FavoritedFood";
+// ライブラリ
+import { FormProvider, useForm } from "react-hook-form";
 import { motion } from "motion/react";
 import { useState } from "react";
-import { FavoritedFood } from "../components/RegisteredFood/FavoritedFood";
 
 export const RegisteredFood = () => {
   const methods = useForm({
@@ -56,7 +58,8 @@ export const RegisteredFood = () => {
           <>
             <select
               value={selectLabel}
-              onChange={e => setSelectLabel(e.target.value)} className="mb-4 rounded-lg"
+              onChange={e => setSelectLabel(e.target.value)}
+              className="mb-5 border-secondary border-2 rounded-lg focus:border-secondary focus:ring-secondary focus:ring-1"
             >
               <option value={"myFood"}>自分の食品</option>
               <option value={"favoriteFood"}>お気に入り食品</option>
