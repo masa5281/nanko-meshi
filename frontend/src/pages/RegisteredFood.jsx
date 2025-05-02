@@ -2,6 +2,7 @@
 import { MyRegisteredFood } from "../components/RegisteredFood/MyRegisteredFood";
 import { AllRegisteredFood } from "../components/RegisteredFood/AllRegisteredFood";
 import { FavoritedFood } from "../components/RegisteredFood/FavoritedFood";
+import { TabLabel } from "../components/RegisteredFood/TabLabel";
 // ライブラリ
 import { FormProvider, useForm } from "react-hook-form";
 import { motion } from "motion/react";
@@ -21,7 +22,7 @@ export const RegisteredFood = () => {
     allFood: { x: 155 },
   };
 
-  const handleSelectTab = (tabName) => {
+  const onSelectTab = (tabName) => {
     setSelectTab(tabName);
     setSelectLabel("myFood");
   };
@@ -29,21 +30,9 @@ export const RegisteredFood = () => {
   return (
     <FormProvider {...methods}>
       <div className="max-w-7xl mx-auto text-center">
-        <div className="relative w-80 py-3 mb-6 mx-auto bg-white rounded-full text-xl shadow-sm shadow-shadow">
-          <div className=" flex gap-8 justify-center">
-            <p
-              className={`${selectTab === "registeredFood" ? "text-white" : "text-black"} z-10 hover:cursor-pointer`}
-              onClick={() => handleSelectTab("registeredFood")}
-            >
-              登録した食品
-            </p>
-            <p
-              className={`${selectTab === "allFood" ? "text-white" : "text-black"} z-10 hover:cursor-pointer`}
-              onClick={() => handleSelectTab("allFood")}
-            >
-              みんなの食品
-            </p>
-          </div>
+        <div className="relative flex gap-8 justify-center w-80 py-3 mb-6 mx-auto bg-white rounded-full text-xl shadow-sm shadow-shadow">
+          <TabLabel selectTab={selectTab} tabText="registeredFood" onSelectTab={onSelectTab}>登録した食品</TabLabel>
+          <TabLabel selectTab={selectTab} tabText="allFood" onSelectTab={onSelectTab}>みんなの食品</TabLabel>
           <motion.span
             className="absolute top-1.5 left-2 w-[150px] h-10 bg-primary rounded-full"
             initial={false}
