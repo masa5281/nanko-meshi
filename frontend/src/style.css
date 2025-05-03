@@ -29,3 +29,7 @@ body {
 .placeholder {
   color: #777;
 }
+
+.react-datepicker-wrapper {
+  width: 100%;
+}

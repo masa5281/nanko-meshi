@@ -133,7 +133,7 @@ export const MetsCalorieForm = () => {
           )}
         </div>
 
-        <div className="flex justify-center gap-4 px-3 mb-6">
+        <div className="md:flex justify-center gap-4 mb-6">
           <InputField
             id="activityTime"
             type="text"

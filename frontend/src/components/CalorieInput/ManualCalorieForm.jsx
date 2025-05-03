@@ -43,7 +43,7 @@ export const ManualCalorieForm = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(handleCreateCalorie)}>
-        <div className="flex justify-center gap-4 px-3 mb-6">
+        <div className="flex flex-col md:flex-row justify-center gap-4 mb-6">
           <InputField
             id="calorie"
             type="text"

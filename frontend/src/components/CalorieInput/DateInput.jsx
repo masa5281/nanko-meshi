@@ -30,7 +30,7 @@ export const DateInput = (props) => {
         render={({ field }) =>
           <DatePicker
             id="calendar"
-            className="border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
+            className="w-full border-slate-900 border-2 rounded-full indent-2 focus:ring-2 focus:ring-primary focus:border-primary"
             dateFormat="yyyy/MM/dd"
             locale="ja"
             selected={field.value}
