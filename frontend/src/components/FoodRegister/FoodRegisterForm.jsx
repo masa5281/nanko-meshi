@@ -43,8 +43,8 @@ export const FoodRegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(createFood)} className="px-10">
-      <div className="w-72 aspect-[4/3] mb-4 mx-auto border-2 border-black rounded-md ring-1 ring-black text-center overflow-hidden">
+    <form onSubmit={handleSubmit(createFood)} className="px-5 md:px-10">
+      <div className="max-w-72 aspect-[4/3] mb-4 mx-auto border-2 border-black rounded-md ring-1 ring-black text-center overflow-hidden">
         <input type="file" className="hidden" ref={inputRef} onChange={(e) => onFileInputChange(e, "food")} />
         <button
           className="relative w-full h-full align-bottom bg-gray-100 hover:brightness-110 transition-all duration-200"
