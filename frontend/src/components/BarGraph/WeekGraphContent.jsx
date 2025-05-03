@@ -1,4 +1,5 @@
 // モジュール
+import { ROUTES } from '../../utils/constants';
 import { buildBarData, week } from '../../utils/graphData';
 import {
   addDays,
@@ -16,6 +17,7 @@ import { CalorieBarGraph } from './CalorieBarGraph';
 import { PeriodNavigation } from './PeriodNavigation';
 // ライブラリ
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const WeekGraphContent = ({ calorieList }) => {
   const [selectDate, setSelectDate] = useState(new Date());
@@ -23,6 +25,7 @@ export const WeekGraphContent = ({ calorieList }) => {
   const [barData, setBarData] = useState(buildBarData(startDate, calorieList, "weekly"));
   const endDate = getGraphEndDate(startDate, "weekly");
   const isCurrentWeek = isDateInRange(formatToday, startDate, endDate);
+  const navigate = useNavigate();
 
   // 日曜日なら6に、それ以外は-1（インデックス番号はグラフラベル合わせ）
   const selectIndex = selectDate.getDay() === 0 ? 6 : selectDate.getDay() - 1;
@@ -54,11 +57,25 @@ export const WeekGraphContent = ({ calorieList }) => {
     setBarData(buildBarData(nextWeekDate, calorieList, "weekly"));
   };
 
+  const convertCalorieToFood = () => {
+    navigate(ROUTES.FOODS.CONVERSION, {
+      state: {
+        burnedCalorie: selectCalorie
+      }
+    })
+  };
+
   return (
     <>
       <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraph(selectDate, "week")}</p>
-      <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
-      <p className='absolute top-[80px] right-8'>{formatStartDate(startDate)}週</p>
+      <p className='mb-3 text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
+      <button
+        className='p-2 bg-primary rounded-md text-white'
+        onClick={convertCalorieToFood}
+      >
+        食品個数換算へ
+      </button>
+      <p className='absolute top-[135px] right-8'>{formatStartDate(startDate)}週</p>
       <CalorieBarGraph
         key={startDate}
         barData={barData}

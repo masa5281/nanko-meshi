@@ -1,4 +1,3 @@
-// モジュール
 import { useCalorieApi } from '../../hooks/useCalorieApi';
 import { WeekGraphContent } from './WeekGraphContent';
 
