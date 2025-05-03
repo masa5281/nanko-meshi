@@ -49,7 +49,7 @@ export const Profile = () => {
         />
       </CustomModal>
 
-      <div className="relative top-8 max-w-md mx-auto px-8 pt-12 pb-5 border-black border-4 rounded-md before:content-[''] before:absolute before:w-56 before:h-10 before:bg-background before:inline-block before:-top-5 before:left-1/2 before:-translate-x-1/2">
+      <div className="relative top-8 max-w-[350px] md:max-w-md mx-auto px-5 pt-12 pb-5 border-black border-4 rounded-md before:content-[''] before:absolute before:w-56 before:h-10 before:bg-background before:inline-block before:-top-5 before:left-1/2 before:-translate-x-1/2">
         <h2 className="absolute -top-7 left-1/2 -translate-x-1/2 w-52 mx-auto mb-5 py-2 rounded-full bg-black text-white text-2xl text-center">
           アカウント設定
         </h2>

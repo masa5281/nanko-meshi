@@ -47,7 +47,7 @@ export const DeleteAccountForm = ({
     <>
       {isGoogleUser ? (
         <>
-          <p className="mb-3">アカウント削除後は復元できません。<br />再ログイン後にアカウントが削除されます。</p>
+          <p className="text-xs md:text-base mb-3">アカウント削除後は復元できません。<br />再ログイン後にアカウントが削除されます。</p>
           <button
             className="w-full inline-block relative mx-auto px-[54px] py-2 border-black border-2 rounded-full bg-delete text-white font-bold hover:brightness-110"
             onClick={handleDeleteUser}
