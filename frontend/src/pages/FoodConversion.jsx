@@ -19,7 +19,7 @@ export const FoodConversion = () => {
           <p className="relative text-5xl md:text-7xl -top-1">{inputCalorie}<span className="text-3xl">kcal</span></p>
         </div>
       </div>
-      <ul className="grid lg:grid-cols-2 gap-5 md:gap-8 max-w-xs md:max-w-xl lg:max-w-5xl mx-auto px-5">
+      <ul className="grid lg:grid-cols-2 gap-5 md:gap-8 max-w-[340px] md:max-w-xl lg:max-w-5xl mx-auto px-5">
         {conversionFoods.map((food) =>
           <FoodItem key={food.id} food={food} inputCalorie={inputCalorie} />
         )}

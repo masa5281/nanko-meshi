@@ -3,10 +3,9 @@ import { FoodMobileItem } from "./FoodMobileItem";
 
 export const FoodItem = ({
   food,
-  inputCalorie
+  inputCalorie,
 }) => {
   const calorieToFoodCount = (foodCalorie) => Math.round((inputCalorie / foodCalorie) * 10) / 10;
-  // const foodPercentage = (foodCalorie) => Math.round((inputCalorie / foodCalorie) * 100);
   const foodPercentage = (foodCalorie) => {
     let percentage = Math.round((inputCalorie / foodCalorie) * 100);
     if (percentage >= 100) percentage = 100;
@@ -17,13 +16,13 @@ export const FoodItem = ({
     <>
       <FoodDesktopItem
         food={food}
-        calorieToFoodCount={calorieToFoodCount}
+        foodCount={calorieToFoodCount(food.calorie)}
         foodPercentage={foodPercentage}
         className={"hidden md:flex"}
       />
       <FoodMobileItem
         food={food}
-        calorieToFoodCount={calorieToFoodCount}
+        foodCount={calorieToFoodCount(food.calorie)}
         foodPercentage={foodPercentage}
         className={"block md:hidden"}
       />
