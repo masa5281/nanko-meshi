@@ -14,12 +14,12 @@ export const FoodConversion = () => {
   return (
     <>
       <div className="mb-8 text-center">
-        <p className="mb-3 text-4xl font-bold">{dbUserData.name}<span className="text-lg">さん</span>の消費カロリー</p>
-        <div className="relative max-w-48 py-2 mx-auto text-white bg-primary rounded-lg text-7xl font-bold z-10 shadow-sm shadow-shadow after:content-[''] after:absolute after:top-16 after:left-1/2 after:-translate-x-1/2 after:border-t-40 after:border-r-50 after:border-l-50 after:border-x-transparent after:border-primary after:-z-10">
-          <p className="relative -top-1">{inputCalorie}<span className="text-3xl">kcal</span></p>
+        <p className="mb-3 text-2xl md:text-4xl font-bold">{dbUserData.name}<span className="text-base md:text-lg">さん</span>の消費カロリー</p>
+        <div className="relative max-w-40 md:max-w-48 py-2 mx-auto text-white bg-primary rounded-lg font-bold z-10 shadow-sm shadow-shadow after:content-[''] after:absolute after:top-9 md:after:top-16 after:left-1/2 after:-translate-x-1/2 after:border-t-40 after:border-r-50 after:border-l-50 after:border-x-transparent after:border-primary after:-z-10">
+          <p className="relative text-5xl md:text-7xl -top-1">{inputCalorie}<span className="text-3xl">kcal</span></p>
         </div>
       </div>
-      <ul className="grid grid-cols-2 gap-8 w-3/4 mx-auto">
+      <ul className="grid lg:grid-cols-2 gap-5 md:gap-8 max-w-xs md:max-w-xl lg:max-w-5xl mx-auto px-5">
         {conversionFoods.map((food) =>
           <FoodItem key={food.id} food={food} inputCalorie={inputCalorie} />
         )}

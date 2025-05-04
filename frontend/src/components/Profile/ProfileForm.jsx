@@ -95,7 +95,7 @@ export const ProfileForm = ({
         <PasswordAuthForm verifyUpdateEmail={verifyUpdateEmail} closeUserModal={closeUserModal} />
       </CustomModal>
 
-      <form onSubmit={handleSubmit(handleUpdateUser)} className="px-5">
+      <form onSubmit={handleSubmit(handleUpdateUser)} className="md:px-5">
         <div className="w-28 h-28 mb-4 mx-auto border-2 border-black rounded-full ring-1 ring-black text-center">
           <input
             type="file"

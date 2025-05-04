@@ -54,7 +54,7 @@ export const WeightRegister = () => {
   return (
     <FormProvider {...methods}>
       <div className="pt-12">
-        <div className="max-w-sm mx-auto px-10 py-6 bg-header rounded-md shadow-md shadow-shadow">
+        <div className="max-w-xs md:max-w-sm mx-auto px-10 py-6 bg-header rounded-md shadow-md shadow-shadow">
           <h2 className="mb-5 pb-2 border-b border-white text-white text-3xl text-center">現在の体重を選択</h2>
 
           <form onSubmit={handleSubmit(handleUpdateUser)} className="flex flex-col">

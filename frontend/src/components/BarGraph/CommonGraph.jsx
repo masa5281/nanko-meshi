@@ -16,7 +16,7 @@ export const CustomTick = ({
 
 export const CustomLegend = ({ payload }) => {
   return (
-    <ul className='text-left'>
+    <ul className='text-center'>
       {
         payload.map((entry, index) => (
           <li key={`item-${index}`}>

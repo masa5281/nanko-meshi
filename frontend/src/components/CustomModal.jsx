@@ -13,6 +13,7 @@ export const CustomModal = ({
       isOpen={isOpen}
       style={modalStyle}
       bodyOpenClassName="modal--open"
+      className={"max-w-80 md:max-w-96 bg-white"}
       contentElement={(props, children) => (
         <motion.div
           {...props}

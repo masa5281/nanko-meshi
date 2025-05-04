@@ -51,7 +51,7 @@ export const MonthGraphContent = ({ calorieList }) => {
   return (
     <>
       <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraph(selectMonth, "month")}</p>
-      <p className='text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
+      <p className='mb-3 text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
       <CalorieBarGraph
         key={startYearDate}
         barData={barData}
@@ -60,6 +60,11 @@ export const MonthGraphContent = ({ calorieList }) => {
         ticks={[2000, 4000, 6000, 8000, 10000]}
         dataKey="dataLabel"
       />
+      <p
+        className="mb-3 md:mb-0 before:content-[''] before:inline-block before:w-4 before:h-4 before:mr-1 before:bg-primary before:rounded-full"
+      >
+        消費カロリー
+      </p>
       <PeriodNavigation
         isCurrentState={isCurrentYear}
         onPrev={onPrevYear}
