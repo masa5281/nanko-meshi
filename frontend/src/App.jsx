@@ -6,7 +6,7 @@ import { Header } from "./components/Header/Header";
 import { CalorieInput } from "./pages/CalorieInput";
 import { FoodConversion } from "./components/FoodConversion/FoodConversion";
 import { FoodRegister } from "./pages/FoodRegister";
-import { RegisterdFood } from "./pages/RegisterdFood";
+import { RegisteredFood } from "./pages/RegisteredFood";
 import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";
 import { PasswordResetForm } from "./pages/PasswordResetForm"
@@ -98,11 +98,11 @@ export const App = () => {
                       }
                     />
                     <Route
-                      path={ROUTES.CALORIE.INPUT}
+                      path={ROUTES.USERS.PROFILE}
                       element={
                         <ProtectedRoute>
                           <WeightCheckNavigator>
-                            <CalorieInput />
+                            <Profile />
                           </WeightCheckNavigator>
                         </ProtectedRoute>
                       }
@@ -128,21 +128,21 @@ export const App = () => {
                       }
                     />
                     <Route
-                      path={ROUTES.USERS.ITEM}
+                      path={ROUTES.FOODS.MY_REGISTERED}
                       element={
                         <ProtectedRoute>
                           <WeightCheckNavigator>
-                            <RegisterdFood />
+                            <RegisteredFood />
                           </WeightCheckNavigator>
                         </ProtectedRoute>
                       }
                     />
                     <Route
-                      path={ROUTES.USERS.PROFILE}
+                      path={ROUTES.CALORIE.INPUT}
                       element={
                         <ProtectedRoute>
                           <WeightCheckNavigator>
-                            <Profile />
+                            <CalorieInput />
                           </WeightCheckNavigator>
                         </ProtectedRoute>
                       }

@@ -10,12 +10,13 @@ export const ROUTES = {
     WEIGHT: "/weight",
   },
   USERS: {
-    ITEM: "/users/item",
     PROFILE: "/users/profile",
   },
   FOODS: {
     CONVERSION: "/foods/conversion",
     REGISTER: "/foods/register",
+    MY_REGISTERED: "/foods/my_registered",
+    ALL_REGISTERED: "/foods/all_registered",
   },
   CALORIE: {
     INPUT: "/calorie/input",
@@ -30,12 +31,16 @@ export const API_ENDPOINTS = {
   },
   FOODS: {
     BASE: `${API_VERSION}/foods`,
+    OTHER: `${API_VERSION}/foods/other`,
   },
   CALORIE: {
     BASE: `${API_VERSION}/calories`,
   },
   METS: {
     BASE: `${API_VERSION}/mets`,
+  },
+  FAVORITES: {
+    BASE: `${API_VERSION}/favorites`
   },
 };
 

@@ -25,6 +25,9 @@ export const setupAxiosStateError = (setStateError) => {
       if (error.response && error.response.status === 404) {
         setStateError(404);
       }
+      if (error.code === "ERR_CANCELED") {
+        return Promise.resolve(error);
+      }
       return Promise.reject(error);
     }
   )

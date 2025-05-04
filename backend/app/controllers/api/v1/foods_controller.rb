@@ -1,4 +1,5 @@
 class Api::V1::FoodsController < ApplicationController
+  # ログインユーザーに紐づく食品情報
   def index
     foods = current_user.foods
     render json: foods.as_json(only: [:id, :name, :calorie, :food_image])
@@ -30,6 +31,12 @@ class Api::V1::FoodsController < ApplicationController
     else
       render json: food.errors, status: :not_found
     end
+  end
+
+  # ログインユーザー以外の食品情報
+  def other
+    foods = Food.includes(:user).where.not(user_id: current_user.id)
+    render json: foods, each_serializer: FoodSerializer, include: ["user"]
   end
 
   private

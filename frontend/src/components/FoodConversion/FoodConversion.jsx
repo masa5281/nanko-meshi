@@ -1,29 +1,18 @@
 // モジュール
-import { getFoodsApi } from "../../api/foodApi";
 import { useUserDataContext } from "../../context/UserDataContext";
+import { useFoodApi } from "../../hooks/useFoodApi";
 // コンポーネント
 import { FoodItem } from "./FoodItem";
 // ライブラリ
-import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const FoodConversion = () => {
-  const [foodList, setFoodList] = useState([]);
+  const { dbUserData } = useUserDataContext();
+  const { myFoodList, favoritedFood } = useFoodApi();
   const state = useLocation();
   const inputCalorie = state.state?.burnedCalorie;
-  const { dbUserData } = useUserDataContext();
-
-  useEffect(() => {
-    const getFoodList = async () => {
-      try {
-        const foodData = await getFoodsApi();
-        setFoodList(foodData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getFoodList();
-  }, []);
+  // 自分の登録した食品とお気に入りした食品を結合
+  const conversionFoods = [...myFoodList, ...favoritedFood];
 
   return (
     <>
@@ -34,10 +23,10 @@ export const FoodConversion = () => {
         </div>
       </div>
       <ul className="grid grid-cols-2 gap-8 w-3/4 mx-auto">
-        {foodList.map((food) =>
+        {conversionFoods.map((food) =>
           <FoodItem key={food.id} food={food} inputCalorie={inputCalorie} />
         )}
       </ul>
     </>
   );
-}
+};

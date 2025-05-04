@@ -2,8 +2,8 @@ import { API_ENDPOINTS } from "../utils/constants";
 import { axiosClient } from "../config/axiosClient";
 
 // カロリーを取得
-export const getCalorieApi = async () => {
-  const response = await axiosClient.get(API_ENDPOINTS.CALORIE.BASE);
+export const getCalorieApi = async (abortController) => {
+  const response = await axiosClient.get(API_ENDPOINTS.CALORIE.BASE, {signal: abortController.signal});
   return response.data;
 };
 

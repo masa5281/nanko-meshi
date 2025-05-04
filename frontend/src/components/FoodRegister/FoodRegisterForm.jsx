@@ -36,7 +36,7 @@ export const FoodRegisterForm = () => {
     try {
       const data = createFoodFormData(foodName, foodCalorie, foodImage);
       await axiosClient.post(API_ENDPOINTS.FOODS.BASE, data);
-      navigate(ROUTES.USERS.ITEM);
+      navigate(ROUTES.FOODS.MY_REGISTERED);
     } catch (error) {
       setValidateErrors(error.response.data);
     }

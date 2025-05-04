@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
-import { createFoodFormData, deleteFoodApi, getFoodsApi } from "../api/foodApi";
+import { createFavoriteFoodApi, createFoodFormData, deleteFavoriteFoodApi, deleteFoodApi, getFavoritedFoodAPI, getMyFoodsApi, getOtherFoodApi } from "../api/foodApi";
 import { axiosClient } from "../config/axiosClient";
 import { API_ENDPOINTS } from "../utils/constants";
 
 export const useFoodApi = () => {
-  const [foodList, setFoodList] = useState([]);
+  const [myFoodList, setMyFoodList] = useState([]);
+  const [otherFoodList, setOtherFoodList] = useState([]);
+  const [favoritedFood, setFavoritedFood] = useState([]);
 
-  // 食品一覧を取得
+  // ログインユーザーの食品一覧を取得
   useEffect(() => {
     const getFoods = async () => {
-      const foodData = await getFoodsApi();
-      setFoodList(foodData);
+      const foodData = await getMyFoodsApi();
+      setMyFoodList(foodData);
     }
     getFoods();
+  }, []);
+
+  // ログインユーザー以外の食品一覧を取得
+  useEffect(() => {
+    const getOtherFood = async () => {
+      const foodData = await getOtherFoodApi();
+      setOtherFoodList(foodData);
+    }
+    getOtherFood();
   }, []);
 
   // 食品を更新
@@ -31,10 +42,35 @@ export const useFoodApi = () => {
     await deleteFoodApi(selectFood.id);
   };
 
+  // お気に入り済み食品情報を取得
+  useEffect(() => {
+    const getFavoritedFood = async () => {
+      const foodData = await getFavoritedFoodAPI();
+      setFavoritedFood(foodData);
+    };
+    getFavoritedFood();
+  }, [])
+
+  // 食品をお気に入り登録
+  const createFavoriteFood = async (food) => {
+    await createFavoriteFoodApi(food.id);
+  };
+
+  // 食品のお気に入りを解
+  const deleteFavoriteFood = async (food) => {
+    await deleteFavoriteFoodApi(food.id);
+  };
+
   return {
-    foodList,
-    setFoodList,
-    deleteFood,
+    myFoodList,
+    setMyFoodList,
+    otherFoodList,
+    setOtherFoodList,
     updateFood,
+    deleteFood,
+    favoritedFood,
+    setFavoritedFood,
+    createFavoriteFood,
+    deleteFavoriteFood,
   };
 };

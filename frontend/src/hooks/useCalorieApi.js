@@ -9,12 +9,14 @@ export const useCalorieApi = () => {
 
   // カロリー一覧を取得
   useEffect(() => {
+    const abortController = new AbortController();
     const getCalorie = async () => {
-      const calorieData = await getCalorieApi();
+      const calorieData = await getCalorieApi(abortController);
       setCalorieList(calorieData);
     }
     getCalorie();
-  }, [])
+    return () => abortController.abort();
+  }, []);
 
   // カロリーを作成
   const createCalorie = async (calorie, recordedDate) => {
