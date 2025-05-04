@@ -4,7 +4,7 @@ import { setupAxiosStateError } from "./config/axiosClient";
 // Pages
 import { Header } from "./components/Header/Header";
 import { CalorieInput } from "./pages/CalorieInput";
-import { FoodConversion } from "./components/FoodConversion/FoodConversion";
+import { FoodConversion } from "./pages/FoodConversion";
 import { FoodRegister } from "./pages/FoodRegister";
 import { RegisteredFood } from "./pages/RegisteredFood";
 import { SignUp } from "./pages/SignUp";

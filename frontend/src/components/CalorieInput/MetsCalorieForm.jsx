@@ -86,7 +86,6 @@ export const MetsCalorieForm = () => {
     // 分を時間に変換し、小数第二位で四捨五入
     const calcActivityTime = Math.round((activityTime / 60) * 100) / 100;
     const calcCalorie = Math.round(selectMetsValue * dbUserData.weight * calcActivityTime * 1.05);
-
     return calcCalorie;
   };
 

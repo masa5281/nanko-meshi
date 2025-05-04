@@ -6,7 +6,12 @@ export const FoodItem = ({
   inputCalorie
 }) => {
   const calorieToFoodCount = (foodCalorie) => Math.round((inputCalorie / foodCalorie) * 10) / 10;
-  const foodPercentage = (foodCalorie) => Math.round((inputCalorie / foodCalorie) * 100);
+  // const foodPercentage = (foodCalorie) => Math.round((inputCalorie / foodCalorie) * 100);
+  const foodPercentage = (foodCalorie) => {
+    let percentage = Math.round((inputCalorie / foodCalorie) * 100);
+    if (percentage >= 100) percentage = 100;
+    return percentage;
+  };
 
   return (
     <li className="flex p-4 bg-white rounded-lg shadow-sm shadow-shadow">
@@ -25,8 +30,8 @@ export const FoodItem = ({
           </div>
           <div className="flex flex-col flex-grow-2 relative max-w-52 ml-auto">
             {
-              foodPercentage(food.calorie) >= 100 ? (
-                <p className="text-3xl font-bold text-center"><span className="text-4xl text-redBar">{foodPercentage(food.calorie)}%</span>を消費</p>
+              foodPercentage(food.calorie) === 100 ? (
+                <p className="text-2xl font-bold text-center"><span className="text-4xl text-redBar">{foodPercentage(food.calorie)}%</span>以上消費</p>
               ) : (
                 <p className="text-2xl font-bold text-center"><span className="text-4xl">{foodPercentage(food.calorie)}%</span>を消費</p>
               )
