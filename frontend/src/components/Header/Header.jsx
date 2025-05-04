@@ -74,7 +74,7 @@ export const Header = () => {
                 <Dropdown.Item icon={BiSolidBowlRice}>食品登録</Dropdown.Item>
               </Link>
               <Link to={ROUTES.CALORIE.GRAPH} className="md:hidden">
-                <Dropdown.Item icon={VscGraph}>総消費カロリー</Dropdown.Item>
+                <Dropdown.Item icon={VscGraph}>グラフ</Dropdown.Item>
               </Link>
               <Link to={ROUTES.FOODS.MY_REGISTERED}>
                 <Dropdown.Item icon={BiSolidBowlRice}>登録した食品</Dropdown.Item>

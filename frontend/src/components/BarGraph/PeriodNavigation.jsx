@@ -6,7 +6,7 @@ export const PeriodNavigation = ({
   nextText,
 }) => {
   return (
-    <div className='mr-3 text-lg text-right'>
+    <div className='lg:mr-3 text-lg md:text-right'>
       <button
         className="relative mr-4 before:content-[''] before:absolute before:top-2.5 before:-left-3 before:w-3 before:h-3 before:border-t-2 before:border-l-2 before:border-black before:-rotate-45"
         onClick={onPrev}

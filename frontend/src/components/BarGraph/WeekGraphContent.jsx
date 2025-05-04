@@ -19,7 +19,7 @@ import { PeriodNavigation } from './PeriodNavigation';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const WeekGraphContent = ({ calorieList }) => {
+export const WeekGraphContent = ({ calorieList, graphType }) => {
   const [selectDate, setSelectDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date(currentYear, currentMonth, mondayDate));
   const [barData, setBarData] = useState(buildBarData(startDate, calorieList, "weekly"));
@@ -70,12 +70,12 @@ export const WeekGraphContent = ({ calorieList }) => {
       <p className='inline-block mb-2 border-b-2 border-black text-xl'>{formatGraph(selectDate, "week")}</p>
       <p className='mb-3 text-primary text-5xl font-bold'>{selectCalorie}<span className='text-black text-xl'>kcal</span></p>
       <button
-        className='p-2 bg-primary rounded-md text-white'
+        className='mb-2 p-2 bg-primary rounded-md text-white text-sm md:text-base'
         onClick={convertCalorieToFood}
       >
         食品個数換算へ
       </button>
-      <p className='absolute top-[135px] right-8'>{formatStartDate(startDate)}週</p>
+      <p className='mb-3 md:mb-0 md:absolute md:top-[140px] md:right-8 lg:right-20'>{formatStartDate(startDate)}週</p>
       <CalorieBarGraph
         key={startDate}
         barData={barData}
@@ -83,7 +83,13 @@ export const WeekGraphContent = ({ calorieList }) => {
         onClickGraph={onClickGraph}
         ticks={[200, 400, 600, 800, 1000]}
         dataKey="dataLabel"
+        graphType={graphType}
       />
+      <p
+        className="mb-3 md:mb-0 before:content-[''] before:inline-block before:w-4 before:h-4 before:mr-1 before:bg-primary before:rounded-full"
+      >
+        消費カロリー
+      </p>
       <PeriodNavigation
         isCurrentState={isCurrentWeek}
         onPrev={onPrevWeek}
