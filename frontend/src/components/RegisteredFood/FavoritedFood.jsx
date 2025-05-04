@@ -1,5 +1,5 @@
 import { useFoodApi } from "../../hooks/useFoodApi";
-import { FoodSquareCard } from "./FoodSquareCard";
+import { FoodCard } from "./FoodCard";
 import { FavoriteStar } from "./FavoriteStar";
 
 export const FavoritedFood = () => {
@@ -9,13 +9,11 @@ export const FavoritedFood = () => {
   } = useFoodApi();
 
   return (
-    <ul className="grid grid-cols-3 gap-12 px-20">
+    <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 max-w-xs md:max-w-3xl lg:max-w-7xl mx-auto md:px-5">
       {favoritedFood.map((food) =>
-        <FoodSquareCard key={food.id} food={food}>
-          <div className="absolute top-3 right-3">
-            <FavoriteStar food={food} setList={setFavoritedFood} />
-          </div>
-        </FoodSquareCard>
+        <FoodCard key={food.id} food={food}>
+          <FavoriteStar food={food} setList={setFavoritedFood} />
+        </FoodCard>
       )}
     </ul>
   );

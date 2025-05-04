@@ -31,7 +31,10 @@ export const Profile = () => {
     setIsOpen(true);
   };
 
-  const closeUserModal = () => setIsOpen(false);
+  const closeUserModal = () => {
+    setIsOpen(false);
+    document.querySelector("body").classList.remove("modal--open");
+  };
 
   return (
     <FormProvider {...methods}>

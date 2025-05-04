@@ -66,6 +66,7 @@ export const Header = () => {
               arrowIcon={false}
               inline={true}
               theme={headerCustomTheme}
+              className="z-20"
             >
               <Link to={ROUTES.CALORIE.INPUT} className="md:hidden">
                 <Dropdown.Item icon={FaFire}>カロリー入力</Dropdown.Item>

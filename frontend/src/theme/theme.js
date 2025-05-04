@@ -19,6 +19,5 @@ export const headerCustomTheme = {
 };
 
 export const foodCustomTheme = {
-  content: "p-0",
-  inlineWrapper: "absolute top-3 right-3 flex" // buttonタグ
+  content: "w-24",
 };

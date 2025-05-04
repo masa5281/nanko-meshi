@@ -2,13 +2,13 @@
 import { FoodEditForm } from "./FoodEditForm";
 import { FoodDeleteForm } from "./FoodDeleteForm";
 import { CustomModal } from "../CustomModal";
+import { FoodCard } from "./FoodCard";
+import { FoodEditMenu } from "./FoodEditMenu";
 // ライブラリ
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 // カスタムフック
 import { useFoodApi } from "../../hooks/useFoodApi";
-import { FoodSquareCard } from "./FoodSquareCard";
-import { FoodEditMenu } from "./FoodEditMenu";
 
 export const MyRegisteredFood = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +30,10 @@ export const MyRegisteredFood = () => {
     }
   };
 
-  const closeFoodModal = () => setIsOpen(false);
+  const closeFoodModal = () => {
+    setIsOpen(false);
+    document.querySelector("body").classList.remove("modal--open");
+  };
 
   return (
     <>
@@ -55,11 +58,11 @@ export const MyRegisteredFood = () => {
           </CustomModal>
         )
       }
-      <ul className="grid grid-cols-3 gap-12 px-20">
+      <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 max-w-xs md:max-w-3xl lg:max-w-7xl mx-auto md:px-5">
         {myFoodList.map((food) =>
-          <FoodSquareCard key={food.id} food={food} >
+          <FoodCard key={food.id} food={food} >
             <FoodEditMenu food={food} openFoodModal={openFoodModal} />
-          </FoodSquareCard>
+          </FoodCard>
         )}
       </ul>
     </>
