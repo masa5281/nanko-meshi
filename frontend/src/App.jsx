@@ -15,6 +15,7 @@ import { WeightRegister } from "./pages/WeightRegister";
 import { Profile } from "./pages/Profile";
 import { Page404 } from "./pages/404";
 import { BarGraph } from "./pages/BarGraph";
+import { TopPage } from "./pages/TopPage";
 
 import { ProtectedRoute } from "./Routes/ProtectedRoute";
 import { GuestRoute } from "./Routes/GuestRoute";
@@ -53,6 +54,12 @@ export const App = () => {
                       path="*"
                       element={
                         <Page404 />
+                      }
+                    />
+                    <Route
+                      path={ROUTES.TOP}
+                      element={
+                        <TopPage />
                       }
                     />
                     <Route
