@@ -16,6 +16,8 @@ import { Profile } from "./pages/Profile";
 import { Page404 } from "./pages/404";
 import { BarGraph } from "./pages/BarGraph";
 import { TopPage } from "./pages/TopPage";
+import { Terms } from "./pages/Terms";
+import { Privacy } from "./pages/Privacy";
 
 import { ProtectedRoute } from "./Routes/ProtectedRoute";
 import { GuestRoute } from "./Routes/GuestRoute";
@@ -60,6 +62,18 @@ export const App = () => {
                       path={ROUTES.TOP}
                       element={
                         <TopPage />
+                      }
+                    />
+                    <Route
+                      path={ROUTES.TERMS}
+                      element={
+                        <Terms />
+                      }
+                    />
+                    <Route
+                      path={ROUTES.PRIVACY}
+                      element={
+                        <Privacy />
                       }
                     />
                     <Route
