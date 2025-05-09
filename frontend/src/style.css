@@ -33,3 +33,18 @@ body {
 .react-datepicker-wrapper {
   width: 100%;
 }
+
+.document-styles {
+  @apply max-w-4xl mx-auto mt-8;
+  h2 {
+    @apply text-2xl mb-8 font-bold text-center;
+  }
+
+  ol {
+    @apply mb-8 list-decimal list-inside;
+  }
+
+  ul {
+    @apply pl-2 list-disc list-inside;
+  }
+}
