@@ -28,6 +28,7 @@ module.exports = {
         delete: "#DC2626"
       },
       borderWidth: {
+        "1": "1px",
         "40": "40px",
         "50": "50px"
       },

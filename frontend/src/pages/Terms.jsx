@@ -1,6 +1,6 @@
 export const Terms = () => {
   const TermsTitle = ({children}) => {
-    return <h3 className="text-xl pb-1 border-b-2 border-black font-bold">{children}</h3>
+    return <h3 className="text-xl mb-2 pb-1 border-b-1 border-black font-bold">{children}</h3>
   };
 
   return (
@@ -82,7 +82,7 @@ export const Terms = () => {
         <li>
           本サービスは、以下のいずれかの事由があると判断した場合、
           ユーザーに事前に通知することなく本サービスの全部または一部の提供を停止または中断することができるものとします。
-          <ul className="pl-2 list-disc list-inside">
+          <ul>
             <li>本サービスにかかるコンピュータシステムの保守点検または更新を行う場合</li>
             <li>地震、落雷、火災、停電または天災などの不可抗力により、本サービスの提供が困難となった場合</li>
             <li>コンピュータまたは通信回線等が事故により停止した場合</li>

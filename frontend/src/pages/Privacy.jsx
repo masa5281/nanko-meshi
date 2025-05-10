@@ -1,6 +1,6 @@
 export const Privacy = () => {
   const PrivacyTitle = ({ children }) => {
-    return <h3 className="text-xl pb-1 border-b-2 border-black font-bold">{children}</h3>
+    return <h3 className="text-xl mb-2 pb-1 border-b-1 border-black font-bold">{children}</h3>
   };
 
   return (

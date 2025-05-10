@@ -46,7 +46,7 @@ export const Header = () => {
   }, [user])
 
   return (
-    <header className="flex items-center justify-between w-full h-16 px-5 mb-8 bg-header shadow-sm shadow-shadow">
+    <header className="flex items-center justify-between w-full h-16 px-5 bg-header shadow-sm shadow-shadow">
       <a href={ROUTES.TOP}>
         <div className="w-36 md:w-48">
           <img src={logo} alt="ロゴ" className="w-full" />
