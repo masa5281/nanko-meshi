@@ -120,7 +120,7 @@ export const TopPage = () => {
           <h2 className="inline-block mb-3 md:mb-5 lg:mb-8 pb-2 text-2xl lg:text-4xl border-b-2 border-black font-bold">
             アプリの主な使い方
           </h2>
-          <ul className="flex gap-5 lg:gap-8 p-3 md:p-0 overflow-x-scroll md:overflow-x-visible">
+          <ul className="flex gap-5 lg:gap-8 p-3 md:p-0 overflow-x-scroll lg:overflow-x-visible">
             <ProcessStep
               title={"カロリー入力"}
               img={iPhoneInput}
