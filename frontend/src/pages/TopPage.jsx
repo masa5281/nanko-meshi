@@ -25,10 +25,10 @@ export const TopPage = () => {
     description
   }) => {
     return (
-      <li className="max-w-80 p-6 bg-[#FFDD79] rounded-md shadow-sm shadow-shadow">
-        <h3 className="inline-block mb-5 px-3 py-1 bg-primary rounded-full text-2xl text-background">{title}</h3>
+      <li className="max-w-80 p-3 lg:p-6 bg-[#FFDD79] rounded-md shadow-sm shadow-shadow">
+        <h3 className="inline-block mb-5 px-3 py-1 bg-primary rounded-full text-base lg:text-2xl text-background">{title}</h3>
         <img src={img} alt={alt} className="mb-5" />
-        <p className="text-left">{description}</p>
+        <p className="text-sm lg:text-base text-left">{description}</p>
       </li>
     );
   };
@@ -41,7 +41,7 @@ export const TopPage = () => {
   }) => {
     return (
       <div className="flex justify-center items-center mb-8">
-        <div className={`${flexClass} ${side === "left" ? "-translate-x-48" : "translate-x-48"} flex `}>
+        <div className={`${flexClass} ${side === "left" ? "md:-translate-x-36 lg:-translate-x-48" : "md:translate-x-36 lg:translate-x-48"} flex `}>
           <div>
             <img src={defaultIcon} alt="" className="max-w-20 rounded-full shadow-md shadow-shadow" />
           </div>
@@ -73,7 +73,7 @@ export const TopPage = () => {
   }) => {
     return (
       <motion.li
-        className="max-w-80 w-full mr-4 p-3 text-xl bg-white rounded-md"
+        className="max-w-80 w-full mr-4 p-3 text-xs lg:text-xl bg-white rounded-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -81,7 +81,7 @@ export const TopPage = () => {
         transition={{ duration: 0.8 }}
       >
         <p className="mb-2">{text}</p>
-        <p className="text-2xl">{foodName}<span className="text-primary text-3xl font-bold">{countText}</span></p>
+        <p className="text-lg lg:text-2xl">{foodName}<span className="text-primary text-2xl lg:text-3xl font-bold">{countText}</span></p>
       </motion.li>
     );
   };
@@ -90,9 +90,9 @@ export const TopPage = () => {
     <>
       <section
         style={{ backgroundImage: `url(${keyBgDesktop})` }}
-        className="relative -z-10 flex justify-center items-center h-[600px] mb-10 bg-no-repeat bg-cover bg-center"
+        className="relative -z-10 flex justify-center items-center md:h-[400px] lg:h-[600px] mb-10 bg-no-repeat bg-cover bg-center"
       >
-        <div className="max-w-lg">
+        <div className="max-w-md lg:max-w-lg">
           <img src={keyLogoDesktop} alt="ロゴ画像" className="w-full" />
         </div>
       </section>
@@ -107,12 +107,14 @@ export const TopPage = () => {
         </UserProblem>
       </section>
 
-      <section className="mb-12">
-        <div className="max-w-6xl mx-auto p-8 bg-primary rounded-md text-white text-center shadow-sm shadow-shadow">
-          <h2 className="mb-5 text-3xl">あなたの消費カロリー、<span className="text-5xl text-[#ffff00]">食べ物<span className="text-3xl">の</span>個数</span>で置き換えてみませんか？</h2>
-          <p className="mb-5 text-xl">「なんこメシ」は運動で消費したカロリーを食品の個数に換算できます。</p>
+      <section className="mb-12 px-10">
+        <div className="max-w-6xl mx-auto p-4 lg:p-8 bg-primary rounded-md text-white text-center shadow-sm shadow-shadow">
+          <h2 className="mb-5 text-xl lg:text-3xl">あなたの消費カロリー、<br className="block lg:hidden" />
+            <span className="text-3xl lg:text-5xl text-[#ffff00]">食べ物<span className="md:text-xl lg:text-3xl">の</span>個数</span>で置き換えてみませんか？
+          </h2>
+          <p className="mb-5 md:text-lg lg:text-xl">「なんこメシ」は運動で消費したカロリーを食品の個数に換算できます。</p>
           <div>
-            <p className="mb-3 text-3xl -tracking-widest">例えば<span className="-tracking-[0.5em]">・・・</span></p>
+            <p className="mb-3 md:text-xl lg:text-3xl -tracking-widest">例えば<span className="-tracking-[0.5em]">・・・</span></p>
             <ul className="flex justify-center text-black drop-shadow-md">
               <FoodConversionItem text={"ランニングで消費した400kcal"} foodName={"ポテチ"} countText={"1.4個分"} />
               <FoodConversionItem text={"筋トレで消費した100kcal"} foodName={"アイス"} countText={"0.5個分"} />
@@ -122,10 +124,10 @@ export const TopPage = () => {
         </div>
       </section>
 
-      <section className="mb-12 bg-">
+      <section className="mb-12 px-10">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="inline-block mb-8 pb-2 text-4xl border-b-2 border-black font-bold">アプリの主な使い方</h2>
-          <ul className="flex gap-8">
+          <h2 className="inline-block mb-5 lg:mb-8 pb-2 text-2xl lg:text-4xl border-b-2 border-black font-bold">アプリの主な使い方</h2>
+          <ul className="flex gap-5 lg:gap-8">
             <ProcessStep
               title={"カロリー入力"}
               img={iPhoneInput}
@@ -133,7 +135,7 @@ export const TopPage = () => {
               description={"運動による消費カロリーと日付を入力。カロリー不明な場合はMETsから推定値を算出できます。"}
             />
             <ProcessStep
-              title={"食品個数に換算"}
+              title={"個数に換算"}
               img={iPhoneConversion}
               alt={"換算結果ページが表示されたiPhone13"}
               description={"カロリー入力後、あなたが消費したカロリーが食品の個数に換算されます。"}
@@ -145,7 +147,7 @@ export const TopPage = () => {
               description={"自分がよく食べる食品を登録して、個数換算の対象にできます。"}
             />
             <ProcessStep
-              title={"お気に入り機能"}
+              title={"お気に入り"}
               img={iPhoneFavorite}
               alt={"お気に入りページが表示されたiPhone13"}
               description={"他のユーザーが登録している食品をお気に入り登録して、個数換算の対象にできます。"}
