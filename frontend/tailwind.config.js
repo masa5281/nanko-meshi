@@ -28,12 +28,17 @@ module.exports = {
         delete: "#DC2626"
       },
       borderWidth: {
+        "1": "1px",
         "40": "40px",
         "50": "50px"
       },
       flexGrow: {
         2: "2"
-      }
+      },
+      backgroundImage: {
+        "keyDesktop": "url('./images/key-pc-bg.png')",
+        "keyMobile": "url('./images/key-mobile-bg.png')"
+      },
     },
   },
   plugins: [

@@ -2,6 +2,9 @@ const API_VERSION = "/api/v1";
 
 // フロントエンドのルート
 export const ROUTES = {
+  TOP: "/",
+  TERMS: "/terms",
+  PRIVACY: "/privacy",
   AUTH: {
     SIGN_UP: "/sign_up",
     SIGN_IN: "/sign_in",

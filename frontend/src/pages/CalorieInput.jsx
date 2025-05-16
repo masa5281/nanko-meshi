@@ -4,8 +4,8 @@ import { motion } from "motion/react";
 
 export const CalorieInput = () => {
   return (
-    <div className="max-w-[350px] md:container mx-auto md:pt-8 pb-8 text-center">
-      <div className="mb-14 md:mb-20">
+    <div className="max-w-[350px] md:container mx-auto text-center">
+      <div className="mt-8 mb-14 md:mb-20">
         <motion.h2 className="relative inline-block mb-3 text-black text-[28px] md:text-5xl font-bold gradient-marker">
           消費したカロリーを入力！
           <motion.span

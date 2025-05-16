@@ -29,7 +29,7 @@ export const RegisteredFood = () => {
 
   return (
     <FormProvider {...methods}>
-      <div className="max-w-7xl mx-auto text-center">
+      <div className="max-w-7xl mx-auto mt-8 text-center">
         <div className="relative flex gap-8 justify-center w-80 py-3 mb-6 mx-auto bg-white rounded-full text-xl shadow-sm shadow-shadow">
           <TabLabel selectTab={selectTab} tabText="registeredFood" onSelectTab={onSelectTab}>登録した食品</TabLabel>
           <TabLabel selectTab={selectTab} tabText="allFood" onSelectTab={onSelectTab}>みんなの食品</TabLabel>
