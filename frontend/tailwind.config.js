@@ -34,7 +34,11 @@ module.exports = {
       },
       flexGrow: {
         2: "2"
-      }
+      },
+      backgroundImage: {
+        "keyDesktop": "url('./images/key-pc-bg.png')",
+        "keyMobile": "url('./images/key-mobile-bg.png')"
+      },
     },
   },
   plugins: [

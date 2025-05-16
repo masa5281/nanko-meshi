@@ -1,11 +1,6 @@
-// モジュール
-import { ROUTES } from "../utils/constants";
 // ライブラリ
-import { Link } from "react-router-dom";
 import { motion } from "motion/react"
 // 画像読み込み
-import keyLogoDesktop from "../images/key-pc-logo.png"
-import keyBgDesktop from "../images/key-pc-bg.png"
 import defaultIcon from "../images/default-icon.jpg"
 import iPhoneInput from "../images/iPhone-13-Pro-input.png"
 import iPhoneConversion from "../images/iPhone-13-Pro-conversion.png"
@@ -25,7 +20,7 @@ export const TopPage = () => {
     description
   }) => {
     return (
-      <li className="max-w-80 p-3 lg:p-6 bg-[#FFDD79] rounded-md shadow-sm shadow-shadow">
+      <li className="min-w-[180px] max-w-80 p-3 lg:p-6 bg-[#FFDD79] rounded-md shadow-sm shadow-shadow">
         <h3 className="inline-block mb-5 px-3 py-1 bg-primary rounded-full text-base lg:text-2xl text-background">{title}</h3>
         <img src={img} alt={alt} className="mb-5" />
         <p className="text-sm lg:text-base text-left">{description}</p>
@@ -41,9 +36,9 @@ export const TopPage = () => {
   }) => {
     return (
       <div className="flex justify-center items-center mb-8">
-        <div className={`${flexClass} ${side === "left" ? "md:-translate-x-36 lg:-translate-x-48" : "md:translate-x-36 lg:translate-x-48"} flex `}>
+        <div className={`${flexClass} ${side === "left" ? "-translate-x-5 md:-translate-x-36 lg:-translate-x-48" : "translate-x-3 md:translate-x-36 lg:translate-x-48"} flex items-center`}>
           <div>
-            <img src={defaultIcon} alt="" className="max-w-20 rounded-full shadow-md shadow-shadow" />
+            <img src={defaultIcon} alt="ユーザーアイコン" className="max-w-14 md:max-w-20 rounded-full shadow-md shadow-shadow" />
           </div>
           <motion.div
             className="drop-shadow-md"
@@ -53,10 +48,10 @@ export const TopPage = () => {
             transition={{ duration: 0.3 }}
           >
             <p
-              className={`${side === "left" ? "left-10 after:-left-4 after:border-r-[30px]" : "right-10 after:-right-4 after:border-l-[30px]"}
-              relative inline-block p-4 bg-white text-lg rounded-md
-              after:content-[''] after:absolute after:top-4 after:-z-10 after:border-t-transparent after:border-b-transparent
-              after:border-t-[30px] after:border-b-[30px] after:border-white` }
+              className={`${side === "left" ? "left-5 md:left-10 after:-left-2 md:after:-left-4 after:border-r-[15px] md:after:border-r-[30px]" : "right-5 md:right-10 after:-right-2 md:after:-right-4 after:border-l-[15px] md:after:border-l-[30px]"}
+              relative inline-block p-4 bg-white text-xs md:text-lg rounded-md
+              after:content-[''] after:absolute after:top-5 md:after:top-4 after:-z-10 after:border-t-transparent after:border-b-transparent
+              after:border-t-[15px] md:after:border-t-[30px] after:border-b-[15px] md:after:border-b-[30px] after:border-white` }
             >
               {children}
             </p>
@@ -73,7 +68,7 @@ export const TopPage = () => {
   }) => {
     return (
       <motion.li
-        className="max-w-80 w-full mr-4 p-3 text-xs lg:text-xl bg-white rounded-md"
+        className="max-w-52 md:max-w-80 w-full p-3 text-xs lg:text-xl bg-white rounded-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -89,33 +84,29 @@ export const TopPage = () => {
   return (
     <>
       <section
-        style={{ backgroundImage: `url(${keyBgDesktop})` }}
-        className="relative -z-10 flex justify-center items-center md:h-[400px] lg:h-[600px] mb-10 bg-no-repeat bg-cover bg-center"
+        className="relative -z-10 flex justify-center items-center h-[300px] md:h-[400px] lg:h-[600px] mb-10 bg-no-repeat bg-cover bg-center bg-keyMobile md:bg-keyDesktop"
       >
-        <div className="max-w-md lg:max-w-lg">
-          <img src={keyLogoDesktop} alt="ロゴ画像" className="w-full" />
-        </div>
       </section>
 
       <section className="mb-10">
-        <h2 className="mb-12 text-4xl font-bold text-center">こんなお悩みありませんか？</h2>
+        <h2 className="mb-5 md:mb-12 text-2xl md:text-4xl font-bold text-center">こんなお悩みありませんか？</h2>
         <UserProblem flexClass={"flex-row"} initialX={-200} side={"left"}>
-          運動をしてカロリーを消費したけど、<br /><span className="text-xl font-bold">イマイチ達成感がないかも？</span>
+          運動をしてカロリーを消費したけど、<br /><span className="text-sm md:text-xl font-bold">イマイチ達成感がないかも？</span>
         </UserProblem>
         <UserProblem flexClass={"flex-row-reverse"} initialX={200} side={"right"}>
-          この努力、<br /><span className="text-xl font-bold">もっと別の“何か”で評価されたい！</span>
+          この努力、<br /><span className="text-sm md:text-xl font-bold">もっと別の“何か”で評価されたい！</span>
         </UserProblem>
       </section>
 
-      <section className="mb-12 px-10">
+      <section className="mb-12 px-8 md:px-10">
         <div className="max-w-6xl mx-auto p-4 lg:p-8 bg-primary rounded-md text-white text-center shadow-sm shadow-shadow">
-          <h2 className="mb-5 text-xl lg:text-3xl">あなたの消費カロリー、<br className="block lg:hidden" />
-            <span className="text-3xl lg:text-5xl text-[#ffff00]">食べ物<span className="md:text-xl lg:text-3xl">の</span>個数</span>で置き換えてみませんか？
+          <h2 className="mb-5 text-lg md:text-xl lg:text-3xl">あなたの消費カロリー、<br className="block lg:hidden" />
+            <span className="text-xl md:text-3xl lg:text-5xl text-[#ffff00]">食べ物<span className="text-lg md:text-xl lg:text-3xl">の</span>個数</span>で<br className="block md:hidden" />置き換えてみませんか？
           </h2>
-          <p className="mb-5 md:text-lg lg:text-xl">「なんこメシ」は運動で消費したカロリーを食品の個数に換算できます。</p>
+          <p className="mb-5 text-base md:text-lg lg:text-xl">「なんこメシ」は運動で消費したカロリーを食品の個数に換算できます。</p>
           <div>
             <p className="mb-3 md:text-xl lg:text-3xl -tracking-widest">例えば<span className="-tracking-[0.5em]">・・・</span></p>
-            <ul className="flex justify-center text-black drop-shadow-md">
+            <ul className="flex flex-col md:flex-row justify-center items-center gap-4 text-black drop-shadow-md">
               <FoodConversionItem text={"ランニングで消費した400kcal"} foodName={"ポテチ"} countText={"1.4個分"} />
               <FoodConversionItem text={"筋トレで消費した100kcal"} foodName={"アイス"} countText={"0.5個分"} />
               <FoodConversionItem text={"ヨガで消費した200kcal"} foodName={"ラーメン"} countText={"0.4個分"} />
@@ -126,8 +117,10 @@ export const TopPage = () => {
 
       <section className="mb-12 px-10">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="inline-block mb-5 lg:mb-8 pb-2 text-2xl lg:text-4xl border-b-2 border-black font-bold">アプリの主な使い方</h2>
-          <ul className="flex gap-5 lg:gap-8">
+          <h2 className="inline-block mb-3 md:mb-5 lg:mb-8 pb-2 text-2xl lg:text-4xl border-b-2 border-black font-bold">
+            アプリの主な使い方
+          </h2>
+          <ul className="flex gap-5 lg:gap-8 p-3 md:p-0 overflow-x-scroll md:overflow-x-visible">
             <ProcessStep
               title={"カロリー入力"}
               img={iPhoneInput}

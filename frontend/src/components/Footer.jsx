@@ -3,8 +3,8 @@ import { ROUTES } from "../utils/constants";
 
 export const Footer = () => {
   return (
-    <footer className="flex justify-around items-center py-3 bg-[#FFFAF0]">
-      <nav>
+    <footer className="flex flex-col md:flex-row justify-around items-center py-3 bg-[#FFFAF0]">
+      <nav className="mb-3 md:mb-0">
         <ul className="flex gap-4 justify-center text-xs">
           <li><Link to={ROUTES.TERMS}>利用規約</Link></li>
           <li><Link to={ROUTES.PRIVACY}>プライバシーポリシー</Link></li>
