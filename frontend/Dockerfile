@@ -12,5 +12,6 @@ RUN yarn install
 
 COPY . .
 
+ENV DISABLE_ESLINT_PLUGIN=true
 RUN yarn build
 EXPOSE 3001

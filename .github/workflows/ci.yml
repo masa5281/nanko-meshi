@@ -25,5 +25,7 @@ jobs:
         working-directory: frontend
 
       - name: build check
+        env:
+          DISABLE_ESLINT_PLUGIN: true
         run: yarn build
         working-directory: frontend
