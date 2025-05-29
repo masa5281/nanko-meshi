@@ -6,13 +6,14 @@ import { useMotionValue, useMotionValueEvent, animate } from "motion/react";
 import { progressCustomTheme } from "../../theme/theme";
 
 // プログレスバーをアニメーション
-export const AnimateProgress = (props) => {
-  const { foodCalorie, foodPercentage } = props;
-
+export const AnimateProgress = ({
+  foodCalorie,
+  foodPercentage,
+}) => {
   const initialValue = useMotionValue(0);
   const [progressValue, setProgressValue] = useState(0);
-  const progressColor = (foodCalorie) => (foodPercentage >= 100) ? "redBar" : "primaryLight";
-  
+  const progressColor = () => (foodPercentage >= 100) ? "redBar" : "primaryLight";
+
   useMotionValueEvent(initialValue, "change", (latest) => {
     setProgressValue(Math.round(latest));
   })
@@ -21,6 +22,12 @@ export const AnimateProgress = (props) => {
   }, [initialValue, foodCalorie, foodPercentage]);
 
   return (
-    <Progress progress={progressValue} size="lgPlus" color={progressColor(foodCalorie)} className="bg-slate-200" theme={progressCustomTheme} />
+    <Progress
+      progress={progressValue}
+      size="lgPlus"
+      color={progressColor()}
+      className="bg-slate-200"
+      theme={progressCustomTheme}
+    />
   )
-}
+};

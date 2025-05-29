@@ -37,12 +37,8 @@ export const useFirebaseAuth = () => {
 
   // ユーザーの削除
   const deleteAccount = async (uid) => {
-    try {
-      await deleteUserApi(uid);
-      await deleteUser(user);
-    } catch (error) {
-      throw error;
-    }
+    await deleteUserApi(uid);
+    await deleteUser(user);
   };
 
   return {

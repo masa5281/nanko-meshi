@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  front-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repositry
+        uses: actions/checkout@v4
+
+      - name: install yarn
+        run: yarn install
+      
+      - name: eslint check
+        run: yarn eslint
+
+      - name: build check
+        run: yarn build

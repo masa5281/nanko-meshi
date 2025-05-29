@@ -28,7 +28,7 @@ export const SignIn = () => {
     try {
       await signIn(watch("email"), watch("password"));
       navigate(ROUTES.CALORIE.INPUT);
-    } catch (error) {
+    } catch {
       setErrorMessage("メールアドレスまたはパスワードが違います");
     }
   };
