@@ -44,7 +44,7 @@ jobs:
 
       - name: bundler and gem install
         run: |
-          gem install
+          gem install bundler
           bundle install
       
       - name: run rubocop
