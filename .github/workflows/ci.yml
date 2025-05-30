@@ -46,6 +46,7 @@ jobs:
         run: |
           gem install bundler
           bundle install
+        working-directory: backend
       
       - name: run rubocop
         run: bundle exec rubocop
