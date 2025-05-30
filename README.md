@@ -51,7 +51,7 @@
 |環境構築|Docker|
 |CI/CD|GitHub Actions|
 |その他（フロントエンド）|ESLint / axios|
-|その他（バックエンド）|CarrierWave / rack-cors / jwt / active_model_serializers|
+|その他（バックエンド）|RuboCop / CarrierWave / jwt / active_model_serializers|
 ## ■ UIフレームワーク
 ![UIフレームワーク](https://github.com/user-attachments/assets/a906c2c8-aa99-48ff-b672-31e1102bee9b)
 ## ■ ER図
