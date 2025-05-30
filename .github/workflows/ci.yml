@@ -41,6 +41,11 @@ jobs:
         with:
           ruby-version: 3.4.1
           bundler-cache: true
+
+      - name: bundler and gem install
+        run: |
+          gem install
+          bundle install
       
       - name: run rubocop
         run: bundle exec rubocop
