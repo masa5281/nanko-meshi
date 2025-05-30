@@ -29,3 +29,18 @@ jobs:
           DISABLE_ESLINT_PLUGIN: true
         run: yarn build
         working-directory: frontend
+
+  backend-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repositry
+        uses: actions/checkout@v4
+      
+      - name: set up ruby
+        uses: ruby/setup-ruby@v1 
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      
+      - name: run rubocop
+        run: bundle exec rubocop
