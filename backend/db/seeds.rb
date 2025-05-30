@@ -33,7 +33,7 @@ foods = [
   {
     name: "てりやきマックバーガー",
     calorie: 477
-  },
+  }
 ]
 foods.each do |food|
   user.foods.find_or_create_by!(**food)
@@ -92,7 +92,7 @@ activities = [
   {
     activity_name: "筋トレ（ベンチプレス、デッドリフト等）",
     mets_value: "6.0"
-  },
+  }
 ]
 activities.each do |acticity|
   Met.find_or_create_by!(**acticity)

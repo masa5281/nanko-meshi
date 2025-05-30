@@ -16,8 +16,8 @@ class FoodImageUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url(*args)
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+    #   # For Rails 3.1+ asset pipeline compatibility:
+    #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
 
     "#{CarrierWave::Uploader::Base.asset_host}/images/default-food-thumb.jpg"
   end
@@ -31,13 +31,13 @@ class FoodImageUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :thumb do
-    process resize_to_fill: [200, 150]
+    process resize_to_fill: [ 200, 150 ]
   end
 
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_allowlist
-    %w(jpg jpeg gif png heic)
+    %w[jpg jpeg gif png heic]
   end
 
   # Override the filename of the uploaded files:

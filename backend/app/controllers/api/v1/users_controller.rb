@@ -8,7 +8,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    render json: @user.as_json(only: [:id, :name, :avatar, :weight])
+    render json: @user.as_json(only: [ :id, :name, :avatar, :weight ])
   end
 
   def create
@@ -24,7 +24,7 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      render json: @user.as_json(only: [:id, :weight])
+      render json: @user.as_json(only: [ :id, :weight ])
     else
       render json: @user.errors, status: :unprocessable_entity
     end

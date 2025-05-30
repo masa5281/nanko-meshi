@@ -1,11 +1,11 @@
 module FirebaseAuthenticator
-  require 'jwt'
-  require 'net/http' # 外部URLとHTTP通信を行う用
-  require 'uri' # URLの操作用
+  require "jwt"
+  require "net/http" # 外部URLとHTTP通信を行う用
+  require "uri" # URLの操作用
 
   # 定数の設定
   ALG = "RS256" # 署名アルゴリズムの指定
-  FIREBASE_PROJECT_ID = 'nanko-meshi-auth' # プロジェクトIDに変更
+  FIREBASE_PROJECT_ID = "nanko-meshi-auth" # プロジェクトIDに変更
   CERT_URI = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com" # Firebaseの公開鍵にアクセス
 
   # IDトークンの検証
@@ -31,11 +31,11 @@ module FirebaseAuthenticator
       iss: "https://securetoken.google.com/#{FIREBASE_PROJECT_ID}",
       verify_iss: true,
       aud: FIREBASE_PROJECT_ID,
-      verify_aud: true,
+      verify_aud: true
     })
 
     # UIDの抽出
-    payload['sub']
+    payload["sub"]
 
     # JWT.decodeの例外処理
     rescue => e

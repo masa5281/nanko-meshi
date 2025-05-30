@@ -2,7 +2,7 @@ class Api::V1::FoodsController < ApplicationController
   # ログインユーザーに紐づく食品情報
   def index
     foods = current_user.foods
-    render json: foods.as_json(only: [:id, :name, :calorie, :food_image])
+    render json: foods.as_json(only: [ :id, :name, :calorie, :food_image ])
   end
 
   def create
@@ -17,7 +17,7 @@ class Api::V1::FoodsController < ApplicationController
   def update
     food = Food.find(params[:id])
     if food.update(food_params)
-      render json: food.as_json(only: [:id, :name, :calorie, :food_image])
+      render json: food.as_json(only: [ :id, :name, :calorie, :food_image ])
     else
       render json: food.errors, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class Api::V1::FoodsController < ApplicationController
   # ログインユーザー以外の食品情報
   def other
     foods = Food.includes(:user).where.not(user_id: current_user.id)
-    render json: foods, each_serializer: FoodSerializer, include: ["user"]
+    render json: foods, each_serializer: FoodSerializer, include: [ "user" ]
   end
 
   private
