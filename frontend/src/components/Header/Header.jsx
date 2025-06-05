@@ -1,13 +1,11 @@
 // モジュール
 import { ROUTES } from "../../utils/constants";
-import { getUserApi } from "../../api/userApi";
 // コンポーネント
 import { IconList } from "./IconList";
 import { IconProvider } from "../IconProvider";
 // ライブラリ
 import { Link } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
-import { useEffect, useState } from "react";
 // 画像
 import fire from "../../images/fire-white.png"
 import food from "../../images/food-white.png"
@@ -25,25 +23,12 @@ import { headerCustomTheme } from "../../theme/theme";
 // カスタムフック
 import { useAuth } from "../../context/AuthContext";
 import { useFirebaseAuth } from "../../hooks/useFirebaseAuth";
+import { useUserDataContext } from "../../context/UserDataContext";
 
 export const Header = () => {
-  const [userImage, setUserImage] = useState("");
   const { user, isAuthReady } = useAuth();
   const { handleSignOut } = useFirebaseAuth();
-
-  useEffect(() => {
-    if (!user) return;
-
-    const getUserData = async () => {
-      try {
-        const userData = await getUserApi(user.uid);
-        setUserImage(userData.avatar.icon.url);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getUserData();
-  }, [user])
+  const { dbUserData } = useUserDataContext();
 
   return (
     <header className="flex items-center justify-between w-full h-16 px-5 bg-header shadow-sm shadow-shadow">
@@ -60,9 +45,7 @@ export const Header = () => {
               <IconList link={ROUTES.FOODS.REGISTER} img={food} alt={"食品登録"} menuName={"食品登録"} />
               <IconList link={ROUTES.CALORIE.GRAPH} img={graph} alt={"総消費カロリー"} menuName={"総消費カロリー"} />
             </ul>
-            <Dropdown label={
-              <img src={userImage} alt="" />
-            }
+            <Dropdown label={dbUserData && <img src={dbUserData?.avatar.icon.url} alt="ユーザーアイコン" />}
               arrowIcon={false}
               inline={true}
               theme={headerCustomTheme}

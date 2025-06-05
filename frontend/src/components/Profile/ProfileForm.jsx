@@ -36,6 +36,7 @@ export const ProfileForm = ({
 }) => {
   const weights = setWeight();
   const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { register, watch, handleSubmit, setError, formState: { errors } } = useFormContext();
   const inputRef = useRef(null);
   const { dbUserData, setDbUserData } = useUserDataContext();
@@ -59,6 +60,7 @@ export const ProfileForm = ({
 
   const handleUpdateUser = async () => {
     try {
+      setIsLoading(true);
       if (!isOpen && user.email !== userEmail) {
         openUserModal("passwordAuth");
         return;
@@ -79,6 +81,8 @@ export const ProfileForm = ({
         return;
       }
       setValidateErrors(error.response.data);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -114,9 +118,9 @@ export const ProfileForm = ({
             </div>
             {dbUserData.avatar ? (
               userImage ? (
-                <img src={previewImage} alt="" className="w-full h-full rounded-full object-cover" />
+                <img src={previewImage} alt="プレビューアイコン" className="w-full h-full rounded-full object-cover" />
               ) : (
-                <img src={dbUserData.avatar.url} alt="" className="w-full h-full rounded-full object-cover" />
+                <img src={dbUserData.avatar.url} alt="ユーザーアイコン" className="w-full h-full rounded-full object-cover" />
               )
             ) : (
               <div className="w-full flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -193,7 +197,7 @@ export const ProfileForm = ({
           )}
         </div>
 
-        <SubmitButton className="w-full">更新</SubmitButton>
+        <SubmitButton className="w-full" isLoading={isLoading}>更新</SubmitButton>
       </form>
     </>
   );
