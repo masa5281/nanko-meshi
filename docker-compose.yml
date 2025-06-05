@@ -26,11 +26,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    command: yarn start
-    volumes:
-      - ./frontend:/app
+      target: production
     ports:
-      - "3001:3001"
+      - "8080:80"
     env_file:
       - ./frontend/.env.development
 volumes:

@@ -1,4 +1,4 @@
-FROM node:23.7.0
+FROM node:23.7.0 AS base
 RUN apt update -qq && apt install -y vim
 
 WORKDIR /app
@@ -12,6 +12,20 @@ RUN yarn install
 
 COPY . .
 
+# 開発用
+FROM base AS development
+EXPOSE 3001
+CMD [ "yarn", "start" ]
+
+# ビルドステージ
+FROM base AS builder
+# ビルド時はESLintを無効化 
 ENV DISABLE_ESLINT_PLUGIN=true
 RUN yarn build
-EXPOSE 3001
+
+# 本番用
+FROM nginx:stable-alpine AS production
+COPY --from=builder /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
