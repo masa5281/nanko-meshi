@@ -8,7 +8,7 @@ import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
 import { IconProvider } from "../IconProvider";
 // ライブラリ
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 // アイコン
@@ -22,6 +22,7 @@ export const FoodRegisterForm = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const { setValidateErrors } = useValidateError();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     foodImage,
     previewImage,
@@ -34,11 +35,14 @@ export const FoodRegisterForm = () => {
 
   const createFood = async () => {
     try {
+      setIsLoading(true);
       const data = createFoodFormData(foodName, foodCalorie, foodImage);
       await axiosClient.post(API_ENDPOINTS.FOODS.BASE, data);
       navigate(ROUTES.FOODS.MY_REGISTERED);
     } catch (error) {
       setValidateErrors(error.response.data);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -84,7 +88,7 @@ export const FoodRegisterForm = () => {
         validationRule={VALIDATE_MESSAGES.FOOD.CALORIE}
         columnName="calorie"
       />
-      <SubmitButton className="w-full">登録</SubmitButton>
+      <SubmitButton className="w-full" isLoading={isLoading}>登録</SubmitButton>
     </form>
   );
 };
