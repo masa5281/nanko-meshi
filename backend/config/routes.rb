@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get "health/index", to: "health#index"
       resources :users, param: :firebase_uid, only: %i[index show create update destroy]
       resources :foods, only: %i[index create update destroy] do
         resource :favorites, only: %i[create destroy]
