@@ -13,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.find_or_initialize_by(firebase_uid: user_params[:firebase_uid])
-    user.assign_attributes(user_params)
+    user.name = params[:name] if user.new_record?
 
     if user.save
       head :created
