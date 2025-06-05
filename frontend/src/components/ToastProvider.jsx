@@ -6,7 +6,7 @@ export const ToastProvider = ({ children }) => {
     <>
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={1000}
         hideProgressBar={true}
         theme="colored"
       />

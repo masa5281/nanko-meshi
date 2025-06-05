@@ -104,7 +104,7 @@ export const ProfileForm = ({
             onChange={(e) => onFileInputChange(e, "user")}
           />
           <button
-            className="w-full h-full relative bg-gray-100 rounded-full  transition-all duration-200 hover:brightness-110"
+            className="w-full h-full relative bg-gray-100 rounded-full  transition-all duration-200"
             onClick={(e) => handleInputFile(e, inputRef)}
           >
             <div className="absolute bottom-0 right-0 p-2 bg-primary-deep rounded-full">

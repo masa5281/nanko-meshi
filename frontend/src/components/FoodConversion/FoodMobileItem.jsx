@@ -8,12 +8,12 @@ export const FoodMobileItem = ({
   className,
 }) => {
   return (
-    <li className={`${className} relative p-4 bg-white rounded-lg shadow-sm shadow-shadow`}>
+    <li className={`${className} relative max-h-[210px] p-4 bg-white rounded-lg shadow-sm shadow-shadow`}>
       <XShareButton food={food} foodCount={foodCount} />
 
       <div className="flex mb-3">
-        <div className="max-w-24 max-h-24 mr-2 rounded-md overflow-hidden">
-          <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full" />
+        <div className="max-w-24 max-h-[72px] mr-2 rounded-md overflow-hidden">
+          <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full object-cover" />
         </div>
         <div>
           <p className={`${food.name.length >= 8 ? "text-sm" : "text-base"} max-w-[150px] mb-1 font-bold`}>{food.name}</p>
