@@ -5,8 +5,11 @@ class FoodImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::Vips
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
-  # storage :fog
+  if Rails.env.production?
+    storage :fog
+  else
+    storage :file
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -46,18 +49,18 @@ class FoodImageUploader < CarrierWave::Uploader::Base
   #   "something.jpg"
   # end
 
-  process :convert_to_jpg
+  # process :convert_to_jpg
 
   # heicをjpgに変換
-  def convert_to_jpg
-    manipulate! do |img|
-      img.format "jpg" if file.extension.downcase == "heic"
-      img
-    end
-  end
+  # def convert_to_jpg
+  #   manipulate! do |img|
+  #     img.format "jpg" if file.extension.downcase == "heic"
+  #     img
+  #   end
+  # end
 
   # 画像を.jpgで保存
-  def filename
-    super.chomp(File.extname(super)) + ".jpg" if original_filename.present?
-  end
+  # def filename
+  #   super.chomp(File.extname(super)) + ".jpg" if original_filename.present?
+  # end
 end
