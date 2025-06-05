@@ -2,7 +2,7 @@ import { auth } from "../config/firebase";
 import axios from "axios";
 
 export const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_DEV_API_URL
+  baseURL: process.env.REACT_APP_API_URL
 });
 
 // リクエスト直前にトークンをセット

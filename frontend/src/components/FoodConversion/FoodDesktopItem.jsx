@@ -12,8 +12,8 @@ export const FoodDesktopItem = ({
       <XShareButton food={food} foodCount={foodCount} />
 
       <div className="flex flex-col justify-between mr-4 pr-4 border-r-2 text-center">
-        <div className="max-w-24 max-h-24 rounded-md overflow-hidden">
-          <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full" />
+        <div className="max-w-24 max-h-[72px] rounded-md overflow-hidden">
+          <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full object-cover" />
         </div>
         <p><span className="text-xl">{food.calorie}</span>kcal</p>
       </div>

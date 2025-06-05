@@ -8,7 +8,7 @@ import { InputField } from "../InputField/InputField";
 import { SubmitButton } from "../Button/SubmitButton";
 import { IconProvider } from "../IconProvider";
 // ライブラリ
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 // アイコン
 import { FaCamera } from "react-icons/fa";
@@ -28,6 +28,7 @@ export const FoodEditForm = ({
   const { handleSubmit } = useFormContext();
   const { updateFood } = useFoodApi();
   const inputRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     foodImage,
     previewImage,
@@ -37,13 +38,18 @@ export const FoodEditForm = ({
 
   const handleUpdateFood = async () => {
     try {
+      setIsLoading(true);
       const response = await updateFood(selectFood, foodImage);
-      setMyFoodList(prevMyFoodList =>
+      await setMyFoodList(prevMyFoodList =>
         prevMyFoodList.map(food => food.id === selectFood.id ? response : food)
       );
       closeFoodModal();
+      setValidateErrors([]);
+      updateNotify("食品を更新しました")
     } catch (error) {
       setValidateErrors(error.response.data);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,7 +62,7 @@ export const FoodEditForm = ({
       <div className="w-48 aspect-[4/3] mb-5 mx-auto rounded-md text-center overflow-visible">
         <input type="file" className="hidden" ref={inputRef} onChange={(e) => onFileInputChange(e, "food")} />
         <button
-          className="relative w-full h-full hover:brightness-105 transition-all duration-200"
+          className="relative w-full h-full transition-all duration-200"
           onClick={(e) => handleInputFile(e, inputRef)}
         >
           <div className="absolute -bottom-2 -right-2 p-2 bg-primary-deep rounded-full">
@@ -98,7 +104,7 @@ export const FoodEditForm = ({
         />
         <SubmitButton
           className="w-full"
-          onClick={() => updateNotify("食品を更新しました")}
+          isLoading={isLoading}
         >
           更新
         </SubmitButton>
