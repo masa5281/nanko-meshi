@@ -10,23 +10,23 @@ jobs:
   front-build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repositry
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: node setup
+      - name: Node Setup
         uses: actions/setup-node@v4
         with:
           node-version: 23.7.0
 
-      - name: install yarn
+      - name: Install arn
         run: yarn install
         working-directory: frontend
       
-      - name: eslint check
+      - name: ESLint Check
         run: yarn eslint
         working-directory: frontend
 
-      - name: build check
+      - name: Build Check
         env:
           DISABLE_ESLINT_PLUGIN: true
         run: yarn build
@@ -35,21 +35,21 @@ jobs:
   backend-lint:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repositry
+      - name: Checkout Repository
         uses: actions/checkout@v4
       
-      - name: set up ruby
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1 
         with:
           ruby-version: 3.4.1
           bundler-cache: true
 
-      - name: bundler and gem install
+      - name: Bundler and Gem Install
         run: |
           gem install bundler
           bundle install
         working-directory: backend
       
-      - name: run rubocop
+      - name: Run Rubocop
         run: bundle exec rubocop
         working-directory: backend
