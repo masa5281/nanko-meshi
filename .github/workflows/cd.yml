@@ -1,8 +1,8 @@
-name: CI
+name: CD
 
 on:
   push:
-    branches: [develop, feature/cd-setup]
+    branches: [develop, feature/*]
 
 # 権限設定
 permissions:
