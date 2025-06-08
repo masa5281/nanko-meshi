@@ -9,7 +9,12 @@ export const UserDataProvider = ({ children }) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      // ログアウト時にstateをリセット
+      setDbUserData(null);
+      return;
+    }
+    if (dbUserData) return;
 
     const getUser = async () => {
       try {

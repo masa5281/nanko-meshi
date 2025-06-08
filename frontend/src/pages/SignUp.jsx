@@ -14,6 +14,7 @@ import { IoMdLock } from "react-icons/io";
 // カスタムフック
 import { useValidateError } from "../context/ValidateErrorContext";
 import { useFirebaseAuth } from "../hooks/useFirebaseAuth";
+import { useUserDataContext } from "../context/UserDataContext";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -24,10 +25,12 @@ export const SignUp = () => {
   });
   const { watch, setError, handleSubmit, getValues } = methods;
   const { signUp, signInGoogle } = useFirebaseAuth();
+  const { setDbUserData } = useUserDataContext();
 
   const handleSignUp = async () => {
     try {
-      await signUp(watch("email"), watch("password"), watch("userName"));
+      const dbUser = await signUp(watch("email"), watch("password"), watch("userName"));
+      setDbUserData(dbUser);
       navigate(ROUTES.AUTH.WEIGHT);
     } catch (error) {
       firebaseErrorMessage(error.code);
@@ -37,7 +40,8 @@ export const SignUp = () => {
 
   const handleSignInGoogle = async () => {
     try {
-      await signInGoogle();
+      const dbUser = await signInGoogle();
+      setDbUserData(dbUser);
       navigate(ROUTES.AUTH.WEIGHT);
     } catch (error) {
       console.error(error);

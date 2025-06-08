@@ -13,6 +13,7 @@ import { IoMail } from "react-icons/io5";
 import { IoMdLock } from "react-icons/io";
 // カスタムフック
 import { useFirebaseAuth } from "../hooks/useFirebaseAuth";
+import { useUserDataContext } from "../context/UserDataContext";
 
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -23,10 +24,12 @@ export const SignIn = () => {
   });
   const { watch, handleSubmit } = methods;
   const { signIn, signInGoogle } = useFirebaseAuth();
+  const { setDbUserData } = useUserDataContext();
 
   const handleSignIn = async () => {
     try {
-      await signIn(watch("email"), watch("password"));
+      const dbUser = await signIn(watch("email"), watch("password"));
+      setDbUserData(dbUser);
       navigate(ROUTES.CALORIE.INPUT);
     } catch {
       setErrorMessage("メールアドレスまたはパスワードが違います");
@@ -35,7 +38,8 @@ export const SignIn = () => {
 
   const handleSignInGoogle = async () => {
     try {
-      await signInGoogle();
+      const dbUser = await signInGoogle();
+      setDbUserData(dbUser);
       navigate(ROUTES.CALORIE.INPUT);
     } catch (error) {
       console.error(error);

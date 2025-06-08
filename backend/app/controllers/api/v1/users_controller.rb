@@ -12,11 +12,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    user = User.find_or_initialize_by(firebase_uid: user_params[:firebase_uid])
-    user.name = params[:name] if user.new_record?
+    user = User.find_or_create_by(firebase_uid: user_params[:firebase_uid]) do |u|
+      u.name = user_params[:name]
+    end
 
-    if user.save
-      head :created
+    if user.persisted?
+      render json: user
     else
       render json: user.errors, status: :unprocessable_entity
     end

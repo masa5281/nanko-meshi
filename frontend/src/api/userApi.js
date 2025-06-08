@@ -10,11 +10,13 @@ export const getUserApi = async (uid) => {
 // ユーザーを作成
 export const createUserApi = async (uid, userName, userWeight) => {
   const response = await axiosClient.post(API_ENDPOINTS.USERS.BASE, {
-    firebase_uid: uid,
-    name: userName,
-    weight: userWeight
+    user: {
+      firebase_uid: uid,
+      name: userName,
+      weight: userWeight
+    },
   });
-  return response;
+  return response.data;
 };
 
 // ユーザーを更新

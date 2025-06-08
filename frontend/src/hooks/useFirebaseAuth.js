@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, deleteUser, EmailAuthProvider, reauthenticateWithCredential, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { useAuth } from "../context/AuthContext";
 import { auth, provider } from "../config/firebase";
-import { createUserApi, deleteUserApi } from "../api/userApi";
+import { createUserApi, deleteUserApi, getUserApi } from "../api/userApi";
 
 export const useFirebaseAuth = () => {
   const { user } = useAuth();
@@ -9,12 +9,13 @@ export const useFirebaseAuth = () => {
   // サインアップ（メアド、パスワード）
   const signUp = async (email, password, userName) => {
     const signUpUser = await createUserWithEmailAndPassword(auth, email, password);
-    await createUserApi(signUpUser.user.uid, userName);
+    return await createUserApi(signUpUser.user.uid, userName);
   };
 
   // サインイン（メアド、パスワード）
   const signIn = async (email, password) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return await getUserApi(userCredential.user.uid);
   };
 
   // サインアウト
@@ -23,7 +24,7 @@ export const useFirebaseAuth = () => {
   // サインイン（Google）
   const signInGoogle = async () => {
     const googleUser = await signInWithPopup(auth, provider);
-    await createUserApi(googleUser.user.uid, googleUser.user.displayName);
+    return await createUserApi(googleUser.user.uid, googleUser.user.displayName);
   };
 
   // 再認証（Email）

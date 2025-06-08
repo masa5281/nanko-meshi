@@ -34,7 +34,7 @@ export const MetsCalorieForm = () => {
     handleSubmit,
     formState: { errors },
   } = methods;
-  const [dbMetsData, setDbMetsData] = useState("");
+  const [dbMetsData, setDbMetsData] = useState([]);
   const { dbUserData } = useUserDataContext();
   const { validateErrors, setValidateErrors } = useValidateError();
   const [isTextPlaceholder, setIsTextPlaceholder] = useState(true);
