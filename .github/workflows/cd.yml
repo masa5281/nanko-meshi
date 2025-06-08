@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [develop, feature/*]
+    branches: [main]
 
 # 権限設定
 permissions:
