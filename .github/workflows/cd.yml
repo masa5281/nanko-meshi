@@ -45,13 +45,13 @@ jobs:
             --target production \
             -t $ECR_REPOSITORY_FRONTEND:$IMAGE_TAG \
             --push \
-            --build-arg REACT_APP_API_URL=${{ vars.REACT_APP_API_URL }}
-            --build-arg REACT_APP_BASE_URL=${{ vars.REACT_APP_BASE_URL }}
-            --build-arg REACT_APP_FIREBASE_API_KEY=${{ secrets.REACT_APP_FIREBASE_API_KEY }}
-            --build-arg REACT_APP_FIREBASE_AUTH_DOMAIN=${{ vars.REACT_APP_FIREBASE_AUTH_DOMAIN }}
-            --build-arg REACT_APP_FIREBASE_PROJECT_ID=${{ vars.REACT_APP_FIREBASE_PROJECT_ID }}
-            --build-arg REACT_APP_FIREBASE_STORAGE_BUCKET=${{ vars.REACT_APP_FIREBASE_STORAGE_BUCKET }}
-            --build-arg REACT_APP_FIREBASE_MESSAGE_SENDER_ID=${{ vars.REACT_APP_FIREBASE_MESSAGE_SENDER_ID }}
+            --build-arg REACT_APP_API_URL=${{ vars.REACT_APP_API_URL }} \
+            --build-arg REACT_APP_BASE_URL=${{ vars.REACT_APP_BASE_URL }} \
+            --build-arg REACT_APP_FIREBASE_API_KEY=${{ secrets.REACT_APP_FIREBASE_API_KEY }} \
+            --build-arg REACT_APP_FIREBASE_AUTH_DOMAIN=${{ vars.REACT_APP_FIREBASE_AUTH_DOMAIN }} \
+            --build-arg REACT_APP_FIREBASE_PROJECT_ID=${{ vars.REACT_APP_FIREBASE_PROJECT_ID }} \
+            --build-arg REACT_APP_FIREBASE_STORAGE_BUCKET=${{ vars.REACT_APP_FIREBASE_STORAGE_BUCKET }} \
+            --build-arg REACT_APP_FIREBASE_MESSAGE_SENDER_ID=${{ vars.REACT_APP_FIREBASE_MESSAGE_SENDER_ID }} \
             --build-arg REACT_APP_FIREBASE_APP_ID=${{ vars.REACT_APP_FIREBASE_APP_ID }}
             ./frontend
           echo "image_uri_front=$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG" >> $GITHUB_OUTPUT
