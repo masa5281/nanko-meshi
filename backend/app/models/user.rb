@@ -9,4 +9,14 @@ class User < ApplicationRecord
   validates :firebase_uid, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 20 }
   validates :weight, numericality: { only_integer: true, greater_than: 19, less_than: 151 }, allow_nil: true
+
+  after_create :add_initial_foods
+
+  private
+
+  def add_initial_foods
+    DEFAULT_FOODS.each do |food|
+      self.foods.create!(food)
+    end
+  end
 end

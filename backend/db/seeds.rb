@@ -7,39 +7,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-user = User.find_or_create_by!(firebase_uid: "ZwVVw6cxxzYSE8r5gAruHgJvNyv1") do |u|
+
+# 開発者
+User.find_or_create_by!(firebase_uid: ENV.fetch("DEVELOPER_FIREBASE_UID")) do |u|
   u.name = "開発者"
   u.avatar = nil
   u.weight = 70
 end
 
-foods = [
-  {
-    name: "ポテトチップス うすしお味",
-    calorie: 336
-  },
-  {
-    name: "たけのこの里",
-    calorie: 383
-  },
-  {
-    name: "牛丼 並盛",
-    calorie: 683
-  },
-  {
-    name: "ハーゲンダッツ",
-    calorie: 240
-  },
-  {
-    name: "てりやきマックバーガー",
-    calorie: 477
-  }
-]
-foods.each do |food|
-  user.foods.find_or_create_by!(**food)
-end
-
-
+# Metsの運動項目
 activities = [
   {
     activity_name: "ウォーキング（3.2km/h・18分45秒/km）",
