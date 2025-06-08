@@ -1,0 +1,10 @@
+services:
+  front:
+    build:
+      target: development
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./frontend:/app
+    env_file:
+    - ./frontend/.env.development

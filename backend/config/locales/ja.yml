@@ -1,0 +1,54 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      calorie: カロリー
+      food: 食品
+      met: 運動強度
+    attributes:
+      user:
+        firebase_uid: 認証ID
+        name: ユーザー名
+        avatar: プロフィール画像
+        weight: 体重
+      calorie:
+        burned_calorie: カロリー
+        recorded_at: 登録日
+      food:
+        name: 食品名
+        calorie: カロリー
+        food_image: 食品画像
+      met:
+        activity_name: 活動名
+        mets_value: MET値
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "%{attribute}を入力してください"
+              too_long: "%{attribute}は20文字以内で入力してください"
+            weight:
+              blank: "%{attribute}を入力してください"
+              not_a_number: "%{attribute}は数字で入力してください"
+              greater_than: "%{attribute}は%{count}より大きい値で入力してください"
+              less_than: "%{attribute}は%{count}より小さい値で入力してください"
+        calorie:
+          attributes:
+            burned_calorie:
+              blank: "%{attribute}を入力してください"
+              not_a_number: "%{attribute}は数字で入力してください"
+              greater_than: "%{attribute}は1以上で入力してください"
+            recorded_at:
+              blank: "%{attribute}を入力してください"
+              not_future_date: "未来の日付は指定できません"
+        food:
+          attributes:
+            name:
+              blank: "%{attribute}を入力してください"
+              too_long: "%{attribute}は20文字以内で入力してください"
+            calorie:
+              blank: "%{attribute}を入力してください"
+              not_a_number: "%{attribute}は数字で入力してください"
+              greater_than: "%{attribute}は1以上で入力してください"
+              less_than: "%{attribute}は9999以下で入力してください"

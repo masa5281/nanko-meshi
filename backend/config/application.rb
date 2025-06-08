@@ -28,5 +28,11 @@ module App
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.i18n.default_locale = :ja
+    config.active_model.i18n_customize_full_message = true
+    config.time_zone = "Tokyo"
+
+    # libディレクトリ自動ロード設定
+    config.autoload_lib(ignore: %w[assets tasks])
   end
 end

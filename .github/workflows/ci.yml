@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  front-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Node Setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23.7.0
+
+      - name: Install arn
+        run: yarn install
+        working-directory: frontend
+      
+      - name: ESLint Check
+        run: yarn eslint
+        working-directory: frontend
+
+      - name: Build Check
+        env:
+          DISABLE_ESLINT_PLUGIN: true
+        run: yarn build
+        working-directory: frontend
+
+  backend-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1 
+        with:
+          ruby-version: 3.4.1
+          bundler-cache: true
+
+      - name: Bundler and Gem Install
+        run: |
+          gem install bundler
+          bundle install
+        working-directory: backend
+      
+      - name: Run Rubocop
+        run: bundle exec rubocop
+        working-directory: backend
