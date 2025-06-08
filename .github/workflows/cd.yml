@@ -40,16 +40,14 @@ jobs:
       - name: Build and Push frontend image to ECR
         id: build-image-front
         run: |
-          docker buildx build --platform linux/arm64 --target production -t $ECR_REPOSITORY_FRONTEND:$IMAGE_TAG ./frontend
-          docker push $ECR_REPOSITORY_FRONTEND:$IMAGE_TAG
+          docker buildx build --platform linux/arm64 --target production -t $ECR_REPOSITORY_FRONTEND:$IMAGE_TAG --push ./frontend
           echo "image_uri_front=$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG" >> $GITHUB_OUTPUT
       
       # Dockerイメージをbuild、push（バックエンド）
       - name: Build and Push backend image to ECR
         id: build-image-back
         run: |
-          docker buildx build --platform linux/arm64 -t $ECR_REPOSITORY_BACKEND:$IMAGE_TAG ./backend
-          docker push $ECR_REPOSITORY_BACKEND:$IMAGE_TAG
+          docker buildx build --platform linux/arm64 -t $ECR_REPOSITORY_BACKEND:$IMAGE_TAG --push ./backend
           echo "image_uri_back=$ECR_REPOSITORY_BACKEND:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       # --------------------------------------------------
