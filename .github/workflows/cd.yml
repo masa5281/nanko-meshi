@@ -52,7 +52,7 @@ jobs:
             --build-arg REACT_APP_FIREBASE_PROJECT_ID=${{ vars.REACT_APP_FIREBASE_PROJECT_ID }} \
             --build-arg REACT_APP_FIREBASE_STORAGE_BUCKET=${{ vars.REACT_APP_FIREBASE_STORAGE_BUCKET }} \
             --build-arg REACT_APP_FIREBASE_MESSAGE_SENDER_ID=${{ vars.REACT_APP_FIREBASE_MESSAGE_SENDER_ID }} \
-            --build-arg REACT_APP_FIREBASE_APP_ID=${{ vars.REACT_APP_FIREBASE_APP_ID }}
+            --build-arg REACT_APP_FIREBASE_APP_ID=${{ vars.REACT_APP_FIREBASE_APP_ID }} \
             ./frontend
           echo "image_uri_front=$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG" >> $GITHUB_OUTPUT
       
