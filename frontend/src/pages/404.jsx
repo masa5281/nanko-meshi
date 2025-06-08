@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export const Page404 = () => {
 
   return (
-    <div className="text-center">
+    <div className="mt-6 text-center">
       <h2 className="mb-3 text-4xl">404 Not Found</h2>
       <p className="mb-5">お探しのページは見つかりませんでした</p>
       <Link

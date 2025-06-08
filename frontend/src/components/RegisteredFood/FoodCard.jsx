@@ -5,9 +5,9 @@ export const FoodCard = ({ food, children }) => {
         <img src={food.food_image.thumb.url} alt="食品画像" className="w-full h-full rounded-md object-cover" />
       </div>
       <div className="flex flex-col justify-between w-full">
-        <p className={`${food.name.length >= 12 ? "text-xs md:text-sm lg:text-base" : "text-sm md:text-lg"} text-black font-bold text-left`}>{food.name}</p>
+        <p className={`${food.name.length >= 11 ? "text-xs md:text-sm lg:text-base" : "text-sm md:text-lg"} text-black font-bold text-left`}>{food.name}</p>
         <div className="flex justify-between items-end">
-          <p className="inline-block max-w-24 px-2 py-1 bg-primary-deep rounded-lg text-white text-lg">
+          <p className="inline-block max-w-28 px-2 py-1 bg-primary-deep rounded-lg text-white text-lg">
             <span className="md:text-2xl lg:text-3xl">{food.calorie}</span>kcal
           </p>
           <div className="relative flex justify-end">

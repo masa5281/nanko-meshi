@@ -35,7 +35,7 @@ body {
 }
 
 .document-styles {
-  @apply max-w-4xl mx-auto mt-8;
+  @apply max-w-xs md:max-w-xl lg:max-w-4xl mx-auto mt-8;
   h2 {
     @apply text-2xl mb-8 font-bold text-center;
   }

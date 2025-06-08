@@ -36,7 +36,7 @@ export const TopPage = () => {
   }) => {
     return (
       <div className="flex justify-center items-center mb-8">
-        <div className={`${flexClass} ${side === "left" ? "-translate-x-5 md:-translate-x-36 lg:-translate-x-48" : "translate-x-3 md:translate-x-36 lg:translate-x-48"} flex items-center`}>
+        <div className={`${flexClass} ${side === "left" ? "-translate-x-3 md:-translate-x-36 lg:-translate-x-48" : "translate-x-3 md:translate-x-36 lg:translate-x-48"} flex items-center`}>
           <div>
             <img src={defaultIcon} alt="ユーザーアイコン" className="max-w-14 md:max-w-20 rounded-full shadow-md shadow-shadow" />
           </div>
@@ -48,10 +48,13 @@ export const TopPage = () => {
             transition={{ duration: 0.3 }}
           >
             <p
-              className={`${side === "left" ? "left-5 md:left-10 after:-left-2 md:after:-left-4 after:border-r-[15px] md:after:border-r-[30px]" : "right-5 md:right-10 after:-right-2 md:after:-right-4 after:border-l-[15px] md:after:border-l-[30px]"}
-              relative inline-block p-4 bg-white text-xs md:text-lg rounded-md
-              after:content-[''] after:absolute after:top-5 md:after:top-4 after:-z-10 after:border-t-transparent after:border-b-transparent
-              after:border-t-[15px] md:after:border-t-[30px] after:border-b-[15px] md:after:border-b-[30px] after:border-white` }
+              className={`${side === "left"
+                ? "left-5 md:left-10 after:-left-2 md:after:-left-4 after:border-r-[15px] md:after:border-r-[30px]"
+                : "right-5 md:right-10 after:-right-2 md:after:-right-4 after:border-l-[15px] md:after:border-l-[30px]"
+                } relative inline-block max-w-[340px] p-4 bg-white text-xs md:text-lg rounded-md
+                  after:content-[''] after:absolute after:top-5 md:after:top-4 after:-z-10 after:border-t-transparent after:border-b-transparent
+                  after:border-t-[15px] md:after:border-t-[30px] after:border-b-[15px] md:after:border-b-[30px] after:border-white `
+              }
             >
               {children}
             </p>
@@ -84,7 +87,7 @@ export const TopPage = () => {
   return (
     <>
       <section
-        className="relative -z-10 flex justify-center items-center h-[300px] md:h-[400px] lg:h-[600px] mb-10 bg-no-repeat bg-cover bg-center bg-keyMobile md:bg-keyDesktop"
+        className="drop-shadow-sm shadow-shadow relative -z-10 flex justify-center items-center h-[300px] md:h-[400px] lg:h-[600px] mb-10 bg-no-repeat bg-cover bg-center bg-keyMobile md:bg-keyDesktop"
       >
       </section>
 
@@ -94,7 +97,7 @@ export const TopPage = () => {
           運動をしてカロリーを消費したけど、<br /><span className="text-sm md:text-xl font-bold">イマイチ達成感がないかも？</span>
         </UserProblem>
         <UserProblem flexClass={"flex-row-reverse"} initialX={200} side={"right"}>
-          この努力、<br /><span className="text-sm md:text-xl font-bold">もっと別の“何か”で評価されたい！</span>
+          この努力を、<br /><span className="text-sm md:text-xl font-bold">もっと別の何かで評価されたい！</span>
         </UserProblem>
       </section>
 
@@ -115,12 +118,12 @@ export const TopPage = () => {
         </div>
       </section>
 
-      <section className="mb-12 px-10">
+      <section className="mb-12 px-8 md:px-10">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="inline-block mb-3 md:mb-5 lg:mb-8 pb-2 text-2xl lg:text-4xl border-b-2 border-black font-bold">
             アプリの主な使い方
           </h2>
-          <ul className="flex gap-5 lg:gap-8 p-3 md:p-0 overflow-x-scroll lg:overflow-x-visible">
+          <ul className="flex gap-5 lg:gap-8 pb-3 lg:pb-0 overflow-x-scroll lg:overflow-x-visible">
             <ProcessStep
               title={"カロリー入力"}
               img={iPhoneInput}
