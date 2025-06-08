@@ -30,6 +30,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to ECR
         uses: aws-actions/amazon-ecr-login@v2
 
@@ -37,7 +40,7 @@ jobs:
       - name: Build and Push frontend image to ECR
         id: build-image-front
         run: |
-          docker build --target production -t $ECR_REPOSITORY_FRONTEND:$IMAGE_TAG ./frontend
+          docker buildx build --platform linux/arm64 --target production -t $ECR_REPOSITORY_FRONTEND:$IMAGE_TAG ./frontend
           docker push $ECR_REPOSITORY_FRONTEND:$IMAGE_TAG
           echo "image_uri_front=$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG" >> $GITHUB_OUTPUT
       
@@ -45,7 +48,7 @@ jobs:
       - name: Build and Push backend image to ECR
         id: build-image-back
         run: |
-          docker build -t $ECR_REPOSITORY_BACKEND:$IMAGE_TAG ./backend
+          docker buildx build --platform linux/arm64 -t $ECR_REPOSITORY_BACKEND:$IMAGE_TAG ./backend
           docker push $ECR_REPOSITORY_BACKEND:$IMAGE_TAG
           echo "image_uri_back=$ECR_REPOSITORY_BACKEND:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
