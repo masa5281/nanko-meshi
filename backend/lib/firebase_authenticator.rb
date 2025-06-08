@@ -5,7 +5,7 @@ module FirebaseAuthenticator
 
   # 定数の設定
   ALG = "RS256" # 署名アルゴリズムの指定
-  FIREBASE_PROJECT_ID = "nanko-meshi-auth" # プロジェクトIDに変更
+  FIREBASE_PROJECT_ID = ENV.fetch("FIREBASE_PROJECT_ID") # プロジェクトIDに変更
   CERT_URI = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com" # Firebaseの公開鍵にアクセス
 
   # IDトークンの検証
