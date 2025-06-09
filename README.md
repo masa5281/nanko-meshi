@@ -1,5 +1,11 @@
 ## ■ なんこメシ / 消費カロリー変換アプリ
 ![key-pc](https://github.com/user-attachments/assets/64543d40-8947-44fd-88ea-d0b5b5ed4a33)
+
+▼ サービスURL<br> 
+https://www.nankomeshi.com<br> 
+
+▼ Qiitaの紹介記事<br> 
+https://qiita.com/maaasaaayk/items/28832ffa80b791f37858
 ## ■ サービス概要
 消費したカロリーを食べ物の個数に換算するアプリ。<br/> 
 運動1回分、あるいは累積のカロリー消費量を数値で入力すると、それに相当する「お菓子」や「ジャンクフード」など、
