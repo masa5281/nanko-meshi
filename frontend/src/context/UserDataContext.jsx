@@ -21,6 +21,10 @@ export const UserDataProvider = ({ children }) => {
         const userData = await getUserApi(user.uid);
         setDbUserData(userData);
       } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log("新規登録時の404を回避");
+          return;
+        }
         console.error(error);
       }
     }
