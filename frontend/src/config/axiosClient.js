@@ -1,5 +1,6 @@
 import { auth } from "../config/firebase";
 import axios from "axios";
+import { API_ENDPOINTS } from "../utils/constants";
 
 export const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL
@@ -23,6 +24,11 @@ export const setupAxiosStateError = (setStateError) => {
     },
     (error) => {
       if (error.response && error.response.status === 404) {
+        const errorUrl = error.config.url;
+
+        if (errorUrl.startsWith(API_ENDPOINTS.USERS.BASE)) {
+          return Promise.reject(error);
+        }
         setStateError(404);
       }
       if (error.code === "ERR_CANCELED") {
